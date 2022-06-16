@@ -128,7 +128,7 @@ List all your screens from above. Under each screen, list the screens you can na
    | objectId      | String         | unique id for the user post (default field) |
    | createdAt     | DateTime       | date when post is created (default field) |
    | updatedAt     | DateTime       | date when post is last updated (default field) |
-   | username      | Pointer to User| associated user |
+   | user          | Pointer to User| associated user |
    | type          | String         | project type, i.e., iOS, Android, Web, or Other |
    | description   | File           | profile picture of the user |
    | image         | File           | image describing the project, e.g., mockup |
