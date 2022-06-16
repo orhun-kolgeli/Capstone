@@ -111,10 +111,75 @@ List all your screens from above. Under each screen, list the screens you can na
 
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+#### User
+
+   | Property      | Type           | Description |
+   | ------------- | --------       | ------------|
+   | objectId      | String         | unique id for the user post (default field) |
+   | createdAt     | DateTime       | date when post is created (default field) |
+   | updatedAt     | DateTime       | date when post is last updated (default field) |
+   | email         | String         | email address of the user |
+   | profile image | File           | profile picture of the user |
+   | password      | String         | user password |
+   | organization  | Number         | 0 if developer; 1 if organization |
+   
+   
+#### Project
+
+   | Property      | Type           | Description |
+   | ------------- | --------       | ------------|
+   | objectId      | String         | unique id for the user post (default field) |
+   | createdAt     | DateTime       | date when post is created (default field) |
+   | updatedAt     | DateTime       | date when post is last updated (default field) |
+   | postedBy      | Pointer to User| organization that posted the project |
+   | type          | String         | project type, i.e., iOS, Android, Web, or Other |
+   | description   | File           | profile picture of the user |
+   | image         | File           | image describing the project, e.g., mockup |
+
+#### Developer
+
+   | Property      | Type           | Description |
+   | ------------- | --------       | ------------|
+   | objectId      | String         | unique id for the user post (default field) |
+   | createdAt     | DateTime       | date when post is created (default field) |
+   | updatedAt     | DateTime       | date when post is last updated (default field) |
+   | username      | Pointer to User| associated user |
+   | type          | String         | project type, i.e., iOS, Android, Web, or Other |
+   | description   | File           | profile picture of the user |
+   | image         | File           | image describing the project, e.g., mockup |
+   
+   
+   
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+#### List of network requests by screen
+   - Search Project Screen
+      - (Read/GET) Query all projects
+      ```java
+        // specify what type of data to query, i.e., Project
+        ParseQuery<Post> query = ParseQuery.getQuery(Project.class);
+        // include data referred by user key
+        query.include(Post.KEY_USER);
+        // limit query to latest 20 projects
+        query.setLimit(20);
+        // order projects by creation date (newest first)
+        query.addDescendingOrder("createdAt");
+        // start an asynchronous call for projects
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Project> projects, ParseException e) {
+                if (e != null) { // exception thrown
+                    Log.e(TAG, "Issue with getting projects", e);
+                    return;
+                } else {
+                    Log.i(TAG, "Successfully retrieved projects");
+                }
+            }
+        });
+         ```
+   - Set Up Profile Screen
+      - (Create/POST) Create a new developer object
+   - Search Developer Screen
+      - (Read/GET) Query all developers
+   - Post Project Screen
+      - (Create/POST) Create a new project object
