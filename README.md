@@ -24,21 +24,13 @@
 ### 1. User Stories (Required and Optional)
 
 **Required Must-have Stories**
-Minimmum amount of work
-login 
-register 
-nonp search 
-dev search
-communication (email/ optional: in app)
-
-
 * Both nonprofits and developers can sign up and log in
-* Nonprofits can post their web, iOS, or Android projects
 * Developers can scroll through the list of projects posted by nonprofits
-* Developers can apply via email to build a posted project by opening up a detail view of a posted project
-* Nonprofits can scroll through the list of all developers
-* Nonprofits can invite via email a developer to build their project  by opening up a detail view of a developer's profile by tapping
+* Developers can apply via email to build a posted project by opening up a detail view of the project
 * Developers can edit their profile 
+* Nonprofits can scroll through the list of all developers
+* Nonprofits can invite via email a developer to build their project by opening up a detail view of a developer's profile
+* Nonprofits can post their web, iOS, Android, or other projects
 
 **Optional Nice-to-have Stories**
 
@@ -48,8 +40,7 @@ communication (email/ optional: in app)
 * Animations
 * Developers can receive a notification when a nonprofit invites them
 * Nonprofits can receive a notification when a developer sends an application
-* Developers can showcase their prior projects on their profile
-
+* Developers can showcase their GitHub projects on their profile
 
 ### 2. Screen Archetypes
 
@@ -65,7 +56,6 @@ communication (email/ optional: in app)
      * User (developer) can send an application to a nonprofit
  * Developer search screen
    * User (nonprofit) can see all the developers and reach out to them
-   * 
  * Edit Profile Screen
    * User (developer) can set up or update their profile
  * Compose Project Screen
@@ -77,7 +67,6 @@ communication (email/ optional: in app)
 ### 3. Navigation
 
 **Tab Navigation** (Tab to Screen)
-
 
 * Log in
 * Register
@@ -104,8 +93,6 @@ List all your screens from above. Under each screen, list the screens you can na
 
 ## Wireframes
 ![alt-text](https://github.com/orhun-kolgeli/Capstone/blob/main/capstone_wireframes.jpg)
-
-
 
 ## Schema 
 ### Models
