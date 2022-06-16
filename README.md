@@ -118,7 +118,6 @@ List all your screens from above. Under each screen, list the screens you can na
    | updatedAt     | DateTime       | date when post is last updated (default field) |
    | postedBy      | Pointer to User| organization that posted the project |
    | type          | String         | project type, i.e., iOS, Android, Web, or Other |
-   | description   | File           | profile picture of the user |
    | image         | File           | image describing the project, e.g., mockup |
 
 #### Developer
@@ -129,9 +128,9 @@ List all your screens from above. Under each screen, list the screens you can na
    | createdAt     | DateTime       | date when post is created (default field) |
    | updatedAt     | DateTime       | date when post is last updated (default field) |
    | user          | Pointer to User| associated user |
-   | type          | String         | project type, i.e., iOS, Android, Web, or Other |
-   | description   | File           | profile picture of the user |
-   | image         | File           | image describing the project, e.g., mockup |
+   | Bio           | String         | Bio of the developer |
+   | GitHub        | String         | GitHub username |
+   
    
    
    
