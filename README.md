@@ -142,6 +142,7 @@ List all your screens from above. Under each screen, list the screens you can na
       - (Read/GET) Query all projects
       ```java
         // Specify what type of data to query, i.e., Project
+        // Error handling
         ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
         // Limit query to latest 20 projects
         query.setLimit(20);
@@ -152,6 +153,7 @@ List all your screens from above. Under each screen, list the screens you can na
             @Override
             public void done(List<Project> projects, ParseException e) {
                 if (e != null) { // exception thrown
+                    // Snack bar, toast (error handling)
                     Log.e(TAG, "Issue with getting projects", e);
                     return;
                 } else {
