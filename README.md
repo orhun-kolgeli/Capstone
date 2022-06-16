@@ -106,7 +106,7 @@ List all your screens from above. Under each screen, list the screens you can na
    | email         | String         | email address of the user |
    | profile image | File           | profile picture of the user |
    | password      | String         | user password |
-   | organization  | Number         | 0 if developer; 1 if organization |
+   | organization  | Boolean        | false if developer; true if organization |
    
    
 #### Project
