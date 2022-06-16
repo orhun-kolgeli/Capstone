@@ -128,8 +128,9 @@ List all your screens from above. Under each screen, list the screens you can na
    | createdAt     | DateTime       | date when post is created (default field) |
    | updatedAt     | DateTime       | date when post is last updated (default field) |
    | user          | Pointer to User| associated user |
-   | Bio           | String         | Bio of the developer |
+   | Bio           | String         | bio of the developer |
    | GitHub        | String         | GitHub username |
+   | Skills        | String         | web or mobile development skills |
    
    
    
