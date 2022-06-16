@@ -106,7 +106,7 @@ List all your screens from above. Under each screen, list the screens you can na
    | email         | String         | email address of the user |
    | profile image | File => url / or initials (Picasso) | profile picture of the user |
    | password      | String         | user password |
-   | organization  | Boolean        | false if developer; true if organization |
+   | organization  | enum type      | false if developer; true if organization |
    | project       | Pointer to Project | project tied to the account, if any
    | developer     | Pointer to Developer | developer tied to the account, if any
    
