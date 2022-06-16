@@ -106,7 +106,7 @@ List all your screens from above. Under each screen, list the screens you can na
 
 
 ## Wireframes
-![alt-text](https://github.com/orhun-kolgeli/Capstone/blob/main/Wireframes.jpg)
+![alt-text](https://github.com/orhun-kolgeli/Capstone/blob/main/capstone_wireframes.jpg)
 
 
 
