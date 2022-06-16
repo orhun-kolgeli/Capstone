@@ -140,15 +140,15 @@ List all your screens from above. Under each screen, list the screens you can na
    - Search Project Screen
       - (Read/GET) Query all projects
       ```java
-        // specify what type of data to query, i.e., Project
-        ParseQuery<Post> query = ParseQuery.getQuery(Project.class);
-        // include data referred by user key
-        query.include(Post.KEY_USER);
-        // limit query to latest 20 projects
+        // Specify what type of data to query, i.e., Project
+        ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
+        // Include data about the associated user
+        query.include("postedBy");
+        // Limit query to latest 20 projects
         query.setLimit(20);
-        // order projects by creation date (newest first)
+        // Order projects by creation date
         query.addDescendingOrder("createdAt");
-        // start an asynchronous call for projects
+        // Start an asynchronous call for projects
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Project> projects, ParseException e) {
