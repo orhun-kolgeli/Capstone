@@ -160,7 +160,7 @@ List all your screens from above. Under each screen, list the screens you can na
                 }
             }
         });
-         ```
+     ```
    - Set Up Profile Screen
       - (Create/POST) Create a new developer object
    - Search Developer Screen
