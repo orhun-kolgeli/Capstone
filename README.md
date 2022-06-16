@@ -104,7 +104,7 @@ List all your screens from above. Under each screen, list the screens you can na
    | createdAt     | DateTime       | date when post is created (default field) |
    | updatedAt     | DateTime       | date when post is last updated (default field) |
    | email         | String         | email address of the user |
-   | profile image | File           | profile picture of the user |
+   | profile image | File => url    | profile picture of the user |
    | password      | String         | user password |
    | organization  | Boolean        | false if developer; true if organization |
    | project       | Pointer to Project | project tied to the account, if any
