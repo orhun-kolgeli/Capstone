@@ -131,6 +131,7 @@ List all your screens from above. Under each screen, list the screens you can na
    | Bio           | String         | bio of the developer |
    | GitHub        | String         | GitHub username |
    | Skills        | String         | web or mobile development skills |
+   Having pre-determined skills to choose from: for filtering, matching, etc.
    
    
    
