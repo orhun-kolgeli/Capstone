@@ -107,6 +107,8 @@ List all your screens from above. Under each screen, list the screens you can na
    | profile image | File           | profile picture of the user |
    | password      | String         | user password |
    | organization  | Boolean        | false if developer; true if organization |
+   | project       | Pointer to Project | project tied to the account, if any
+   | developer     | Pointer to Developer | developer tied to the account, if any
    
    
 #### Project
@@ -116,7 +118,6 @@ List all your screens from above. Under each screen, list the screens you can na
    | objectId      | String         | unique id for the user post (default field) |
    | createdAt     | DateTime       | date when post is created (default field) |
    | updatedAt     | DateTime       | date when post is last updated (default field) |
-   | postedBy      | Pointer to User| organization that posted the project |
    | type          | String         | project type, i.e., iOS, Android, Web, or Other |
    | image         | File           | image describing the project, e.g., mockup |
 
@@ -127,7 +128,6 @@ List all your screens from above. Under each screen, list the screens you can na
    | objectId      | String         | unique id for the user post (default field) |
    | createdAt     | DateTime       | date when post is created (default field) |
    | updatedAt     | DateTime       | date when post is last updated (default field) |
-   | user          | Pointer to User| associated user |
    | Bio           | String         | bio of the developer |
    | GitHub        | String         | GitHub username |
    | Skills        | String         | web or mobile development skills |
@@ -142,8 +142,6 @@ List all your screens from above. Under each screen, list the screens you can na
       ```java
         // Specify what type of data to query, i.e., Project
         ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
-        // Include data about the associated user
-        query.include("postedBy");
         // Limit query to latest 20 projects
         query.setLimit(20);
         // Order projects by creation date
