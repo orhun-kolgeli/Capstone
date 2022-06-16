@@ -1,6 +1,3 @@
-Original App Design Project
-===
-
 # Capstone
 
 ## Table of Contents
