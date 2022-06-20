@@ -129,7 +129,7 @@ List all your screens from above. Under each screen, list the screens you can na
    | createdAt     | DateTime       | date when post is created (default field) |
    | updatedAt     | DateTime       | date when post is last updated (default field) |
    | bio           | String         | bio of the developer |
-   | gitHub        | String         | GitHub username |
+   | github        | String         | GitHub username |
    | skills        | String         | web or mobile development skills |
    Having pre-determined skills to choose from: for filtering, matching, etc.
    
