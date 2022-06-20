@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Capstone</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="find_a_project_label">Find a project</string>
+    <string name="second_fragment_label">Project Details</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="log_out">Log out</string>
+    <string name="set_up_profile">Set up profile</string>
+</resources>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/ProjectSearchFragment">
+
+    <fragment
+        android:id="@+id/ProjectSearchFragment"
+        android:name="com.orhunkolgeli.capstone.ProjectSearchFragment"
+        android:label="@string/find_a_project_label"
+        tools:layout="@layout/fragment_project_search">
+
+        <action
+            android:id="@+id/action_ProjectSearchFragment_to_ProjectDetailFragment"
+            app:destination="@id/ProjectDetailFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/ProjectDetailFragment"
+        android:name="com.orhunkolgeli.capstone.ProjectDetailFragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_project_detail">
+
+        <action
+            android:id="@+id/action_ProjectDetailFragment_to_ProjectSearchFragment"
+            app:destination="@id/ProjectSearchFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+</navigation>
