@@ -1,6 +1,7 @@
 package com.orhunkolgeli.capstone;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,15 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.orhunkolgeli.capstone.databinding.FragmentProjectSearchBinding;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 public class ProjectSearchFragment extends Fragment {
 
+    private static final String TAG = "ProjectSearchFragment";
     private FragmentProjectSearchBinding binding;
 
     @Override
@@ -21,6 +28,7 @@ public class ProjectSearchFragment extends Fragment {
             Bundle savedInstanceState
     ) {
 
+        readProjects();
         binding = FragmentProjectSearchBinding.inflate(inflater, container, false);
         return binding.getRoot();
 
@@ -45,4 +53,21 @@ public class ProjectSearchFragment extends Fragment {
         binding = null;
     }
 
+    public void readProjects() {
+        ParseQuery<Project> query = ParseQuery.getQuery("Project");
+        // Search for ParseObject Project
+        // Query will invoke the FindCallback with either the object or the exception thrown
+        query.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> projects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error reading projects from database");
+                    return;
+                }
+                for (Project project : projects) {
+                    Log.i(TAG, "Project : " + project.getType() + ", " + project.getDescription());
+                }
+            }
+        });
+    }
 }

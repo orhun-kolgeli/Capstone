@@ -119,6 +119,7 @@ List all your screens from above. Under each screen, list the screens you can na
    | createdAt     | DateTime       | date when post is created (default field) |
    | updatedAt     | DateTime       | date when post is last updated (default field) |
    | type          | String         | project type, i.e., iOS, Android, Web, or Other |
+   | description   | String         | description of the project |
    | image         | File           | image describing the project, e.g., mockup |
 
 #### Developer

@@ -1,6 +1,7 @@
 package com.orhunkolgeli.capstone;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,15 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.orhunkolgeli.capstone.databinding.FragmentProjectDetailBinding;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 public class ProjectDetailFragment extends Fragment {
 
+    private static final String TAG = "ProjectDetailFragment";
     private FragmentProjectDetailBinding binding;
 
     @Override
@@ -43,5 +50,4 @@ public class ProjectDetailFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
-
 }
