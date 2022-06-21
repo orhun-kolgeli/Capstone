@@ -11,4 +11,11 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="log_out">Log out</string>
     <string name="set_up_profile">Set up profile</string>
+    <string name="image_describing_the_project">image describing the project</string>
+    <string name="project_type">Project Type:</string>
+    <string name="organization_profile_picture">Organization profile picture</string>
+    <string name="description">Description:</string>
+    <string name="projects_will_go_here">Projects will go here</string>
+    <string name="tap">Tap</string>
+    <string name="placeholder_initals">OK</string>
 </resources>

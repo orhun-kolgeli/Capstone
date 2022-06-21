@@ -10,6 +10,7 @@ public class Project extends ParseObject {
     public static final String KEY_TYPE = "type";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_USER = "user";
 
     public String getType() {
         return getString(KEY_TYPE);
@@ -34,4 +35,9 @@ public class Project extends ParseObject {
     public void setImage(ParseFile image) {
         put(KEY_IMAGE, image);
     }
+
+    public ParseUser getUser() {
+        return getParseUser(KEY_USER);
+    }
+
 }
