@@ -100,11 +100,12 @@ List all your screens from above. Under each screen, list the screens you can na
 
    | Property      | Type           | Description |
    | ------------- | --------       | ------------|
-   | objectId      | String         | unique id for the user post (default field) |
-   | createdAt     | DateTime       | date when post is created (default field) |
-   | updatedAt     | DateTime       | date when post is last updated (default field) |
+   | objectId      | String         | unique id for the user (default field) |
+   | createdAt     | DateTime       | date when user is created (default field) |
+   | updatedAt     | DateTime       | date when user is last updated (default field) |
    | email         | String         | email address of the user |
-   | profileImage  | File => url / or initials (Picasso) | profile picture of the user |
+   | username      | String         | username of the user |
+   | name          | String         | full name of the user |
    | password      | String         | user password |
    | organization  | bool / or enum  | false if developer; true if organization |
    | project       | Pointer to Project | project tied to the account, if any
@@ -115,23 +116,26 @@ List all your screens from above. Under each screen, list the screens you can na
 
    | Property      | Type           | Description |
    | ------------- | --------       | ------------|
-   | objectId      | String         | unique id for the user post (default field) |
-   | createdAt     | DateTime       | date when post is created (default field) |
-   | updatedAt     | DateTime       | date when post is last updated (default field) |
+   | objectId      | String         | unique id for the project (default field) |
+   | createdAt     | DateTime       | date when project is created (default field) |
+   | updatedAt     | DateTime       | date when project is last updated (default field) |
    | type          | String         | project type, i.e., iOS, Android, Web, or Other |
    | description   | String         | description of the project |
    | image         | File           | image describing the project, e.g., mockup |
+   | user         | Pointer to User           | organization that owns the project |
 
 #### Developer
 
    | Property      | Type           | Description |
    | ------------- | --------       | ------------|
-   | objectId      | String         | unique id for the user post (default field) |
-   | createdAt     | DateTime       | date when post is created (default field) |
-   | updatedAt     | DateTime       | date when post is last updated (default field) |
+   | objectId      | String         | unique id for the developer (default field) |
+   | createdAt     | DateTime       | date when developer profile is created (default field) |
+   | updatedAt     | DateTime       | date when developer profile is last updated (default field) |
+   | profileImage  | File => url / or initials (Picasso) | profile picture of the user |
    | bio           | String         | bio of the developer |
    | github        | String         | GitHub username |
    | skills        | String         | web or mobile development skills |
+   | user          | Pointer to User| associated user |
    Having pre-determined skills to choose from: for filtering, matching, etc.
    
    
