@@ -21,4 +21,8 @@
     <string name="t">T</string>
     <string name="posted_by">Posted By:</string>
     <string name="apply">Apply</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="username">Username</string>
+    <string name="logo">Logo</string>
 </resources>
