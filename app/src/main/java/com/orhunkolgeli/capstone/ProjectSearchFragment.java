@@ -52,7 +52,6 @@ public class ProjectSearchFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +59,6 @@ public class ProjectSearchFragment extends Fragment {
                         .navigate(R.id.action_ProjectSearchFragment_to_ProjectDetailFragment);
             }
         });
-
     }
 
     @Override
@@ -87,6 +85,9 @@ public class ProjectSearchFragment extends Fragment {
                 }
                 allProjects.addAll(projects);
                 adapter.notifyDataSetChanged();
+                // Hide the progress bar
+                binding.pbReadProjects.setVisibility(View.GONE);
+                binding.tvLoadingProjects.setVisibility(View.GONE);
             }
         });
     }

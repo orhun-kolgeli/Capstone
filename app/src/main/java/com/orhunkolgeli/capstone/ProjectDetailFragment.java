@@ -1,11 +1,13 @@
 package com.orhunkolgeli.capstone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,18 +20,20 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.bumptech.glide.Glide;
 import com.orhunkolgeli.capstone.databinding.FragmentProjectDetailBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ProjectDetailFragment extends Fragment {
 
     private static final String TAG = "ProjectDetailFragment";
     private FragmentProjectDetailBinding binding;
-    TextView textview_second;
 
     @Override
     public View onCreateView(
@@ -44,17 +48,37 @@ public class ProjectDetailFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        binding.buttonSecond.setOnClickListener(new View.OnClickListener() {
+        Project project = getArguments().getParcelable("bundleKey");
+        String orgName = project.getUser().getString("name");
+        String type = project.getType();
+        String description = project.getDescription();
+        binding.tvPostedBy.setText(orgName);
+        binding.tvTypeofProject.setText(type);
+        binding.tvDescription.setText(description);
+        ParseFile image = project.getImage();
+        if (image != null) {
+            Glide.with(requireActivity())
+                    .load(image.getUrl())
+                    .into(binding.ivProjectImg);
+        }
+        binding.btnApply.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                Intent intent = new Intent(android.content.Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                String email = project.getUser().getString("emailAddress");
+                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {email} );
+                intent.putExtra(intent.EXTRA_SUBJECT, "Job application - " + project.getType() + " Developer");
+                intent.putExtra(android.content.Intent.EXTRA_TEXT,
+                        "Dear " + orgName + ",\n\n");
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    getActivity().startActivity(Intent.createChooser(intent, "Send Email using:"));
+                }
+                else {
+                    Toast.makeText(getActivity(), "You don't have any email apps.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-        textview_second = view.findViewById(R.id.textview_second);
-        Project project = getArguments().getParcelable("bundleKey");
-        textview_second.setText(
-                project.getDescription() + "\n" + project.getType() + "\n" + project.getUser().getUsername()
-        );
     }
 
     @Override

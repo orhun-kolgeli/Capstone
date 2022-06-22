@@ -19,4 +19,6 @@
     <string name="tap">Tap</string>
     <string name="placeholder_initals">OK</string>
     <string name="t">T</string>
+    <string name="posted_by">Posted By:</string>
+    <string name="apply">Apply</string>
 </resources>
