@@ -7,11 +7,14 @@
 
     <ImageView
         android:id="@+id/ivProjectImage"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:contentDescription="@string/image_describing_the_project"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tvProjectDescription"
         app:layout_constraintTop_toBottomOf="@+id/tvProjectDescription"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -19,8 +22,7 @@
         android:id="@+id/tvProjectDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/tvDesc"
@@ -31,7 +33,6 @@
         android:id="@+id/tvProjectType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="@+id/tvType"
         app:layout_constraintTop_toBottomOf="@+id/tvType"
         tools:text="Android" />
@@ -40,19 +41,16 @@
         android:id="@+id/tvType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="96dp"
-        android:layout_marginTop="32dp"
         android:text="@string/project_type"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/tvUsername"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsername" />
 
     <TextView
         android:id="@+id/tvDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:text="@string/description"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/tvProjectType"
@@ -60,18 +58,29 @@
 
     <TextView
         android:id="@+id/tvInitials"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="20dp"
         android:background="@drawable/circle_shape"
         android:backgroundTint="#970202"
         android:padding="10dp"
-        android:text="@string/placeholder_initals"
+        android:text="@string/t"
+        android:textAlignment="center"
         android:textColor="#FBFBFB"
         android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvProjectDescription"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvType"
-        app:layout_constraintVertical_bias="0.525" />
+        app:layout_constraintTop_toTopOf="@+id/tvUsername" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/tvInitials"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Username" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
