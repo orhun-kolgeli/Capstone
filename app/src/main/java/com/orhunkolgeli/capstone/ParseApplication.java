@@ -12,6 +12,7 @@ public class ParseApplication extends Application {
 
         // Register parse models
         ParseObject.registerSubclass(Project.class);
+        ParseObject.registerSubclass(Developer.class);
 
         // Initialization
         Parse.initialize(new Parse.Configuration.Builder(this)

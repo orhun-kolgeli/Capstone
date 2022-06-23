@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +31,8 @@ import java.util.List;
 import java.util.Random;
 
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHolder> {
+    public static final int DARK_COLOR_RGB_VALUE = 200;
+    public static final int ALPHA = 255;
     private Context context;
     private List<Project> projects;
 
@@ -83,9 +86,6 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
                     NavHostFragment navHostFragment = (NavHostFragment) fragmentManager.findFragmentById(R.id.nav_host_fragment_content_main);
                     NavController navController = navHostFragment.getNavController();
                     navController.navigate(R.id.action_ProjectSearchFragment_to_ProjectDetailFragment, result);
-
-
-
                 }
             });
             // Display project type
@@ -103,10 +103,10 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             tvInitials.setText(username.substring(0,1).toUpperCase());
             // Pick a random color
             Random rnd = new Random();
-            int color = Color.argb(255,
-                    rnd.nextInt(256),
-                    rnd.nextInt(256),
-                    rnd.nextInt(256));
+            int color = Color.argb(ALPHA,
+                    rnd.nextInt(DARK_COLOR_RGB_VALUE),
+                    rnd.nextInt(DARK_COLOR_RGB_VALUE),
+                    rnd.nextInt(DARK_COLOR_RGB_VALUE));
             // Set user's initial's background to random color
             tvInitials.setBackgroundTintList(ColorStateList.valueOf(color));
             // Load image describing the project from Parse server

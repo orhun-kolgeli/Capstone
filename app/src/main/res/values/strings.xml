@@ -7,8 +7,6 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="log_out">Log out</string>
     <string name="set_up_profile">Set up profile</string>
     <string name="image_describing_the_project">image describing the project</string>
@@ -25,4 +23,10 @@
     <string name="log_in">Log in</string>
     <string name="username">Username</string>
     <string name="logo">Logo</string>
+    <string name="loading_projects">Loading projects...</string>
+    <string name="skills">Skills</string>
+    <string name="save">Save</string>
+    <string name="bio">Bio</string>
+    <string name="github">GitHub</string>
+    <string name="two_developers_discussing">Two developers discussing</string>
 </resources>

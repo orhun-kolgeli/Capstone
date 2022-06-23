@@ -8,11 +8,14 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.orhunkolgeli.capstone.databinding.FragmentProjectSearchBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -47,16 +50,15 @@ public class ProjectSearchFragment extends Fragment {
         readProjects();
 
         return binding.getRoot();
-
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.buttonFirst.setOnClickListener(new View.OnClickListener() {
+        binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 NavHostFragment.findNavController(ProjectSearchFragment.this)
-                        .navigate(R.id.action_ProjectSearchFragment_to_ProjectDetailFragment);
+                        .navigate(R.id.action_ProjectSearchFragment_to_setupProfileFragment);
             }
         });
     }
