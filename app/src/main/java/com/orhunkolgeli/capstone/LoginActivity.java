@@ -16,6 +16,7 @@ import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActvity";
+    public static final String KEY_ORGANIZATION = "organization";
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
@@ -27,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         ParseUser currentUser = ParseUser.getCurrentUser();
         // Check if user is already logged in
         if (currentUser != null) {
-            boolean isOrganization = currentUser.getBoolean("organization");
+            boolean isOrganization = currentUser.getBoolean(KEY_ORGANIZATION);
             if (isOrganization) {
                 //launchOrganizationView();
             } else {
@@ -55,19 +56,19 @@ public class LoginActivity extends AppCompatActivity {
                 if (e != null) { // exception thrown
                     Log.e(TAG, "Login error", e);
                     if (username.isEmpty()) {
-                        Toast.makeText(LoginActivity.this, "Please enter your username",
+                        Toast.makeText(LoginActivity.this, R.string.enter_username,
                                 Toast.LENGTH_SHORT).show();
                     } else if (password.isEmpty()) {
-                        Toast.makeText(LoginActivity.this, "Please enter your password",
+                        Toast.makeText(LoginActivity.this, R.string.enter_password,
                                 Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Invalid username or password",
+                        Toast.makeText(LoginActivity.this, R.string.invalid_username_password,
                                 Toast.LENGTH_SHORT).show();
                     }
                     return;
                 }
                 launchDeveloperView();
-                Toast.makeText(LoginActivity.this, "Welcome " + username + "!",
+                Toast.makeText(LoginActivity.this, getString(R.string.welcome) + username + "!",
                         Toast.LENGTH_SHORT).show();
             }
         });
