@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -20,17 +22,19 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
+    private TextView tvDontHaveAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().setTitle(R.string.log_in_toolbar);
         ParseUser currentUser = ParseUser.getCurrentUser();
         // Check if user is already logged in
         if (currentUser != null) {
             boolean isOrganization = currentUser.getBoolean(KEY_ORGANIZATION);
             if (isOrganization) {
-                //launchOrganizationView();
+                launchOrganizationView();
             } else {
                 launchDeveloperView();
             }
@@ -44,6 +48,14 @@ public class LoginActivity extends AppCompatActivity {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 logUserIn(username, password);
+            }
+        });
+        tvDontHaveAccount = findViewById(R.id.tvDontHaveAccount);
+        tvDontHaveAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -67,9 +79,14 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     return;
                 }
-                launchDeveloperView();
                 Toast.makeText(LoginActivity.this, getString(R.string.welcome) + username + "!",
                         Toast.LENGTH_SHORT).show();
+                boolean isOrganization = user.getBoolean(KEY_ORGANIZATION);
+                if (isOrganization) {
+                    launchOrganizationView();
+                } else {
+                    launchDeveloperView();
+                }
             }
         });
     }
@@ -79,5 +96,11 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         // Prevent user from going back to LoginActivity with back button
         finish();
+    }
+
+    private void launchOrganizationView() {
+        Toast.makeText(this, "Welcome to organization view", Toast.LENGTH_SHORT).show();
+        ParseUser.logOut();
+        Toast.makeText(this, "We logged you out", Toast.LENGTH_SHORT).show();
     }
 }
