@@ -42,4 +42,13 @@
     <string name="register_org">Register as Organization</string>
     <string name="register_dev">Register as Developer</string>
     <string name="fill_in_required_fields">Please fill in all the required fields</string>
+    <string name="title_activity_organization">OrganizationActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="loading_developer_profiles">Loading developer profiles...</string>
+    <string name="o">O</string>
+    <string name="github_logo">GitHub Logo</string>
 </resources>

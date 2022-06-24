@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProjectSearchFragment">
+    tools:context=".DeveloperSearchFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDevelopers"
@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
-        android:id="@+id/pbReadProjects"
+        android:id="@+id/pbLoadDevelopers"
         style="@android:style/Widget.Material.Light.ProgressBar.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,19 +26,19 @@
         app:layout_constraintVertical_bias="0.377" />
 
     <TextView
-        android:id="@+id/tvLoadingProjects"
+        android:id="@+id/tvLoadingDevs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/loading_projects"
+        android:text="@string/loading_developer_profiles"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/pbReadProjects"
+        app:layout_constraintBottom_toTopOf="@+id/pbLoadDevelopers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fabAddProject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -47,6 +47,5 @@
         android:contentDescription="@string/set_up_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
-
+        app:srcCompat="@android:drawable/ic_menu_add" />
 </androidx.constraintlayout.widget.ConstraintLayout>

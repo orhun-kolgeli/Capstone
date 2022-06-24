@@ -99,8 +99,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void launchOrganizationView() {
-        Toast.makeText(this, "Welcome to organization view", Toast.LENGTH_SHORT).show();
-        ParseUser.logOut();
-        Toast.makeText(this, "We logged you out", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, OrganizationActivity.class);
+        startActivity(intent);
+        // Prevent user from going back to LoginActivity with back button
+        finish();
     }
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.orhunkolgeli.capstone.databinding.FragmentDeveloperSearchBinding;
+import com.orhunkolgeli.capstone.databinding.FragmentDeveloperSearchBinding;
 import com.orhunkolgeli.capstone.databinding.FragmentProjectSearchBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -21,41 +24,43 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectSearchFragment extends Fragment {
+public class DeveloperSearchFragment extends Fragment {
 
+    private FragmentDeveloperSearchBinding binding;
     private static final String TAG = "ProjectSearchFragment";
-    private FragmentProjectSearchBinding binding;
-    List<Project> allProjects;
-    ProjectAdapter adapter;
+    List<Developer> allDevelopers;
+    DeveloperAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentProjectSearchBinding.inflate(inflater, container, false);
+        binding = FragmentDeveloperSearchBinding.inflate(inflater, container, false);
         View rootView = binding.getRoot();
         // Get a reference to recyclerView
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rvDevelopers);
         // Set layoutManger
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // Create an adapter
-        allProjects = new ArrayList<>();
-        adapter = new ProjectAdapter(getActivity(), allProjects);
+        allDevelopers = new ArrayList<>();
+        adapter = new DeveloperAdapter(getActivity(), allDevelopers);
         // Set adapter
         recyclerView.setAdapter(adapter);
         // Set item animator to DefaultAnimator
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        // Read in the projects from database
-        readProjects();
+        // Read in the developer profiles from database
+        loadDeveloperProfiles();
 
         return binding.getRoot();
+
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+
+        binding.fabAddProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(ProjectSearchFragment.this)
-                        .navigate(R.id.action_ProjectSearchFragment_to_setupProfileFragment);
+                Toast.makeText(getActivity(), "Should go to compose project!", Toast.LENGTH_SHORT).show();
+                //NavHostFragment.findNavController(DeveloperSearchFragment.this).navigate(R.id.action_FirstFragment_to_SecondFragment);
             }
         });
     }
@@ -66,27 +71,27 @@ public class ProjectSearchFragment extends Fragment {
         binding = null;
     }
 
-    public void readProjects() {
-        ParseQuery<Project> query = ParseQuery.getQuery("Project");
+    private void loadDeveloperProfiles() {
+        ParseQuery<Developer> query = ParseQuery.getQuery("Developer");
         query.setLimit(20);
         query.addDescendingOrder("createdAt");
-        // Search for ParseObject Project
+        // Search for ParseObject Developer
         // Query will invoke the FindCallback with either the object or the exception thrown
-        query.findInBackground(new FindCallback<Project>() {
+        query.findInBackground(new FindCallback<Developer>() {
             @Override
-            public void done(List<Project> projects, ParseException e) {
+            public void done(List<Developer> developers, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Error reading projects from database");
+                    Log.e(TAG, "Error reading in the developer profiles from database");
                     return;
                 }
-                for (Project project : projects) {
-                    Log.i(TAG, "Project : " + project.getType() + ", " + project.getDescription());
+                for (Developer developer : developers) {
+                    Log.i(TAG, "Developer GitHub: " + developer.getGitHub());
                 }
-                allProjects.addAll(projects);
+                allDevelopers.addAll(developers);
                 adapter.notifyDataSetChanged();
                 // Hide the progress bar
-                binding.pbReadProjects.setVisibility(View.GONE);
-                binding.tvLoadingProjects.setVisibility(View.GONE);
+                binding.pbLoadDevelopers.setVisibility(View.GONE);
+                binding.tvLoadingDevs.setVisibility(View.GONE);
             }
         });
     }
