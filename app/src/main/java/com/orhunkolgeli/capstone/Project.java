@@ -40,4 +40,8 @@ public class Project extends ParseObject {
         return getParseUser(KEY_USER);
     }
 
+    public void setUser(ParseUser user) {
+        put(KEY_USER, user);
+    }
+
 }

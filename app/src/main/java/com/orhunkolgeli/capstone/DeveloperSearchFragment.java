@@ -57,8 +57,8 @@ public class DeveloperSearchFragment extends Fragment {
         binding.fabAddProject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Should go to compose project instead!", Toast.LENGTH_SHORT).show();
-                NavHostFragment.findNavController(DeveloperSearchFragment.this).navigate(R.id.action_DeveloperSearchFragment_to_DeveloperDetailFragment);
+                NavHostFragment.findNavController(DeveloperSearchFragment.this).navigate(
+                        R.id.action_DeveloperSearchFragment_to_postProjectFragment);
             }
         });
     }

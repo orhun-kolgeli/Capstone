@@ -115,6 +115,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
                 Glide.with(context)
                         .load(image.getUrl())
                         .into(ivProjectImage);
+            } else {
+                ivProjectImage.setVisibility(View.GONE);
             }
         }
     }

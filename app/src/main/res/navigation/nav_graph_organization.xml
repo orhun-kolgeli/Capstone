@@ -18,6 +18,14 @@
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_DeveloperSearchFragment_to_postProjectFragment"
+            app:destination="@id/postProjectFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out"
+            app:popUpTo="@id/DeveloperSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/DeveloperDetailFragment"
@@ -34,5 +42,18 @@
             app:popExitAnim="@android:anim/fade_out" />
         <argument android:name="developer"
             app:argType="com.orhunkolgeli.capstone.Developer" />
+    </fragment>
+    <fragment
+        android:id="@+id/postProjectFragment"
+        android:name="com.orhunkolgeli.capstone.PostProjectFragment"
+        android:label="Post a Project"
+        tools:layout="@layout/fragment_post_project" >
+        <action
+            android:id="@+id/action_postProjectFragment_to_DeveloperSearchFragment"
+            app:destination="@id/DeveloperSearchFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
 </navigation>
