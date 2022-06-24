@@ -51,4 +51,6 @@
     <string name="loading_developer_profiles">Loading developer profiles...</string>
     <string name="o">O</string>
     <string name="github_logo">GitHub Logo</string>
+    <string name="error_signout">There was an error signing out.</string>
+    <string name="logout_successful">Successfully logged out.</string>
 </resources>

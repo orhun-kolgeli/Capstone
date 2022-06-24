@@ -60,15 +60,14 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_logout) {
             ParseUser.logOutInBackground(e -> {
                 if(e != null) {
-                    Toast.makeText(MainActivity.this, "There was an error signing out.",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, R.string.error_signout, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 // Prevent user from using back button to go back to Main Activity after logout
                 finish();
-                Toast.makeText(MainActivity.this, "Successfully logged out.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, R.string.logout_successful, Toast.LENGTH_SHORT).show();
             });
             return true;
         }
@@ -81,4 +80,6 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+
 }
