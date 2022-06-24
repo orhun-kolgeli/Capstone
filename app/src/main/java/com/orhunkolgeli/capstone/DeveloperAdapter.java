@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -27,10 +30,12 @@ import java.util.Random;
 public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.ViewHolder> {
     private Context context;
     private List<Developer> developers;
+    Fragment fragment;
 
-    public DeveloperAdapter(Context context, List<Developer> developers) {
+    public DeveloperAdapter(Context context, List<Developer> developers, Fragment fragment) {
         this.context = context;
         this.developers = developers;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -58,6 +63,7 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
         TextView tvGitHub;
         TextView tvDevInitials;
         TextView tvFullName;
+        ConstraintLayout clDeveloperItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +72,7 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
             tvGitHub = itemView.findViewById(R.id.tvGitHub);
             tvDevInitials = itemView.findViewById(R.id.tvDevInitials);
             tvFullName = itemView.findViewById(R.id.tvFullName);
+            clDeveloperItem = itemView.findViewById(R.id.clDeveloperItem);
         }
 
         public void bind(Developer developer) {
@@ -80,6 +87,19 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
             }
             tvDevInitials.setText(full_name.substring(0,1).toUpperCase());
             tvFullName.setText(full_name);
+            String finalFull_name = full_name;
+            clDeveloperItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavHostFragment.findNavController(fragment)
+                            .navigate(
+                                    DeveloperSearchFragmentDirections
+                                            .actionDeveloperSearchFragmentToDeveloperDetailFragment(
+                                                    developer
+                                            )
+                            );
+                }
+            });
         }
     }
 }

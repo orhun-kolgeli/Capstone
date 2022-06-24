@@ -15,8 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.orhunkolgeli.capstone.databinding.FragmentDeveloperSearchBinding;
-import com.orhunkolgeli.capstone.databinding.FragmentDeveloperSearchBinding;
-import com.orhunkolgeli.capstone.databinding.FragmentProjectSearchBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -41,7 +39,7 @@ public class DeveloperSearchFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // Create an adapter
         allDevelopers = new ArrayList<>();
-        adapter = new DeveloperAdapter(getActivity(), allDevelopers);
+        adapter = new DeveloperAdapter(getActivity(), allDevelopers, DeveloperSearchFragment.this);
         // Set adapter
         recyclerView.setAdapter(adapter);
         // Set item animator to DefaultAnimator
@@ -60,7 +58,7 @@ public class DeveloperSearchFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity(), "Should go to compose project instead!", Toast.LENGTH_SHORT).show();
-                NavHostFragment.findNavController(DeveloperSearchFragment.this).navigate(R.id.action_FirstFragment_to_SecondFragment);
+                NavHostFragment.findNavController(DeveloperSearchFragment.this).navigate(R.id.action_DeveloperSearchFragment_to_DeveloperDetailFragment);
             }
         });
     }

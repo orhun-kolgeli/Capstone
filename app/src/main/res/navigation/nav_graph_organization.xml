@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_developer_search">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            android:id="@+id/action_DeveloperSearchFragment_to_DeveloperDetailFragment"
             app:destination="@id/DeveloperDetailFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
@@ -26,11 +26,13 @@
         tools:layout="@layout/fragment_developer_detail">
 
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            android:id="@+id/action_DeveloperDetailFragment_to_DeveloperSearchFragment"
             app:destination="@id/DeveloperSearchFragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
+        <argument android:name="developer"
+            app:argType="com.orhunkolgeli.capstone.Developer" />
     </fragment>
 </navigation>
