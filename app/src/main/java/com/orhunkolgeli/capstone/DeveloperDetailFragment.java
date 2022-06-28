@@ -115,6 +115,9 @@ public class DeveloperDetailFragment extends Fragment {
                 // Extract strings from the json object
                 String repo_name = jsonObject.getString("name");
                 String language = jsonObject.getString("language");
+                if (language.equals("null")) {
+                    continue;
+                }
                 String html_url = jsonObject.getString("html_url");
                 // Create a new TextView to put into linearLayoutRepos
                 TextView tvRepo = new TextView(getContext());
