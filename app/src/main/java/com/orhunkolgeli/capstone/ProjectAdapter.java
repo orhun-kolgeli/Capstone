@@ -87,15 +87,27 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             clProjectItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    NavHostFragment.findNavController(fragment)
-                            .navigate(
-                                    ProjectSearchFragmentDirections
-                                            .actionProjectSearchFragmentToProjectDetailFragment(
-                                                    project
-                                            )
-                            );
+                    NavHostFragment.findNavController(fragment).navigate(ProjectSearchFragmentDirections
+                                    .actionProjectSearchFragmentToProjectDetailFragment(project));
                 }
             });
+            setProjectTexts(project);
+            int darker_color = generateRandomDarkerColor();
+            // Set user's initial's background to random color
+            tvInitials.setBackgroundTintList(ColorStateList.valueOf(darker_color));
+            // Load image describing the project from Parse server
+            ParseFile image = project.getImage();
+            if (image != null) {
+                Glide.with(context)
+                        .load(image.getUrl())
+                        .into(ivProjectImage);
+            } else {
+                // No project image to show
+                ivProjectImage.setVisibility(View.GONE);
+            }
+        }
+
+        private void setProjectTexts(Project project) {
             // Display project type
             tvProjectType.setText(project.getType());
             // Display project description
@@ -109,24 +121,16 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             }
             tvUsername.setText(username);
             tvInitials.setText(username.substring(0,1).toUpperCase());
-            // Pick a random color
-            Random rnd = new Random();
-            int color = Color.argb(ALPHA,
-                    rnd.nextInt(DARK_COLOR_RGB_VALUE),
-                    rnd.nextInt(DARK_COLOR_RGB_VALUE),
-                    rnd.nextInt(DARK_COLOR_RGB_VALUE));
-            // Set user's initial's background to random color
-            tvInitials.setBackgroundTintList(ColorStateList.valueOf(color));
-            // Load image describing the project from Parse server
-            ParseFile image = project.getImage();
-            if (image != null) {
-                Glide.with(context)
-                        .load(image.getUrl())
-                        .into(ivProjectImage);
-            } else {
-                // No project image to show
-                ivProjectImage.setVisibility(View.GONE);
-            }
         }
+    }
+
+    private int generateRandomDarkerColor() {
+        // Pick a random color
+        Random rnd = new Random();
+        int color = Color.argb(ALPHA,
+                rnd.nextInt(DARK_COLOR_RGB_VALUE),
+                rnd.nextInt(DARK_COLOR_RGB_VALUE),
+                rnd.nextInt(DARK_COLOR_RGB_VALUE));
+        return color;
     }
 }
