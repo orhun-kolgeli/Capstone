@@ -62,4 +62,5 @@
     <string name="people_building_things">People building things</string>
     <string name="error_tying_project_to_account">Error tying project to your organization account</string>
     <string name="success_tying_project_to_account">Your project has been tied to your organization account.</string>
+    <string name="repositories">Repositories</string>
 </resources>

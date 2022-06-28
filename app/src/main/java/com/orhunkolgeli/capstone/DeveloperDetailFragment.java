@@ -2,17 +2,23 @@ package com.orhunkolgeli.capstone;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
+import android.util.Size;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -35,8 +41,8 @@ import okhttp3.Headers;
 
 public class DeveloperDetailFragment extends Fragment {
     public static final String BASE_URL = "https://api.github.com/users/%s/repos";
-    public static final int MAX_REPO_LINES = 5;
     public static final String TAG = "DeveloperDetailFragment";
+    public static final int MAX_REPOS_DISPLAYED = 20;
 
     private FragmentDeveloperDetailBinding binding;
 
@@ -92,35 +98,46 @@ public class DeveloperDetailFragment extends Fragment {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 JSONArray repos = json.jsonArray;
-                // Make the link to repo clickable
-                binding.tvRepos.setClickable(true);
-                binding.tvRepos.setLines(Math.min(MAX_REPO_LINES, repos.length()));
-                binding.tvRepos.setMovementMethod(LinkMovementMethod.getInstance());
-                for (int i = 0; i < repos.length(); i++) {
-                    try {
-                        JSONObject jsonObject = repos.getJSONObject(i);
-                        String repo_name = jsonObject.getString("name");
-                        Log.d(TAG, "Repo name: " + repo_name);
-                        String language = jsonObject.getString("language");
-                        if (language.equals("null")) {
-                            continue;
-                        }
-                        String html_url = jsonObject.getString("html_url");
-                        // Put a link into the repo name and list the main language used in the repo
-                        String reposText = String.format("<a href='%s'>%s</a> - %s<br/>",
-                                html_url, repo_name, language
-                        );
-                        binding.tvRepos.append(Html.fromHtml(reposText, HtmlCompat.FROM_HTML_MODE_LEGACY));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                createLinearLayoutFromJsonArray(repos);
             }
-
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
                 Log.e(TAG, "onFailure: " + throwable.toString());
             }
         });
+    }
+
+    private void createLinearLayoutFromJsonArray(JSONArray repos) {
+        int length = Math.min(MAX_REPOS_DISPLAYED, repos.length());
+        for (int i = 0; i < length; i++) {
+            try {
+                JSONObject jsonObject = repos.getJSONObject(i);
+                // Extract strings from the json object
+                String repo_name = jsonObject.getString("name");
+                String language = jsonObject.getString("language");
+                String html_url = jsonObject.getString("html_url");
+                // Create a new TextView to put into linearLayoutRepos
+                TextView tvRepo = new TextView(getContext());
+                tvRepo.setText(String.format("%s\n·\n%s", repo_name, language));
+                // Style the TextView
+                tvRepo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                tvRepo.setBackground(ResourcesCompat.getDrawable(getResources(),
+                        R.drawable.rounded_corners, null));
+                tvRepo.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                tvRepo.setTextColor(getResources().getColor(R.color.white, null));
+                // Take user to the repository on GitHub on click
+                tvRepo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(html_url));
+                        startActivity(i);
+                    }
+                });
+                // Put the TextView into the LinearLayout
+                binding.linearLayoutRepos.addView(tvRepo);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
