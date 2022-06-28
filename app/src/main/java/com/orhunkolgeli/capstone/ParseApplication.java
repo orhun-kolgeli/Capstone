@@ -1,6 +1,7 @@
 package com.orhunkolgeli.capstone;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -15,9 +16,10 @@ public class ParseApplication extends Application {
         ParseObject.registerSubclass(Developer.class);
 
         // Initialization
+        // Context context = getApplicationContext();
         Parse.initialize(new Parse.Configuration.Builder(this)
-                .applicationId("haljS0n1MTmYEfhdjaII0FE7rTZ9pBtUmFYqhN5W")
-                .clientKey("Jd2qrNUKX3l8Db42eXNFQVd0095fUVRWlk6NoKWH")
+                .applicationId(this.getString(R.string.application_id))
+                .clientKey(this.getString(R.string.client_key))
                 .server("https://parseapi.back4app.com")
                 .build()
         );

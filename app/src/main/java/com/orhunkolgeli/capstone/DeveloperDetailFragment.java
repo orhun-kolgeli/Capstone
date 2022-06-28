@@ -1,5 +1,6 @@
 package com.orhunkolgeli.capstone;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -27,15 +28,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 import okhttp3.Headers;
 
 public class DeveloperDetailFragment extends Fragment {
-    public static final String TOKEN = "token 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";
     public static final String BASE_URL = "https://api.github.com/users/%s/repos";
     public static final int MAX_REPO_LINES = 5;
-
+    public static final String TAG = "DeveloperDetailFragment";
 
     private FragmentDeveloperDetailBinding binding;
 
@@ -86,7 +87,7 @@ public class DeveloperDetailFragment extends Fragment {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         RequestHeaders headers = new RequestHeaders();
-        headers.put("Authorization", TOKEN);
+        headers.put("Authorization", requireContext().getString(R.string.github_access_token));
         client.get(String.format(BASE_URL, github_username), headers, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -99,6 +100,7 @@ public class DeveloperDetailFragment extends Fragment {
                     try {
                         JSONObject jsonObject = repos.getJSONObject(i);
                         String repo_name = jsonObject.getString("name");
+                        Log.d(TAG, "Repo name: " + repo_name);
                         String language = jsonObject.getString("language");
                         if (language.equals("null")) {
                             continue;
@@ -117,7 +119,7 @@ public class DeveloperDetailFragment extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-
+                Log.e(TAG, "onFailure: " + throwable.toString());
             }
         });
     }
