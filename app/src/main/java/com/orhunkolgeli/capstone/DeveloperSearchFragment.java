@@ -47,7 +47,7 @@ public class DeveloperSearchFragment extends Fragment {
         // Read in the developer profiles from database
         loadDeveloperProfiles();
 
-        return binding.getRoot();
+        return rootView;
 
     }
 

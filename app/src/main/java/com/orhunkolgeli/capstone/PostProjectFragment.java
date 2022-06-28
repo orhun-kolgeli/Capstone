@@ -70,28 +70,27 @@ public class PostProjectFragment extends Fragment {
                             Log.e(TAG, "Error while saving the project", e);
                             return;
                         }
-                        Toast.makeText(getActivity(), "Project saved successfully",
-                                Toast.LENGTH_SHORT).show();
-                        ParseUser currentUser = ParseUser.getCurrentUser();
-                        currentUser.put("project", project);
-                        currentUser.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e != null) { // exception thrown
-                                    Toast.makeText(getActivity(),
-                                            "Error tying project to your organization account",
-                                            Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                Toast.makeText(getActivity(),
-                                        "Your project has been tied to your organization account.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        Toast.makeText(getActivity(), "Project saved successfully", Toast.LENGTH_SHORT).show();
+                        tieProjectToOrgAccount(project);
                     }
                 });
                 NavHostFragment.findNavController(PostProjectFragment.this)
                         .navigate(R.id.action_postProjectFragment_to_DeveloperSearchFragment);
+            }
+        });
+    }
+
+    private void tieProjectToOrgAccount(Project project) {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.put("project", project);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) { // exception thrown
+                    Toast.makeText(getActivity(), R.string.error_tying_project_to_account, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), R.string.success_tying_project_to_account, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

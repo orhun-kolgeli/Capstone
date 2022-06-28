@@ -92,12 +92,8 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
                 @Override
                 public void onClick(View v) {
                     NavHostFragment.findNavController(fragment)
-                            .navigate(
-                                    DeveloperSearchFragmentDirections
-                                            .actionDeveloperSearchFragmentToDeveloperDetailFragment(
-                                                    developer
-                                            )
-                            );
+                            .navigate(DeveloperSearchFragmentDirections
+                                            .actionDeveloperSearchFragmentToDeveloperDetailFragment(developer));
                 }
             });
         }

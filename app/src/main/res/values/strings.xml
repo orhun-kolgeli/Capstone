@@ -60,4 +60,6 @@
     <string name="describe_your_project">Describe your project</string>
     <string name="project_type_e_g_android_ios">Project Type (e.g., Android, iOS, etc.)</string>
     <string name="people_building_things">People building things</string>
+    <string name="error_tying_project_to_account">Error tying project to your organization account</string>
+    <string name="success_tying_project_to_account">Your project has been tied to your organization account.</string>
 </resources>
