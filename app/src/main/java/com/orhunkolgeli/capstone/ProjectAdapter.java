@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -67,6 +69,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
         TextView tvProjectDescription;
         ImageView ivProjectImage;
         TextView tvInitials;
+        ConstraintLayout clProjectItem;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvProjectType = itemView.findViewById(R.id.tvProjectType);
@@ -74,10 +77,11 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             ivProjectImage = itemView.findViewById(R.id.ivProjectImage);
             tvInitials = itemView.findViewById(R.id.tvInitials);
             tvUsername = itemView.findViewById(R.id.tvUsername);
+            clProjectItem = itemView.findViewById(R.id.clProjectItem);
         }
 
         public void bind(Project project) {
-            ivProjectImage.setOnClickListener(new View.OnClickListener() {
+            clProjectItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Bundle result = new Bundle();
@@ -116,6 +120,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
                         .load(image.getUrl())
                         .into(ivProjectImage);
             } else {
+                // No project image to show
                 ivProjectImage.setVisibility(View.GONE);
             }
         }

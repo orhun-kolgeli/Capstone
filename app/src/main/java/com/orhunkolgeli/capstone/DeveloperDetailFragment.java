@@ -1,19 +1,41 @@
 package com.orhunkolgeli.capstone;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.RequestHeaders;
+import com.codepath.asynchttpclient.RequestParams;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.orhunkolgeli.capstone.databinding.FragmentDeveloperDetailBinding;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Random;
+
+import okhttp3.Headers;
+
 public class DeveloperDetailFragment extends Fragment {
+    public static final String TOKEN = "token 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";
+    public static final String BASE_URL = "https://api.github.com/users/%s/repos";
+    public static final int MAX_REPO_LINES = 5;
+
 
     private FragmentDeveloperDetailBinding binding;
 
@@ -51,6 +73,7 @@ public class DeveloperDetailFragment extends Fragment {
                 }
             }
         });
+        getGitHubRepos(developer.getGitHub());
     }
 
     @Override
@@ -59,4 +82,43 @@ public class DeveloperDetailFragment extends Fragment {
         binding = null;
     }
 
+    private void getGitHubRepos(String github_username) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        RequestHeaders headers = new RequestHeaders();
+        headers.put("Authorization", TOKEN);
+        client.get(String.format(BASE_URL, github_username), headers, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                JSONArray repos = json.jsonArray;
+                // Make the link to repo clickable
+                binding.tvRepos.setClickable(true);
+                binding.tvRepos.setLines(Math.min(MAX_REPO_LINES, repos.length()));
+                binding.tvRepos.setMovementMethod(LinkMovementMethod.getInstance());
+                for (int i = 0; i < repos.length(); i++) {
+                    try {
+                        JSONObject jsonObject = repos.getJSONObject(i);
+                        String repo_name = jsonObject.getString("name");
+                        String language = jsonObject.getString("language");
+                        if (language.equals("null")) {
+                            continue;
+                        }
+                        String html_url = jsonObject.getString("html_url");
+                        // Put a link into the repo name and list the main language used in the repo
+                        String reposText = String.format("<a href='%s'>%s</a> - %s<br/>",
+                                html_url, repo_name, language
+                        );
+                        binding.tvRepos.append(Html.fromHtml(reposText, HtmlCompat.FROM_HTML_MODE_LEGACY));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+
+            }
+        });
+    }
 }
