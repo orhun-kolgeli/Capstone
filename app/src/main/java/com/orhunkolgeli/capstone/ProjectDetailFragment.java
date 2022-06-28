@@ -43,7 +43,7 @@ public class ProjectDetailFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Project project = getArguments().getParcelable("bundleKey");
+        Project project = getArguments().getParcelable("project");
         String orgName = project.getUser().getString("name");
         String type = project.getType();
         String description = project.getDescription();

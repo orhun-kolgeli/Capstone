@@ -37,10 +37,13 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     public static final int ALPHA = 255;
     private Context context;
     private List<Project> projects;
+    Fragment fragment;
 
-    public ProjectAdapter(Context context, List<Project> projects) {
+    public ProjectAdapter(Context context, List<Project> projects, Fragment fragment) {
         this.context = context;
         this.projects = projects;
+        this.fragment = fragment;
+
     }
 
     @NonNull
@@ -84,12 +87,13 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             clProjectItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Bundle result = new Bundle();
-                    result.putParcelable("bundleKey", project);
-                    FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
-                    NavHostFragment navHostFragment = (NavHostFragment) fragmentManager.findFragmentById(R.id.nav_host_fragment_content_main);
-                    NavController navController = navHostFragment.getNavController();
-                    navController.navigate(R.id.action_ProjectSearchFragment_to_ProjectDetailFragment, result);
+                    NavHostFragment.findNavController(fragment)
+                            .navigate(
+                                    ProjectSearchFragmentDirections
+                                            .actionProjectSearchFragmentToProjectDetailFragment(
+                                                    project
+                                            )
+                            );
                 }
             });
             // Display project type

@@ -41,8 +41,8 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
         <argument
-            android:name="test"
-            app:argType="string" />
+            android:name="project"
+            app:argType="com.orhunkolgeli.capstone.Project" />
     </fragment>
     <fragment
         android:id="@+id/setupProfileFragment"

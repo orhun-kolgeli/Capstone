@@ -38,7 +38,7 @@ public class ProjectSearchFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // Create an adapter
         allProjects = new ArrayList<>();
-        adapter = new ProjectAdapter(getActivity(), allProjects);
+        adapter = new ProjectAdapter(getActivity(), allProjects, ProjectSearchFragment.this);
         // Set adapter
         recyclerView.setAdapter(adapter);
         // Set item animator to DefaultAnimator
@@ -46,7 +46,7 @@ public class ProjectSearchFragment extends Fragment {
         // Read in the projects from database
         readProjects();
 
-        return binding.getRoot();
+        return rootView;
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
