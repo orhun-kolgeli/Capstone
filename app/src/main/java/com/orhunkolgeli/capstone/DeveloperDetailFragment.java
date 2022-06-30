@@ -134,6 +134,7 @@ public class DeveloperDetailFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+        binding.pbLoadingRepos.setVisibility(View.GONE);
     }
 
     private void sendNotificationtoDeveloper(@NonNull Developer developer) {
