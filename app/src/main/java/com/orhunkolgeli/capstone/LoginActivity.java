@@ -16,6 +16,7 @@ import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.codepath.asynchttpclient.callback.TextHttpResponseHandler;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
@@ -119,7 +120,6 @@ public class LoginActivity extends AppCompatActivity {
         ParseInstallation installation = ParseInstallation.getCurrentInstallation();
         installation.put("user", ParseUser.getCurrentUser());
         installation.saveInBackground();
-        // For development purposes
         Log.i(TAG, "Logged in user id: " + ParseUser.getCurrentUser().getObjectId());
     }
 

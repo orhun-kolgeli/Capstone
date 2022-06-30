@@ -20,9 +20,6 @@ import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class ProjectDetailFragment extends Fragment {
 
     private static final String TAG = "ProjectDetailFragment";
@@ -54,7 +51,7 @@ public class ProjectDetailFragment extends Fragment {
             public void onClick(View v) {
                 //sendApplicationViaEmail(project)
                 // Pull out old code into another function for possible future use
-                sendNotification(project);
+                sendNotificationtoOrganization(project);
             }
         });
     }
@@ -70,10 +67,9 @@ public class ProjectDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void sendNotification(@NonNull Project project) {
+    private void sendNotificationtoOrganization(@NonNull Project project) {
         ParseUser projectOwner = project.getUser();
         String owner_id = projectOwner.getObjectId();
-        // For development purposes
         Log.i(TAG, "Sending notification to the user with the following id: " + owner_id);
         // Make a query where the user is the owner of the project
         ParseQuery<ParseUser> userQuery = ParseUser.getQuery();

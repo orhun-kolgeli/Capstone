@@ -28,6 +28,10 @@ import com.codepath.asynchttpclient.RequestHeaders;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.orhunkolgeli.capstone.databinding.FragmentDeveloperDetailBinding;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,19 +69,7 @@ public class DeveloperDetailFragment extends Fragment {
         binding.btnInvite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                String email = developer.getUser().getString("emailAddress");
-                intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {email} );
-                intent.putExtra(intent.EXTRA_SUBJECT, "Invitation to Interview");
-                intent.putExtra(android.content.Intent.EXTRA_TEXT,
-                        "Hi " + full_name + ",\n\n");
-                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                    getActivity().startActivity(Intent.createChooser(intent, "Send Email using:"));
-                }
-                else {
-                    Toast.makeText(getActivity(), "You don't have any email apps.", Toast.LENGTH_SHORT).show();
-                }
+                sendNotificationtoDeveloper(developer);
             }
         });
         getGitHubRepos(developer.getGitHub());
@@ -128,7 +120,7 @@ public class DeveloperDetailFragment extends Fragment {
                         R.drawable.rounded_corners, null));
                 tvRepo.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
                 tvRepo.setTextColor(getResources().getColor(R.color.white, null));
-                // Take user to the repository on GitHub on click
+                // Take user to the repository on GitHub upon click
                 tvRepo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -142,5 +134,25 @@ public class DeveloperDetailFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void sendNotificationtoDeveloper(@NonNull Developer developer) {
+        ParseUser developerUser = developer.getUser();
+        String developer_user_id = developerUser.getObjectId();
+        Log.i(TAG, "Sending notification to the user with the following id: " + developer_user_id);
+        // Make a query where the user is the developer being invited
+        ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+        userQuery.whereEqualTo("objectId", developer_user_id);
+
+        // Find devices associated with this user
+        ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
+        pushQuery.whereMatchesQuery("user", userQuery);
+
+        // Send push notification to the developer
+        ParsePush push = new ParsePush();
+        push.setQuery(pushQuery);
+        push.setMessage(ParseUser.getCurrentUser().getString("name") +
+                " would like you to consider their project!");
+        push.sendInBackground();
     }
 }
