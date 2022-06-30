@@ -18,6 +18,9 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.codepath.asynchttpclient.callback.TextHttpResponseHandler;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -104,13 +107,24 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void launchDeveloperView() {
+        associateDevice();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         // Prevent user from going back to LoginActivity with back button
         finish();
     }
 
+    private void associateDevice() {
+        // Associate the device with a user
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put("user", ParseUser.getCurrentUser());
+        installation.saveInBackground();
+        // For development purposes
+        Log.i(TAG, "Logged in user id: " + ParseUser.getCurrentUser().getObjectId());
+    }
+
     private void launchOrganizationView() {
+        associateDevice();
         Intent intent = new Intent(this, OrganizationActivity.class);
         startActivity(intent);
         // Prevent user from going back to LoginActivity with back button

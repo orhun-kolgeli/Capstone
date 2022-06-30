@@ -5,6 +5,12 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @ParseClassName("Project")
 public class Project extends ParseObject {
     public static final String KEY_TYPE = "type";
@@ -43,5 +49,4 @@ public class Project extends ParseObject {
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
     }
-
 }
