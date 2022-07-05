@@ -1,5 +1,6 @@
 package com.orhunkolgeli.capstone;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,15 +11,23 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.orhunkolgeli.capstone.databinding.FragmentProjectDetailBinding;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseInstallation;
+import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 public class ProjectDetailFragment extends Fragment {
 
@@ -49,9 +58,7 @@ public class ProjectDetailFragment extends Fragment {
         binding.btnApply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //sendApplicationViaEmail(project)
-                // Pull out old code into another function for possible future use
-                sendNotificationtoOrganization(project);
+                onClickApply(project);
             }
         });
     }
@@ -67,7 +74,27 @@ public class ProjectDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    private void sendNotificationtoOrganization(@NonNull Project project) {
+    private void onClickApply(Project project) {
+        ParseObject developerObject = ParseUser.getCurrentUser().getParseObject("developer");
+        // If the user has no developer account, inform the user and return
+        if (developerObject == null) {
+            showNoDeveloperAccountAlert();
+            return;
+        }
+        // Send a push notification to the organization
+        sendNotificationToOrganization(project);
+        // Get the developer profile
+        Developer developer = null;
+        try {
+            developer = (Developer) developerObject.fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        // Add the developer to the pool of applicants
+        project.addApplicant(developer);
+    }
+
+    private void sendNotificationToOrganization(@NonNull Project project) {
         ParseUser projectOwner = project.getUser();
         String owner_id = projectOwner.getObjectId();
         Log.i(TAG, "Sending notification to the user with the following id: " + owner_id);
@@ -102,5 +129,27 @@ public class ProjectDetailFragment extends Fragment {
         else {
             Toast.makeText(getActivity(), "You don't have any email apps.", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void showNoDeveloperAccountAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle(R.string.dev_profile_needed_to_apply);
+        builder.setMessage(R.string.set_up_profile_now);
+        builder.setIcon(R.drawable.icon);
+        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Navigation.findNavController(binding.getRoot())
+                        .navigate(R.id.action_ProjectDetailFragment_to_setupProfileFragment);
+            }
+        });
+        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

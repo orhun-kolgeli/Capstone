@@ -22,7 +22,7 @@
     <string name="log_in">Log in</string>
     <string name="username">Username</string>
     <string name="logo">Logo</string>
-    <string name="loading_projects">Loading projects...</string>
+    <string name="loading_projects">Loading projects…</string>
     <string name="skills">Skills</string>
     <string name="save">Save</string>
     <string name="bio">Bio</string>
@@ -48,7 +48,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="loading_developer_profiles">Loading developer profiles...</string>
+    <string name="loading_developer_profiles">Loading developer profiles…</string>
     <string name="o">O</string>
     <string name="github_logo">GitHub Logo</string>
     <string name="error_signout">There was an error signing out.</string>
@@ -63,4 +63,8 @@
     <string name="error_tying_project_to_account">Error tying project to your organization account</string>
     <string name="success_tying_project_to_account">Your project has been tied to your organization account.</string>
     <string name="repositories">Repositories</string>
+    <string name="dev_profile_needed_to_apply">You need a developer profile to apply</string>
+    <string name="set_up_profile_now">Would you like to set up your profile now?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

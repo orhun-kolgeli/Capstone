@@ -1,27 +1,18 @@
 package com.orhunkolgeli.capstone;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
-import android.util.Size;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.core.text.HtmlCompat;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestHeaders;
@@ -36,10 +27,6 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Random;
 
 import okhttp3.Headers;
 
@@ -69,7 +56,7 @@ public class DeveloperDetailFragment extends Fragment {
         binding.btnInvite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendNotificationtoDeveloper(developer);
+                sendNotificationToDeveloper(developer);
             }
         });
         getGitHubRepos(developer.getGitHub());
@@ -137,7 +124,7 @@ public class DeveloperDetailFragment extends Fragment {
         binding.pbLoadingRepos.setVisibility(View.GONE);
     }
 
-    private void sendNotificationtoDeveloper(@NonNull Developer developer) {
+    private void sendNotificationToDeveloper(@NonNull Developer developer) {
         ParseUser developerUser = developer.getUser();
         String developer_user_id = developerUser.getObjectId();
         Log.i(TAG, "Sending notification to the user with the following id: " + developer_user_id);
