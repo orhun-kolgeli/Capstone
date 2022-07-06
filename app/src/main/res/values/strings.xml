@@ -67,4 +67,7 @@
     <string name="set_up_profile_now">Would you like to set up your profile now?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="review">Review</string>
+    <string name="extend_offer">Extend offer</string>
+    <string name="remove">Remove</string>
 </resources>
