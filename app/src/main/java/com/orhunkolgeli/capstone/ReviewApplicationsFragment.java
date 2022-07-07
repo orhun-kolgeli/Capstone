@@ -61,7 +61,7 @@ public class ReviewApplicationsFragment extends Fragment {
             @Override
             public void done(List<Developer> developers, ParseException e) {
                 if (e != null) {
-                    Toast.makeText(getContext(), "Error reading applicants from the database", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.applicant_load_error, Toast.LENGTH_SHORT).show();
                 }
                 applicants.addAll(developers);
                 adapter.notifyDataSetChanged();

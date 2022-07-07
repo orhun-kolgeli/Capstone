@@ -70,4 +70,5 @@
     <string name="review">Review</string>
     <string name="extend_offer">Extend offer</string>
     <string name="remove">Remove</string>
+    <string name="applicant_load_error">Error reading applicants from the database</string>
 </resources>
