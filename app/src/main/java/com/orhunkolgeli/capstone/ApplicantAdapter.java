@@ -65,17 +65,11 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.View
         }
 
         public void bind(Developer developer) {
+            tvFullName.setText(developer.getFullName());
             tvSkills.setText(developer.getSkills());
             tvBio.setText(developer.getBio());
             tvGitHub.setText(developer.getGitHub());
-            String full_name = "";
-            try {
-                full_name = developer.getUser().fetchIfNeeded().getString("name");
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            tvDevInitials.setText(full_name.substring(0,1).toUpperCase());
-            tvFullName.setText(full_name);
+            tvDevInitials.setText(developer.getFullName().substring(0,1));
         }
     }
 }

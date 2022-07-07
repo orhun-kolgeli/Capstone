@@ -72,4 +72,6 @@
     <string name="remove">Remove</string>
     <string name="applicant_load_error">Error reading applicants from the database</string>
     <string name="fill_all_fields">Please fill all the fields.</string>
+    <string name="profile_save_success">Profile saved successfully</string>
+    <string name="error_tying_profile_to_account">Error tying profile to your account</string>
 </resources>

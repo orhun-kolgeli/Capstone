@@ -48,9 +48,8 @@ public class DeveloperDetailFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Developer developer = getArguments().getParcelable("developer");
         binding.tvBio2.setText(developer.getBio());
-        String full_name = developer.getUser().getString("name");
-        binding.tvFullName2.setText(full_name);
-        binding.tvDevInitials2.setText(full_name.substring(0,1).toUpperCase());
+        binding.tvFullName2.setText(developer.getFullName());
+        binding.tvDevInitials2.setText(developer.getFullName().substring(0,1));
         binding.tvSkills2.setText(developer.getSkills());
         binding.tvGitHub2.setText(developer.getGitHub());
         binding.btnInvite.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +91,7 @@ public class DeveloperDetailFragment extends Fragment {
             try {
                 JSONObject jsonObject = repos.getJSONObject(i);
                 // Extract strings from the json object
-                String repo_name = jsonObject.getString("name");
+                String repoName = jsonObject.getString("name");
                 String language = jsonObject.getString("language");
                 if (language.equals("null")) {
                     continue;
@@ -100,7 +99,7 @@ public class DeveloperDetailFragment extends Fragment {
                 String html_url = jsonObject.getString("html_url");
                 // Create a new TextView to put into linearLayoutRepos
                 TextView tvRepo = new TextView(getContext());
-                tvRepo.setText(String.format("%s\n·\n%s", repo_name, language));
+                tvRepo.setText(String.format("%s\n·\n%s", repoName, language));
                 // Style the TextView
                 tvRepo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 tvRepo.setBackground(ResourcesCompat.getDrawable(getResources(),

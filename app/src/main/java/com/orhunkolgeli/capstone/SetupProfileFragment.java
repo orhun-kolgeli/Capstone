@@ -29,6 +29,7 @@ import com.parse.SaveCallback;
 
 public class SetupProfileFragment extends Fragment {
     // the fragment initialization parameters
+    public static final String KEY_NAME = "name";
     public static final String TAG = "SetupProfileFragment";
     public static final String[] suggestedSkills = {
             "iOS", "Objective-C", "Swift", "Xcode", "Git", "GitHub",
@@ -92,6 +93,7 @@ public class SetupProfileFragment extends Fragment {
                 developer.setSkills(mactvSkills.getText().toString());
                 // Assign saved profile to the current user
                 developer.setUser(ParseUser.getCurrentUser());
+                developer.setFullName(ParseUser.getCurrentUser().getString(KEY_NAME));
                 developer.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -99,28 +101,25 @@ public class SetupProfileFragment extends Fragment {
                             Log.e(TAG, "Error while saving the profile", e);
                             return;
                         }
-                        Toast.makeText(getActivity(), "Profile saved successfully",
-                                Toast.LENGTH_SHORT).show();
-                        ParseUser currentUser = ParseUser.getCurrentUser();
-                        currentUser.put("developer", developer);
-                        currentUser.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                if (e != null) { // exception thrown
-                                    Toast.makeText(getActivity(),
-                                            "Error tying profile to your account",
-                                            Toast.LENGTH_SHORT).show();
-                                    return;
-                                }
-                                Toast.makeText(getActivity(),
-                                        "Your developer profile has been tied to your account.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        Toast.makeText(getActivity(), R.string.profile_save_success, Toast.LENGTH_SHORT).show();
+                        tieDeveloperProfileToAccount(developer);
                     }
                 });
                 NavHostFragment.findNavController(SetupProfileFragment.this)
                         .navigate(R.id.action_setupProfileFragment_to_ProjectSearchFragment);
+            }
+        });
+    }
+
+    private void tieDeveloperProfileToAccount(Developer developer) {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.put("developer", developer);
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) { // exception thrown
+                    Toast.makeText(getContext(), R.string.error_tying_profile_to_account, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
