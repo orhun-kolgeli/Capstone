@@ -81,6 +81,10 @@ public class SetupProfileFragment extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (etBio.getText().toString().isEmpty() || etGitHub.getText().toString().isEmpty() || mactvSkills.getText().toString().isEmpty()) {
+                    Toast.makeText(getContext(), R.string.fill_all_fields, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 // Create new Developer object and set its fields
                 Developer developer = new Developer();
                 developer.setBio(etBio.getText().toString());
