@@ -31,6 +31,8 @@ public class FindDeveloperFragment extends Fragment {
     private FragmentFindDeveloperBinding binding;
     List<Developer> allDevelopers;
     DeveloperAdapter adapter;
+    public static final String KEY_DEVELOPER = "Developer";
+    public static final String KEY_CREATED_AT = "createdAt";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,16 +62,16 @@ public class FindDeveloperFragment extends Fragment {
     }
 
     private void loadDeveloperProfiles() {
-        ParseQuery<Developer> query = ParseQuery.getQuery("Developer");
+        ParseQuery<Developer> query = ParseQuery.getQuery(KEY_DEVELOPER);
         query.setLimit(5);
-        query.addDescendingOrder("createdAt");
+        query.addDescendingOrder(KEY_CREATED_AT);
         // Search for ParseObject Developer
         // Query will invoke the FindCallback with either the object or the exception thrown
         query.findInBackground(new FindCallback<Developer>() {
             @Override
             public void done(List<Developer> developers, ParseException e) {
                 if (e != null) {
-                    Toast.makeText(getContext(), "Error reading developer profiles from the database",
+                    Toast.makeText(getContext(), R.string.error_loading_developer_profiles,
                             Toast.LENGTH_SHORT).show();
                     return;
                 }
