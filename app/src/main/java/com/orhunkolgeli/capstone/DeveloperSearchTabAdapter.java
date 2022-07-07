@@ -6,6 +6,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class DeveloperSearchTabAdapter extends FragmentStateAdapter {
     public static final int ITEM_COUNT = 2;
+    private FindDeveloperFragment findDeveloperFragment;
+    private ReviewApplicationsFragment reviewApplicationsFragment;
+
     public DeveloperSearchTabAdapter(Fragment fragment) {
         super(fragment);
     }
@@ -14,9 +17,15 @@ public class DeveloperSearchTabAdapter extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         if (position == 0) {
-            return new FindDeveloperFragment();
+            if (findDeveloperFragment == null) {
+                findDeveloperFragment = new FindDeveloperFragment();
+            }
+            return findDeveloperFragment;
         } else {
-            return new ReviewApplicationsFragment();
+            if (reviewApplicationsFragment == null) {
+                reviewApplicationsFragment = new ReviewApplicationsFragment();
+            }
+            return reviewApplicationsFragment;
         }
     }
 
