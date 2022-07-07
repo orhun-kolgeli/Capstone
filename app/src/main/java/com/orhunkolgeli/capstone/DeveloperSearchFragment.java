@@ -47,6 +47,7 @@ public class DeveloperSearchFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tabLayout);
         developerSearchTabAdapter = new DeveloperSearchTabAdapter(this);
         viewPager.setAdapter(developerSearchTabAdapter);
+        viewPager.setPageTransformer(new ZoomOutPageTransformer());
         int[] tabTitles = {R.string.invite, R.string.review};
         // Create a TabLayoutMediator to link the TabLayout to the ViewPager2 and attach it
         new TabLayoutMediator(tabLayout, viewPager,
