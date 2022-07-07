@@ -46,7 +46,7 @@ public class ReviewApplicationsFragment extends Fragment {
             e.printStackTrace();
         }
         applicants = new ArrayList<Developer>();
-        adapter = new ApplicantAdapter(getContext(), applicants, getParentFragment());
+        adapter = new ApplicantAdapter(getContext(), applicants);
         // Set adapter
         recyclerView.setAdapter(adapter);
         // Set item animator to DefaultAnimator

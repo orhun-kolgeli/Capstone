@@ -67,8 +67,7 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
         TextView tvDevInitials;
         TextView tvFullName;
         ConstraintLayout clDeveloperItem;
-        Button btnExtendOffer;
-        Button btnRemoveApplicant;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,8 +77,6 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
             tvDevInitials = itemView.findViewById(R.id.tvDevInitials);
             tvFullName = itemView.findViewById(R.id.tvFullName);
             clDeveloperItem = itemView.findViewById(R.id.clDeveloperItem);
-            btnExtendOffer = itemView.findViewById(R.id.btnExtendOffer);
-            btnRemoveApplicant = itemView.findViewById(R.id.btnRemoveApplicant);
         }
 
         public void bind(Developer developer) {
@@ -94,21 +91,14 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
             }
             tvDevInitials.setText(full_name.substring(0,1).toUpperCase());
             tvFullName.setText(full_name);
-            String finalFull_name = full_name;
-            if (clDeveloperItem != null) {
-                clDeveloperItem.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        NavHostFragment.findNavController(fragment)
-                                .navigate(DeveloperSearchFragmentDirections
-                                        .actionDeveloperSearchFragmentToDeveloperDetailFragment(developer));
-                    }
-                });
-            }
-            setApplicantOnClickListeners(btnExtendOffer, btnRemoveApplicant, developer);
+            clDeveloperItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavHostFragment.findNavController(fragment)
+                            .navigate(DeveloperSearchFragmentDirections
+                                    .actionDeveloperSearchFragmentToDeveloperDetailFragment(developer));
+                }
+            });
         }
-    }
-
-    public void setApplicantOnClickListeners(Button btnExtendOffer, Button btnRemoveApplicant, Developer developer) {
     }
 }

@@ -20,40 +20,62 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-public class ApplicantAdapter extends DeveloperAdapter {
+public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.ViewHolder> {
+    private Context context;
+    private List<Developer> applicants;
 
-    public ApplicantAdapter(Context context, List<Developer> developers, Fragment fragment) {
-        super(context, developers, fragment);
+    public ApplicantAdapter(Context context, List<Developer> applicants) {
+        this.context = context;
+        this.applicants = applicants;
     }
-
+    
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_applicant, parent, false);
+    public ApplicantAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.item_developer, parent, false);
         return new ApplicantAdapter.ViewHolder(view);
     }
 
     @Override
-    public void setApplicantOnClickListeners(Button btnExtendOffer, Button btnRemoveApplicant, Developer applicant) {
-        btnExtendOffer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(v.getContext(), "TODO", Toast.LENGTH_SHORT).show();
+    public void onBindViewHolder(@NonNull ApplicantAdapter.ViewHolder holder, int position) {
+        Developer developer = applicants.get(position);
+        // Bind the project data to the view elements
+        holder.bind(developer);
+    }
+
+    @Override
+    public int getItemCount() {
+        return applicants.size();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvSkills;
+        TextView tvBio;
+        TextView tvGitHub;
+        TextView tvDevInitials;
+        TextView tvFullName;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            tvSkills = itemView.findViewById(R.id.tvSkills);
+            tvBio = itemView.findViewById(R.id.tvBio);
+            tvGitHub = itemView.findViewById(R.id.tvGitHub);
+            tvDevInitials = itemView.findViewById(R.id.tvDevInitials);
+            tvFullName = itemView.findViewById(R.id.tvFullName);
+        }
+
+        public void bind(Developer developer) {
+            tvSkills.setText(developer.getSkills());
+            tvBio.setText(developer.getBio());
+            tvGitHub.setText(developer.getGitHub());
+            String full_name = "";
+            try {
+                full_name = developer.getUser().fetchIfNeeded().getString("name");
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        });
-        btnRemoveApplicant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Project project = null;
-                try {
-                    project = ParseUser.getCurrentUser().getParseObject("project").fetchIfNeeded();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if (project != null) {
-                    project.removeApplicant(applicant);
-                }
-            }
-        });
+            tvDevInitials.setText(full_name.substring(0,1).toUpperCase());
+            tvFullName.setText(full_name);
+        }
     }
 }
