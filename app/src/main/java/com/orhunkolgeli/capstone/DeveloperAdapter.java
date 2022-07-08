@@ -52,7 +52,7 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
     public void onBindViewHolder(@NonNull DeveloperAdapter.ViewHolder holder, int position) {
         Developer developer = developers.get(position);
         // Bind the project data to the view elements
-        holder.bind(developer);
+        holder.bind(developer, position);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
             clDeveloperItem = itemView.findViewById(R.id.clDeveloperItem);
         }
 
-        public void bind(Developer developer) {
+        public void bind(Developer developer, int position) {
             tvFullName.setText(developer.getFullName());
             tvSkills.setText(developer.getSkills());
             tvBio.setText(developer.getBio());
@@ -90,7 +90,8 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
                 public void onClick(View v) {
                     NavHostFragment.findNavController(fragment)
                             .navigate(DeveloperSearchFragmentDirections
-                                    .actionDeveloperSearchFragmentToDeveloperDetailFragment(developer));
+                                    .actionDeveloperSearchFragmentToDeveloperDetailFragment(
+                                            developer, DeveloperDetailFragment.DeveloperCategory.DEVELOPER, position));
                 }
             });
         }

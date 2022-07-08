@@ -3,9 +3,11 @@ package com.orhunkolgeli.capstone;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,12 +30,16 @@ public class ReviewApplicationsFragment extends Fragment {
     private FragmentReviewApplicationsBinding binding;
     List<Developer> applicants;
     ApplicantAdapter adapter;
+    View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (rootView != null) {
+            return rootView;
+        }
         // Inflate the layout for this fragment
         binding = FragmentReviewApplicationsBinding.inflate(inflater, container, false);
-        View rootView = binding.getRoot();
+        rootView = binding.getRoot();
         // Get a reference to recyclerView
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rvApplicants);
         // Set layoutManger
@@ -46,14 +52,40 @@ public class ReviewApplicationsFragment extends Fragment {
             e.printStackTrace();
         }
         applicants = new ArrayList<Developer>();
-        adapter = new ApplicantAdapter(getContext(), applicants);
+        adapter = new ApplicantAdapter(getContext(), applicants, ReviewApplicationsFragment.this);
         // Set adapter
         recyclerView.setAdapter(adapter);
         // Set item animator to DefaultAnimator
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         // Read in the applicants from database
         loadApplicants(project);
+        setUpRefresh(project);
         return rootView;
+    }
+
+    private void setUpRefresh(Project project) {
+        binding.swipeContainerApplicant.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                applicants.clear();
+                loadApplicants(project);
+                // Signal refresh has finished
+                binding.swipeContainerApplicant.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        binding.swipeContainerApplicant.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (applicants.isEmpty()) {
+            binding.tvNothingFound.setVisibility(View.VISIBLE);
+        }
     }
 
     private void loadApplicants(Project project) {

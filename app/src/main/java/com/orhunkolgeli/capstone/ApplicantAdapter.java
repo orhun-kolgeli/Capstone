@@ -19,20 +19,33 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.ViewHolder> {
     private Context context;
     private List<Developer> applicants;
+    Fragment fragment;
+    protected static RemoveCallback removeCallback;
 
-    public ApplicantAdapter(Context context, List<Developer> applicants) {
+    public ApplicantAdapter(Context context, List<Developer> applicants, Fragment fragment) {
         this.context = context;
         this.applicants = applicants;
+        this.fragment = fragment;
+        removeCallback = new RemoveCallback() {
+            @Override
+            public void onActionRemove(int position) {
+                applicants.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, getItemCount());
+
+            }
+        };
     }
     
     @NonNull
     @Override
     public ApplicantAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_developer, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_applicant, parent, false);
         return new ApplicantAdapter.ViewHolder(view);
     }
 
@@ -40,7 +53,7 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.View
     public void onBindViewHolder(@NonNull ApplicantAdapter.ViewHolder holder, int position) {
         Developer developer = applicants.get(position);
         // Bind the project data to the view elements
-        holder.bind(developer);
+        holder.bind(developer, position);
     }
 
     @Override
@@ -54,6 +67,7 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.View
         TextView tvGitHub;
         TextView tvDevInitials;
         TextView tvFullName;
+        ConstraintLayout clApplicant;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,14 +76,24 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.View
             tvGitHub = itemView.findViewById(R.id.tvGitHub);
             tvDevInitials = itemView.findViewById(R.id.tvDevInitials);
             tvFullName = itemView.findViewById(R.id.tvFullName);
+            clApplicant = itemView.findViewById(R.id.clApplicant);
         }
 
-        public void bind(Developer developer) {
+        public void bind(Developer developer, int position) {
             tvFullName.setText(developer.getFullName());
             tvSkills.setText(developer.getSkills());
             tvBio.setText(developer.getBio());
             tvGitHub.setText(developer.getGitHub());
             tvDevInitials.setText(developer.getFullName().substring(0,1));
+            clApplicant.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    NavHostFragment.findNavController(fragment)
+                            .navigate(DeveloperSearchFragmentDirections
+                                    .actionDeveloperSearchFragmentToDeveloperDetailFragment(
+                                            developer, DeveloperDetailFragment.DeveloperCategory.APPLICANT, position));
+                }
+            });
         }
     }
 }

@@ -75,4 +75,8 @@
     <string name="profile_save_success">Profile saved successfully</string>
     <string name="error_tying_profile_to_account">Error tying profile to your account</string>
     <string name="error_loading_developer_profiles">Error reading developer profiles from the database</string>
+    <string name="review_application">Review an application</string>
+    <string name="you_already_applied">You\'ve already applied</string>
+    <string name="application_received">Your application has been received!</string>
+    <string name="you_currently_have_no_applications">You currently have no applications</string>
 </resources>
