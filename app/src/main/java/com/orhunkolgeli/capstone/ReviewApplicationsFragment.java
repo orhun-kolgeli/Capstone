@@ -83,7 +83,7 @@ public class ReviewApplicationsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (applicants.isEmpty()) {
+        if (adapter.getItemCount() == 0) {
             binding.tvNothingFound.setVisibility(View.VISIBLE);
         }
     }
