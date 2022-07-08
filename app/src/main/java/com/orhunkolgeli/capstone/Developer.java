@@ -1,6 +1,8 @@
 package com.orhunkolgeli.capstone;
 
+import com.parse.GetCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -13,6 +15,7 @@ public class Developer extends ParseObject {
     public static final String KEY_GITHUB = "github";
     public static final String KEY_SKILLS = "skills";
     public static final String KEY_USER = "user";
+    public static final String KEY_FULL_NAME = "fullName";
 
     public String getBio() {
         return getString(KEY_BIO);
@@ -44,5 +47,13 @@ public class Developer extends ParseObject {
 
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
+    }
+
+    public void setFullName(String fullName) {
+        put(KEY_FULL_NAME, fullName);
+    }
+
+    public String getFullName() {
+        return getString(KEY_FULL_NAME);
     }
 }

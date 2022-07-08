@@ -2,11 +2,13 @@ package com.orhunkolgeli.capstone;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.orhunkolgeli.capstone.databinding.FragmentProjectDetailBinding;
+import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -32,6 +35,8 @@ import java.util.List;
 public class ProjectDetailFragment extends Fragment {
 
     private static final String TAG = "ProjectDetailFragment";
+    public static final String OBJECT_ID = "objectId";
+    public static final String USER = "user";
     private FragmentProjectDetailBinding binding;
 
     @Override
@@ -55,10 +60,22 @@ public class ProjectDetailFragment extends Fragment {
                     .load(image.getUrl())
                     .into(binding.ivProjectImg);
         }
-        binding.btnApply.setOnClickListener(new View.OnClickListener() {
+        project.getApplicants().getQuery().whereEqualTo("user", ParseUser.getCurrentUser()).countInBackground(new CountCallback() {
             @Override
-            public void onClick(View v) {
-                onClickApply(project);
+            public void done(int count, ParseException e) {
+                binding.btnApply.setVisibility(View.VISIBLE);
+                if (count == 0) {
+                    binding.btnApply.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            onClickApply(project);
+                        }
+                    });
+                } else {
+                    binding.btnApply.setText(R.string.you_already_applied);
+                    binding.btnApply.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey, null)));
+                    binding.btnApply.setTextColor(getResources().getColor(R.color.light_grey, null));
+                }
             }
         });
     }
@@ -75,6 +92,8 @@ public class ProjectDetailFragment extends Fragment {
     }
 
     private void onClickApply(Project project) {
+        binding.btnApply.setVisibility(View.GONE);
+        binding.ivCheckMark.setVisibility(View.VISIBLE);
         ParseObject developerObject = ParseUser.getCurrentUser().getParseObject("developer");
         // If the user has no developer account, inform the user and return
         if (developerObject == null) {
@@ -92,6 +111,7 @@ public class ProjectDetailFragment extends Fragment {
         }
         // Add the developer to the pool of applicants
         project.addApplicant(developer);
+        Toast.makeText(getContext(), R.string.application_received, Toast.LENGTH_SHORT).show();
     }
 
     private void sendNotificationToOrganization(@NonNull Project project) {
@@ -100,11 +120,11 @@ public class ProjectDetailFragment extends Fragment {
         Log.i(TAG, "Sending notification to the user with the following id: " + owner_id);
         // Make a query where the user is the owner of the project
         ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
-        userQuery.whereEqualTo("objectId", owner_id);
+        userQuery.whereEqualTo(OBJECT_ID, owner_id);
 
         // Find devices associated with this user
         ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
-        pushQuery.whereMatchesQuery("user", userQuery);
+        pushQuery.whereMatchesQuery(USER, userQuery);
 
         // Send push notification to query
         ParsePush push = new ParsePush();

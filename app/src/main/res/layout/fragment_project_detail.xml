@@ -89,7 +89,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/apply"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivProjectImg" />
+
+    <ImageView
+        android:id="@+id/ivCheckMark"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/check"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivProjectImg" />
 

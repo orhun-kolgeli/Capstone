@@ -9,17 +9,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestHeaders;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.orhunkolgeli.capstone.databinding.FragmentDeveloperDetailBinding;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseInstallation;
+import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -28,13 +33,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 import okhttp3.Headers;
 
 public class DeveloperDetailFragment extends Fragment {
     public static final String BASE_URL = "https://api.github.com/users/%s/repos";
     public static final String TAG = "DeveloperDetailFragment";
     public static final int MAX_REPOS_DISPLAYED = 20;
+    public static final String POSITION = "position";
+    public static final String PROJECT = "project";
+    public static final String DEVELOPER = "developer";
+    public static final String DEVELOPER_CATEGORY = "developerCategory";
 
+    public enum DeveloperCategory {
+        DEVELOPER, APPLICANT
+    }
     private FragmentDeveloperDetailBinding binding;
 
     @Override
@@ -46,20 +60,52 @@ public class DeveloperDetailFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Developer developer = getArguments().getParcelable("developer");
+        DeveloperCategory developerCategory = (DeveloperCategory) getArguments().get(DEVELOPER_CATEGORY);
+        Developer developer = getArguments().getParcelable(DEVELOPER);
         binding.tvBio2.setText(developer.getBio());
-        String full_name = developer.getUser().getString("name");
-        binding.tvFullName2.setText(full_name);
-        binding.tvDevInitials2.setText(full_name.substring(0,1).toUpperCase());
+        binding.tvFullName2.setText(developer.getFullName());
+        binding.tvDevInitials2.setText(developer.getFullName().substring(0,1));
         binding.tvSkills2.setText(developer.getSkills());
         binding.tvGitHub2.setText(developer.getGitHub());
-        binding.btnInvite.setOnClickListener(new View.OnClickListener() {
+        if (developerCategory == DeveloperCategory.DEVELOPER) {
+            binding.btnInvite.setVisibility(View.VISIBLE);
+            binding.btnInvite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendNotificationToDeveloper(developer);
+                }
+            });
+        } else if (developerCategory == DeveloperCategory.APPLICANT) {
+            ((OrganizationActivity) requireActivity()).getSupportActionBar().setTitle(R.string.review_application);
+            binding.btnExtendOffer.setVisibility(View.VISIBLE);
+            binding.btnRemove.setVisibility(View.VISIBLE);
+            setApplicantOnClickListeners(developer);
+        }
+        getGitHubRepos(developer.getGitHub());
+    }
+
+    private void setApplicantOnClickListeners(Developer developer) {
+        binding.btnRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendNotificationToDeveloper(developer);
+                // Remove item from the recyclerView
+                int position = getArguments().getInt(POSITION);
+                ApplicantAdapter.removeCallback.onActionRemove(position);
+                // Navigate back to the review screen
+                NavHostFragment.findNavController(DeveloperDetailFragment.this).popBackStack();
+                // Remove the applicant from database
+                ParseUser.getCurrentUser().getParseObject(PROJECT).fetchIfNeededInBackground(new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject object, ParseException e) {
+                        if (object != null) {
+                            Project project = (Project) object;
+                            project.removeApplicant(developer);
+                        }
+                    }
+                });
             }
         });
-        getGitHubRepos(developer.getGitHub());
+
     }
 
     @Override
@@ -92,7 +138,7 @@ public class DeveloperDetailFragment extends Fragment {
             try {
                 JSONObject jsonObject = repos.getJSONObject(i);
                 // Extract strings from the json object
-                String repo_name = jsonObject.getString("name");
+                String repoName = jsonObject.getString("name");
                 String language = jsonObject.getString("language");
                 if (language.equals("null")) {
                     continue;
@@ -100,7 +146,7 @@ public class DeveloperDetailFragment extends Fragment {
                 String html_url = jsonObject.getString("html_url");
                 // Create a new TextView to put into linearLayoutRepos
                 TextView tvRepo = new TextView(getContext());
-                tvRepo.setText(String.format("%s\n·\n%s", repo_name, language));
+                tvRepo.setText(String.format("%s\n·\n%s", repoName, language));
                 // Style the TextView
                 tvRepo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 tvRepo.setBackground(ResourcesCompat.getDrawable(getResources(),

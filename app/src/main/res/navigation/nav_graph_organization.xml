@@ -42,6 +42,12 @@
             app:popExitAnim="@android:anim/fade_out" />
         <argument android:name="developer"
             app:argType="com.orhunkolgeli.capstone.Developer" />
+        <argument
+            android:name="developerCategory"
+            app:argType="com.orhunkolgeli.capstone.DeveloperDetailFragment$DeveloperCategory" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/postProjectFragment"

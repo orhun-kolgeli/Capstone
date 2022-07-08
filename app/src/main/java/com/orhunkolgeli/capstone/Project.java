@@ -23,6 +23,7 @@ public class Project extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_USER = "user";
     public static final String KEY_APPLICANTS = "applicants";
+    public static final String KEY_APPLICANT_COUNT = "applicantCount";
 
     public String getType() {
         return getString(KEY_TYPE);
@@ -63,8 +64,24 @@ public class Project extends ParseObject {
     public void addApplicant(Developer developer) {
         // Get a reference to the pool of applicants
         ParseRelation<Developer> relation = this.getApplicants();
+        // Atomically increment applicant count
+        increment(KEY_APPLICANT_COUNT);
         // Add the developer to the pool of applicants and save
         relation.add(developer);
+        saveInBackground();
+    }
+
+    public int getApplicantCount() {
+        return (int) getNumber(KEY_APPLICANT_COUNT);
+    }
+
+    public void removeApplicant(Developer developer) {
+        // Get a reference to the pool of applicants
+        ParseRelation<Developer> relation = this.getApplicants();
+        // Atomically decrement applicant count
+        increment(KEY_APPLICANT_COUNT, -1);
+        // Remove the developer from database and save
+        relation.remove(developer);
         saveInBackground();
     }
 
