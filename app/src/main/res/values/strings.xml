@@ -79,4 +79,6 @@
     <string name="you_already_applied">You\'ve already applied</string>
     <string name="application_received">Your application has been received!</string>
     <string name="you_currently_have_no_applications">You currently have no applications</string>
+    <string name="update_profile">Update your profile</string>
+    <string name="update">Update</string>
 </resources>

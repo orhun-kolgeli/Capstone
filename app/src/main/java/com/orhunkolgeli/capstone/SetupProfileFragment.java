@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.orhunkolgeli.capstone.databinding.FragmentProjectDetailBinding;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -73,12 +74,28 @@ public class SetupProfileFragment extends Fragment {
         EditText etGitHub = view.findViewById(R.id.etGitHub);
         Button btnSave = view.findViewById(R.id.btnSave);
 
+        // Pre-fill the form, if applicable
+        Developer existingProfile = (Developer) ParseUser.getCurrentUser().getParseObject("developer");
+        if (existingProfile != null) {
+            try {
+                ((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.update_profile);
+                btnSave.setText(R.string.update);
+                existingProfile = existingProfile.fetchIfNeeded();
+                mactvSkills.setText(existingProfile.getSkills());
+                etBio.setText(existingProfile.getBio());
+                etGitHub.setText(existingProfile.getGitHub());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
         // Set up multiAutoCompleteTextView
         mactvSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_1, suggestedSkills);
         mactvSkills.setAdapter(arrayAdapter);
 
+        Developer finalExistingProfile = existingProfile;
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,8 +103,14 @@ public class SetupProfileFragment extends Fragment {
                     Toast.makeText(getContext(), R.string.fill_all_fields, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                // Create new Developer object and set its fields
-                Developer developer = new Developer();
+                // If new profile, create new Developer object and set its fields
+                // Otherwise, update the existing fields
+                Developer developer;
+                if (finalExistingProfile == null) {
+                    developer = new Developer();
+                } else {
+                    developer = finalExistingProfile;
+                }
                 developer.setBio(etBio.getText().toString());
                 developer.setGitHub(etGitHub.getText().toString());
                 developer.setSkills(mactvSkills.getText().toString());
