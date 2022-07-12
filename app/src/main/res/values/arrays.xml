@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="project_sorting_options_array">
+        <item>@string/date_posted</item>
+        <item>@string/data_updated</item>
+        <item>@string/num_applicants_ascending</item>
+        <item>@string/num_applicants_descending</item>
+    </string-array>
+</resources>

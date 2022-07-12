@@ -52,6 +52,13 @@ public class DeveloperSearchFragment extends Fragment {
         // Create a TabLayoutMediator to link the TabLayout to the ViewPager2 and attach it
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(tabTitles[position])).attach();
+        binding.fabAddProject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(DeveloperSearchFragment.this).navigate(
+                        R.id.action_DeveloperSearchFragment_to_postProjectFragment);
+            }
+        });
     }
 
     @Override

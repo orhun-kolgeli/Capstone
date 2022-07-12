@@ -82,4 +82,13 @@
     <string name="update_profile">Update your profile</string>
     <string name="update">Update</string>
     <string name="filter">Filter</string>
+    <string name="android_projects">Android Projects</string>
+    <string name="web_projects">Web Projects</string>
+    <string name="ios_projects">iOS Projects</string>
+    <string name="date_posted">Date Posted (Newest First)</string>
+    <string name="data_updated">Date Updated (Newest First)</string>
+    <string name="num_applicants_ascending">Number of Applicants (Ascending)</string>
+    <string name="num_applicants_descending">Number of Applicants (Descending)</string>
+    <string name="filter_projects">Filter projects</string>
+    <string name="cancel">Cancel</string>
 </resources>

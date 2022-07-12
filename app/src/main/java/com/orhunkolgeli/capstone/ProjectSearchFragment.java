@@ -1,10 +1,14 @@
 package com.orhunkolgeli.capstone;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,9 +28,14 @@ import java.util.List;
 public class ProjectSearchFragment extends Fragment {
 
     private static final String TAG = "ProjectSearchFragment";
+    public static final int LIMIT = 10;
+    public static final String TYPE = "type";
+    public static final String PROJECT = "Project";
     private FragmentProjectSearchBinding binding;
     List<Project> allProjects;
     ProjectAdapter adapter;
+    protected static ProjectFilterListener projectFilterListener;
+    protected static ProjectFilterValues projectFilterValues;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,8 +52,13 @@ public class ProjectSearchFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         // Set item animator to DefaultAnimator
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        // Initialize project filter values
+        if (projectFilterValues == null) {
+            projectFilterValues = new ProjectFilterValues();
+        }
+        setHasOptionsMenu(true);
         // Read in the projects from database
-        readProjects();
+        loadProjects();
 
         return rootView;
     }
@@ -58,6 +72,20 @@ public class ProjectSearchFragment extends Fragment {
                         .navigate(R.id.action_ProjectSearchFragment_to_setupProfileFragment);
             }
         });
+        projectFilterListener = new ProjectFilterListener() {
+            @Override
+            public void onActionFilterProjects(ProjectFilterValues newFilterValues) {
+                projectFilterValues = newFilterValues;
+                loadProjects();
+            }
+        };
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem menuItem = menu.findItem(R.id.action_filter);
+        if (menuItem != null)
+            menuItem.setVisible(true);
     }
 
     @Override
@@ -66,24 +94,27 @@ public class ProjectSearchFragment extends Fragment {
         binding = null;
     }
 
-    public void readProjects() {
-        ParseQuery<Project> query = ParseQuery.getQuery("Project");
-        query.setLimit(20);
-        query.addDescendingOrder("createdAt");
-        // Search for ParseObject Project
-        // Query will invoke the FindCallback with either the object or the exception thrown
+
+    public void loadProjects() {
+        // Clear results from the previous filter, if any
+        if (adapter.getItemCount() != 0) {
+            adapter.clear();
+            // Show the progress bar
+            binding.pbReadProjects.setVisibility(View.VISIBLE);
+            binding.tvLoadingProjects.setVisibility(View.VISIBLE);
+        }
+        ParseQuery<Project> query = ParseQuery.getQuery(PROJECT);
+        query.setLimit(LIMIT);
+        projectFilterValues.addSortingToQuery(query);
+        query.whereContainedIn(TYPE, projectFilterValues.selectedProjectTypes());
         query.findInBackground(new FindCallback<Project>() {
             @Override
             public void done(List<Project> projects, ParseException e) {
                 if (e != null) {
-                    Log.e(TAG, "Error reading projects from database");
                     return;
                 }
-                for (Project project : projects) {
-                    Log.i(TAG, "Project : " + project.getType() + ", " + project.getDescription());
-                }
                 allProjects.addAll(projects);
-                adapter.notifyDataSetChanged();
+                adapter.notifyItemRangeInserted(0, LIMIT);
                 // Hide the progress bar
                 binding.pbReadProjects.setVisibility(View.GONE);
                 binding.tvLoadingProjects.setVisibility(View.GONE);

@@ -37,7 +37,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
     public static final int ALPHA = 255;
     private Context context;
     private List<Project> projects;
-    Fragment fragment;
+    private Fragment fragment;
 
     public ProjectAdapter(Context context, List<Project> projects, Fragment fragment) {
         this.context = context;
@@ -98,6 +98,9 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             // Load image describing the project from Parse server
             ParseFile image = project.getImage();
             if (image != null) {
+                // Reset the size of ivProjectImage
+                ivProjectImage.layout(0,0,0,0);
+                // Load project image into ivProjectImage
                 Glide.with(context)
                         .load(image.getUrl())
                         .into(ivProjectImage);
@@ -132,5 +135,11 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
                 rnd.nextInt(DARK_COLOR_RGB_VALUE),
                 rnd.nextInt(DARK_COLOR_RGB_VALUE));
         return color;
+    }
+
+    public void clear() {
+        int size = projects.size();
+        projects.clear();
+        notifyItemRangeRemoved(0, size);
     }
 }

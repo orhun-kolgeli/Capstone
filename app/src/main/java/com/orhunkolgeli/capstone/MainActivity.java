@@ -1,14 +1,17 @@
 package com.orhunkolgeli.capstone;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.fragment.app.FragmentManager;
@@ -25,6 +28,8 @@ import com.parse.ParseUser;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -71,8 +76,53 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, R.string.logout_successful, Toast.LENGTH_SHORT).show();
             });
             return true;
+        } else if (id == R.id.action_filter) {
+            onClickActionFilter();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void onClickActionFilter() {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_filter, null);
+
+        // Get references to filter dialog's view objects
+        Spinner spinner = dialogView.findViewById(R.id.spinnerSortProjects);
+        CheckBox checkBoxAndroid = dialogView.findViewById(R.id.checkBoxAndroid);
+        CheckBox checkBoxiOS = dialogView.findViewById(R.id.checkBoxiOS);
+        CheckBox checkBoxWeb = dialogView.findViewById(R.id.checkBoxWeb);
+
+        // Populate the dialog's fields with previous (or default) selection
+        ProjectFilterValues previousFilterValues = ProjectSearchFragment.projectFilterValues;
+        spinner.setSelection(previousFilterValues.getSortBy());
+        checkBoxAndroid.setChecked(previousFilterValues.isAndroidChecked());
+        checkBoxiOS.setChecked(previousFilterValues.isiOSChecked());
+        checkBoxWeb.setChecked(previousFilterValues.isWebChecked());
+
+        // Build the dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.filter_projects);
+        builder.setIcon(R.drawable.icon);
+        builder.setView(dialogView);
+        builder.setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Communicate the new filter values to ProjectSearchFragment
+                ProjectFilterValues projectFilterValues = new ProjectFilterValues();
+                projectFilterValues.setSortBy(spinner.getSelectedItemPosition());
+                projectFilterValues.setAndroidChecked(checkBoxAndroid.isChecked());
+                projectFilterValues.setIsiOSChecked(checkBoxiOS.isChecked());
+                projectFilterValues.setWebChecked(checkBoxWeb.isChecked());
+                ProjectSearchFragment.projectFilterListener.onActionFilterProjects(projectFilterValues);
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override

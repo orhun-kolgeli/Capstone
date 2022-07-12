@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Spinner
+        android:id="@+id/spinnerSortProjects"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:entries="@array/project_sorting_options_array"
+        android:minHeight="48dp"
+        android:paddingVertical="10dp"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/checkBoxAndroid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/android_projects"
+        app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSortProjects" />
+
+    <CheckBox
+        android:id="@+id/checkBoxiOS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ios_projects"
+        app:layout_constraintStart_toStartOf="@+id/checkBoxAndroid"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxAndroid" />
+
+    <CheckBox
+        android:id="@+id/checkBoxWeb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/web_projects"
+        app:layout_constraintStart_toStartOf="@+id/checkBoxiOS"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxiOS" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
