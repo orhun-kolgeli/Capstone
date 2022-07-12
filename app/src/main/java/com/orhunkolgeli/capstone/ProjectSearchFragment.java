@@ -29,9 +29,11 @@ public class ProjectSearchFragment extends Fragment {
 
     private static final String TAG = "ProjectSearchFragment";
     public static final int LIMIT = 10;
+    public static final int START_PAGE = 0;
     public static final String TYPE = "type";
     public static final String PROJECT = "Project";
     private FragmentProjectSearchBinding binding;
+    private EndlessRecyclerViewScrollListener scrollListener;
     List<Project> allProjects;
     ProjectAdapter adapter;
     protected static ProjectFilterListener projectFilterListener;
@@ -44,7 +46,16 @@ public class ProjectSearchFragment extends Fragment {
         // Get a reference to recyclerView
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rvDevelopers);
         // Set layoutManger
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                loadProjects(page);
+            }
+        };
+        // Add the scroll listener to the recyclerView
+        recyclerView.addOnScrollListener(scrollListener);
         // Create an adapter
         allProjects = new ArrayList<>();
         adapter = new ProjectAdapter(getActivity(), allProjects, ProjectSearchFragment.this);
@@ -58,8 +69,7 @@ public class ProjectSearchFragment extends Fragment {
         }
         setHasOptionsMenu(true);
         // Read in the projects from database
-        loadProjects();
-
+        loadProjects(START_PAGE);
         return rootView;
     }
 
@@ -76,7 +86,7 @@ public class ProjectSearchFragment extends Fragment {
             @Override
             public void onActionFilterProjects(ProjectFilterValues newFilterValues) {
                 projectFilterValues = newFilterValues;
-                loadProjects();
+                loadProjects(START_PAGE);
             }
         };
     }
@@ -95,26 +105,35 @@ public class ProjectSearchFragment extends Fragment {
     }
 
 
-    public void loadProjects() {
-        // Clear results from the previous filter, if any
-        if (adapter.getItemCount() != 0) {
+    public void loadProjects(int page) {
+        // Clear the existing items when performing a new search
+        if (page == START_PAGE && adapter.getItemCount() > 0) {
             adapter.clear();
+            // Reset endless scroll listener
+            scrollListener.resetState();
             // Show the progress bar
             binding.pbReadProjects.setVisibility(View.VISIBLE);
             binding.tvLoadingProjects.setVisibility(View.VISIBLE);
         }
         ParseQuery<Project> query = ParseQuery.getQuery(PROJECT);
+        // Skip the projects that have already been shown
+        query.setSkip(page*LIMIT);
+        // Limit query to as many items as LIMIT
         query.setLimit(LIMIT);
+        // Sort the query results
         projectFilterValues.addSortingToQuery(query);
+        // Filter the query result
         query.whereContainedIn(TYPE, projectFilterValues.selectedProjectTypes());
+        // Start an asynchronous call to retrieve projects from database
         query.findInBackground(new FindCallback<Project>() {
             @Override
             public void done(List<Project> projects, ParseException e) {
                 if (e != null) {
+                    Toast.makeText(getContext(), R.string.error_loading_projects, Toast.LENGTH_SHORT).show();
                     return;
                 }
                 allProjects.addAll(projects);
-                adapter.notifyItemRangeInserted(0, LIMIT);
+                adapter.notifyItemRangeInserted(page*LIMIT, LIMIT);
                 // Hide the progress bar
                 binding.pbReadProjects.setVisibility(View.GONE);
                 binding.tvLoadingProjects.setVisibility(View.GONE);
