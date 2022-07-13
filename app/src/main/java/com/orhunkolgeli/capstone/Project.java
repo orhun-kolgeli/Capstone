@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
@@ -24,6 +25,7 @@ public class Project extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_APPLICANTS = "applicants";
     public static final String KEY_APPLICANT_COUNT = "applicantCount";
+    public static final String KEY_LOCATION = "location";
 
     public String getType() {
         return getString(KEY_TYPE);
@@ -83,6 +85,10 @@ public class Project extends ParseObject {
         // Remove the developer from database and save
         relation.remove(developer);
         saveInBackground();
+    }
+
+    public void setLocation (ParseGeoPoint geoPoint) {
+        put(KEY_LOCATION, geoPoint);
     }
 
 }

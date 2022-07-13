@@ -20,29 +20,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.orhunkolgeli.capstone.databinding.FragmentProjectSearchBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectSearchFragment extends Fragment {
+public class ProjectSearchFragment extends Fragment implements ProjectFilterListener {
 
     private static final String TAG = "ProjectSearchFragment";
     public static final int LIMIT = 10;
     public static final int START_PAGE = 0;
     public static final String TYPE = "type";
     public static final String PROJECT = "Project";
+    public static final String LOCATION = "location";
     private FragmentProjectSearchBinding binding;
     private EndlessRecyclerViewScrollListener scrollListener;
     List<Project> allProjects;
     ProjectAdapter adapter;
-    protected static ProjectFilterListener projectFilterListener;
-    protected static ProjectFilterValues projectFilterValues;
+    protected ProjectFilterValues projectFilterValues;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentProjectSearchBinding.inflate(inflater, container, false);
         View rootView = binding.getRoot();
+        // Set the projectFilterListener, which is held by MainActivity
+        ((MainActivity) requireActivity()).projectFilterListener = this;
         // Get a reference to recyclerView
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rvDevelopers);
         // Set layoutManger
@@ -82,13 +86,6 @@ public class ProjectSearchFragment extends Fragment {
                         .navigate(R.id.action_ProjectSearchFragment_to_setupProfileFragment);
             }
         });
-        projectFilterListener = new ProjectFilterListener() {
-            @Override
-            public void onActionFilterProjects(ProjectFilterValues newFilterValues) {
-                projectFilterValues = newFilterValues;
-                loadProjects(START_PAGE);
-            }
-        };
     }
 
     @Override
@@ -120,10 +117,12 @@ public class ProjectSearchFragment extends Fragment {
         query.setSkip(page*LIMIT);
         // Limit query to as many items as LIMIT
         query.setLimit(LIMIT);
+        // Filter the query result by project type
+        query.whereContainedIn(TYPE, projectFilterValues.selectedProjectTypes());
+        // Filter the query result by distance
+        query.whereWithinMiles(LOCATION, ParseUser.getCurrentUser().getParseGeoPoint(LOCATION), projectFilterValues.getDistance());
         // Sort the query results
         projectFilterValues.addSortingToQuery(query);
-        // Filter the query result
-        query.whereContainedIn(TYPE, projectFilterValues.selectedProjectTypes());
         // Start an asynchronous call to retrieve projects from database
         query.findInBackground(new FindCallback<Project>() {
             @Override
@@ -139,5 +138,11 @@ public class ProjectSearchFragment extends Fragment {
                 binding.tvLoadingProjects.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onActionFilterProjects(ProjectFilterValues projectFilterValues) {
+        this.projectFilterValues = projectFilterValues;
+        loadProjects(START_PAGE);
     }
 }

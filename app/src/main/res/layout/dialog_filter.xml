@@ -43,4 +43,14 @@
         app:layout_constraintStart_toStartOf="@+id/checkBoxiOS"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxiOS" />
 
+    <EditText
+        android:id="@+id/etDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Max Distance (miles)"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="@+id/checkBoxWeb"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxWeb" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

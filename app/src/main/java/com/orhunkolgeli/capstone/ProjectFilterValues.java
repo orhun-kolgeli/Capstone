@@ -2,6 +2,7 @@ package com.orhunkolgeli.capstone;
 
 import android.content.res.Resources;
 
+import com.facebook.stetho.common.StringUtil;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class ProjectFilterValues {
     private boolean isAndroidChecked;
     private boolean isiOSChecked;
     private boolean isWebChecked;
+    private int distance;
 
     public ProjectFilterValues() {
         // Set default values
@@ -29,6 +31,15 @@ public class ProjectFilterValues {
         this.isAndroidChecked = true;
         this.isiOSChecked = true;
         this.isWebChecked = true;
+        this.distance = 3000;
+    }
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 
     public int getSortBy() {return sortBy;}

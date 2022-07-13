@@ -29,14 +29,17 @@ import com.parse.ParseUser;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    public ProjectFilterListener projectFilterListener = null;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    public ProjectFilterValues projectFilterValues;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +93,17 @@ public class MainActivity extends AppCompatActivity {
         CheckBox checkBoxAndroid = dialogView.findViewById(R.id.checkBoxAndroid);
         CheckBox checkBoxiOS = dialogView.findViewById(R.id.checkBoxiOS);
         CheckBox checkBoxWeb = dialogView.findViewById(R.id.checkBoxWeb);
+        EditText etDistance = dialogView.findViewById(R.id.etDistance);
 
         // Populate the dialog's fields with previous (or default) selection
-        ProjectFilterValues previousFilterValues = ProjectSearchFragment.projectFilterValues;
-        spinner.setSelection(previousFilterValues.getSortBy());
-        checkBoxAndroid.setChecked(previousFilterValues.isAndroidChecked());
-        checkBoxiOS.setChecked(previousFilterValues.isiOSChecked());
-        checkBoxWeb.setChecked(previousFilterValues.isWebChecked());
+        if (projectFilterValues == null) {
+            projectFilterValues = new ProjectFilterValues();
+        }
+        spinner.setSelection(projectFilterValues.getSortBy());
+        checkBoxAndroid.setChecked(projectFilterValues.isAndroidChecked());
+        checkBoxiOS.setChecked(projectFilterValues.isiOSChecked());
+        checkBoxWeb.setChecked(projectFilterValues.isWebChecked());
+        etDistance.setText(String.valueOf(projectFilterValues.getDistance()));
 
         // Build the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -107,12 +114,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Communicate the new filter values to ProjectSearchFragment
-                ProjectFilterValues projectFilterValues = new ProjectFilterValues();
+                projectFilterValues = new ProjectFilterValues(); // just save this
                 projectFilterValues.setSortBy(spinner.getSelectedItemPosition());
                 projectFilterValues.setAndroidChecked(checkBoxAndroid.isChecked());
                 projectFilterValues.setIsiOSChecked(checkBoxiOS.isChecked());
                 projectFilterValues.setWebChecked(checkBoxWeb.isChecked());
-                ProjectSearchFragment.projectFilterListener.onActionFilterProjects(projectFilterValues);
+                if (!etDistance.getText().toString().isEmpty()) {
+                    projectFilterValues.setDistance(Integer.parseInt(etDistance.getText().toString()));
+                }
+                if (projectFilterListener != null) {
+                    projectFilterListener.onActionFilterProjects(projectFilterValues);
+                }
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

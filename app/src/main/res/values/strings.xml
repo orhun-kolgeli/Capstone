@@ -57,8 +57,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="post">Post</string>
-    <string name="describe_your_project">Describe your project</string>
-    <string name="project_type_e_g_android_ios">Project Type (e.g., Android, iOS, etc.)</string>
+    <string name="describe_your_project">*Describe your project</string>
+    <string name="project_type_e_g_android_ios">*Project Type (e.g., Android, iOS, etc.)</string>
     <string name="people_building_things">People building things</string>
     <string name="error_tying_project_to_account">Error tying project to your organization account</string>
     <string name="success_tying_project_to_account">Your project has been tied to your organization account.</string>
@@ -92,4 +92,9 @@
     <string name="filter_projects">Filter projects</string>
     <string name="cancel">Cancel</string>
     <string name="error_loading_projects">Error retrieving projects from database</string>
+    <string name="organization_s_zip_code">Organization\'s Zip Code</string>
+    <string name="find">Find</string>
+    <string name="verify">Verify</string>
+    <string name="fill_all_required_fields">Please fill all required fields.</string>
+    <string name="project_save_success">Project saved successfully</string>
 </resources>
