@@ -39,7 +39,7 @@ public class ProjectSearchFragment extends Fragment implements ProjectFilterList
     private EndlessRecyclerViewScrollListener scrollListener;
     List<Project> allProjects;
     ProjectAdapter adapter;
-    protected ProjectFilterValues projectFilterValues;
+    private ProjectFilterValues projectFilterValues;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

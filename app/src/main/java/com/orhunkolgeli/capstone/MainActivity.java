@@ -1,36 +1,20 @@
 package com.orhunkolgeli.capstone;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.orhunkolgeli.capstone.databinding.ActivityMainBinding;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public ProjectFilterListener projectFilterListener = null;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    public ProjectFilterValues projectFilterValues;
+    private FilterProjectsOnClick filterProjectsOnClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
+        filterProjectsOnClick = new FilterProjectsOnClick(this);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
@@ -80,12 +65,16 @@ public class MainActivity extends AppCompatActivity {
             });
             return true;
         } else if (id == R.id.action_filter) {
-            onClickActionFilter();
+            filterProjectsOnClick
+                    .getReferences(getLayoutInflater())
+                    .populateDialog()
+                    .showDialog(projectFilterListener);
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void onClickActionFilter() {
+        /*
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_filter, null);
 
         // Get references to filter dialog's view objects
@@ -133,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .create()
                 .show();
+
+         */
     }
 
     @Override
