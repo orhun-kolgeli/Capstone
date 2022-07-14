@@ -105,44 +105,41 @@ public class MainActivity extends AppCompatActivity {
         checkBoxWeb.setChecked(projectFilterValues.isWebChecked());
         etDistance.setText(String.valueOf(projectFilterValues.getDistance()));
 
-        // Build the dialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(R.string.filter_projects);
-        builder.setIcon(R.drawable.icon);
-        builder.setView(dialogView);
-        builder.setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Communicate the new filter values to ProjectSearchFragment
-                projectFilterValues = new ProjectFilterValues(); // just save this
-                projectFilterValues.setSortBy(spinner.getSelectedItemPosition());
-                projectFilterValues.setAndroidChecked(checkBoxAndroid.isChecked());
-                projectFilterValues.setIsiOSChecked(checkBoxiOS.isChecked());
-                projectFilterValues.setWebChecked(checkBoxWeb.isChecked());
-                if (!etDistance.getText().toString().isEmpty()) {
-                    projectFilterValues.setDistance(Integer.parseInt(etDistance.getText().toString()));
-                }
-                if (projectFilterListener != null) {
-                    projectFilterListener.onActionFilterProjects(projectFilterValues);
-                }
-            }
-        });
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        // Create and show the dialog
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.filter_projects)
+                .setIcon(R.drawable.icon)
+                .setView(dialogView)
+                .setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Communicate the new filter values to ProjectSearchFragment
+                        projectFilterValues = new ProjectFilterValues()
+                                .setSortBy(spinner.getSelectedItemPosition())
+                                .setAndroidChecked(checkBoxAndroid.isChecked())
+                                .setIsiOSChecked(checkBoxiOS.isChecked())
+                                .setWebChecked(checkBoxWeb.isChecked())
+                                .setDistance(etDistance.getText().toString());
+                        if (projectFilterListener != null) {
+                            projectFilterListener.onActionFilterProjects(projectFilterValues);
+                        }
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavController navController = Navigation
+                .findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-
 }

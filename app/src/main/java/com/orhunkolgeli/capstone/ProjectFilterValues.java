@@ -38,36 +38,51 @@ public class ProjectFilterValues {
         return distance;
     }
 
-    public void setDistance(int distance) {
+    public ProjectFilterValues setDistance(int distance) {
         this.distance = distance;
+        return this;
+    }
+
+    public ProjectFilterValues setDistance(String distanceString) {
+        if (!distanceString.isEmpty()) {
+            int distance = Integer.parseInt(distanceString);
+            setDistance(distance);
+        }
+        return this;
     }
 
     public int getSortBy() {return sortBy;}
 
-    public void setSortBy(int sortBy) {this.sortBy = sortBy;}
+    public ProjectFilterValues setSortBy(int sortBy) {
+        this.sortBy = sortBy;
+        return this;
+    }
 
     public boolean isAndroidChecked() {
         return isAndroidChecked;
     }
 
-    public void setAndroidChecked(boolean androidChecked) {
-        isAndroidChecked = androidChecked;
+    public ProjectFilterValues setAndroidChecked(boolean androidChecked) {
+        this.isAndroidChecked = androidChecked;
+        return this;
     }
 
     public boolean isiOSChecked() {
         return isiOSChecked;
     }
 
-    public void setIsiOSChecked(boolean isiOSChecked) {
+    public ProjectFilterValues setIsiOSChecked(boolean isiOSChecked) {
         this.isiOSChecked = isiOSChecked;
+        return this;
     }
 
     public boolean isWebChecked() {
         return isWebChecked;
     }
 
-    public void setWebChecked(boolean webChecked) {
+    public ProjectFilterValues setWebChecked(boolean webChecked) {
         isWebChecked = webChecked;
+        return this;
     }
 
     public List<String> selectedProjectTypes() {
