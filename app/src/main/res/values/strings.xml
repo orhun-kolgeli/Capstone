@@ -100,5 +100,6 @@
     <string name="kilometers">kilometers</string>
     <string name="miles">miles</string>
     <string name="max_distance">Max Distance</string>
+    <string name="reset">Reset</string>
 
 </resources>

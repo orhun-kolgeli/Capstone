@@ -50,7 +50,7 @@ public class FilterProjectsOnClick {
 
     public FilterProjectsOnClick showDialog(ProjectFilterListener projectFilterListener) {
         // Create and show the dialog
-        new AlertDialog.Builder(context)
+        AlertDialog alertDialog = new AlertDialog.Builder(context)
                 .setTitle(R.string.filter_projects)
                 .setIcon(R.drawable.icon)
                 .setView(dialogView)
@@ -69,15 +69,21 @@ public class FilterProjectsOnClick {
                         }
                     }
                 })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create()
+                .setNeutralButton(R.string.reset, null)
+                .setNegativeButton(R.string.cancel, null)
                 .show();
+        setResetButton(alertDialog);
         return this;
+    }
+
+    private void setResetButton(AlertDialog alertDialog) {
+        alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                projectFilterValues = new ProjectFilterValues();
+                populateDialog();
+            }
+        });
     }
 
 
