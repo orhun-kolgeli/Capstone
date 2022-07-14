@@ -73,59 +73,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void onClickActionFilter() {
-        /*
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_filter, null);
-
-        // Get references to filter dialog's view objects
-        Spinner spinner = dialogView.findViewById(R.id.spinnerSortProjects);
-        CheckBox checkBoxAndroid = dialogView.findViewById(R.id.checkBoxAndroid);
-        CheckBox checkBoxiOS = dialogView.findViewById(R.id.checkBoxiOS);
-        CheckBox checkBoxWeb = dialogView.findViewById(R.id.checkBoxWeb);
-        EditText etDistance = dialogView.findViewById(R.id.etDistance);
-
-        // Populate the dialog's fields with previous (or default) selection
-        if (projectFilterValues == null) {
-            projectFilterValues = new ProjectFilterValues();
-        }
-        spinner.setSelection(projectFilterValues.getSortBy());
-        checkBoxAndroid.setChecked(projectFilterValues.isAndroidChecked());
-        checkBoxiOS.setChecked(projectFilterValues.isiOSChecked());
-        checkBoxWeb.setChecked(projectFilterValues.isWebChecked());
-        etDistance.setText(String.valueOf(projectFilterValues.getDistance()));
-
-        // Create and show the dialog
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.filter_projects)
-                .setIcon(R.drawable.icon)
-                .setView(dialogView)
-                .setPositiveButton(R.string.filter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Communicate the new filter values to ProjectSearchFragment
-                        projectFilterValues = new ProjectFilterValues()
-                                .setSortBy(spinner.getSelectedItemPosition())
-                                .setAndroidChecked(checkBoxAndroid.isChecked())
-                                .setIsiOSChecked(checkBoxiOS.isChecked())
-                                .setWebChecked(checkBoxWeb.isChecked())
-                                .setDistance(etDistance.getText().toString());
-                        if (projectFilterListener != null) {
-                            projectFilterListener.onActionFilterProjects(projectFilterValues);
-                        }
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create()
-                .show();
-
-         */
-    }
-
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation
