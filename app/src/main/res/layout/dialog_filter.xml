@@ -47,10 +47,23 @@
         android:id="@+id/etDistance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autofillHints=""
         android:ems="10"
-        android:hint="Max Distance (miles)"
+        android:hint="@string/max_distance"
         android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/checkBoxWeb"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxWeb" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="119dp"
+        android:layout_height="48dp"
+        android:entries="@array/units_of_distance"
+        app:layout_constraintBottom_toBottomOf="@+id/etDistance"
+        app:layout_constraintStart_toEndOf="@+id/etDistance"
+        app:layout_constraintTop_toTopOf="@+id/etDistance" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

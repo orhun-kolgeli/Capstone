@@ -6,4 +6,8 @@
         <item>@string/num_applicants_ascending</item>
         <item>@string/num_applicants_descending</item>
     </string-array>
+
+    <string-array name="units_of_distance">
+        <item>@string/miles</item>
+    </string-array>
 </resources>
