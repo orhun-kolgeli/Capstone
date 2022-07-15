@@ -67,7 +67,7 @@ public class ReviewApplicationsFragment extends Fragment {
         binding.swipeContainerApplicant.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                applicants.clear();
+                adapter.clear();
                 loadApplicants(project);
                 // Signal refresh has finished
                 binding.swipeContainerApplicant.setRefreshing(false);

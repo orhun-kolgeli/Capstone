@@ -88,7 +88,7 @@ public class FindDeveloperFragment extends Fragment {
         binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                allDevelopers.clear();
+                adapter.clear();
                 loadDeveloperProfiles();
                 // Signal refresh has finished
                 binding.swipeContainer.setRefreshing(false);

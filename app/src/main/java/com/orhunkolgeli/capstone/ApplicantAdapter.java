@@ -91,4 +91,10 @@ public class ApplicantAdapter extends RecyclerView.Adapter<ApplicantAdapter.View
             });
         }
     }
+
+    public void clear() {
+        int size = applicants.size();
+        applicants.clear();
+        notifyItemRangeRemoved(0, size);
+    }
 }
