@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.orhunkolgeli.capstone.databinding.FragmentProjectSearchBinding;
 import com.orhunkolgeli.capstone.interfaces.ProjectFilterListener;
@@ -74,7 +75,26 @@ public class ProjectSearchFragment extends Fragment implements ProjectFilterList
         setHasOptionsMenu(true);
         // Read in the projects from database
         loadProjects(START_PAGE);
+        setUpSwipeContainer();
         return rootView;
+    }
+
+    private void setUpSwipeContainer() {
+        binding.swipeContainerProject.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                adapter.clear();
+                loadProjects(START_PAGE);
+                // Signal refresh has finished
+                binding.swipeContainerProject.setRefreshing(false);
+
+            }
+        });
+        // Configure the refreshing colors
+        binding.swipeContainerProject.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
