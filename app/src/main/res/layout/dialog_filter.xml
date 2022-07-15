@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <Spinner
         android:id="@+id/spinnerSortProjects"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:entries="@array/project_sorting_options_array"
         android:minHeight="48dp"
         android:paddingVertical="10dp"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/sortBy" />
 
     <CheckBox
         android:id="@+id/checkBoxAndroid"
@@ -25,22 +24,25 @@
         android:layout_height="wrap_content"
         android:text="@string/android_projects"
         app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerSortProjects" />
+        app:layout_constraintTop_toBottomOf="@+id/projectType" />
 
     <CheckBox
         android:id="@+id/checkBoxiOS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="@string/ios_projects"
-        app:layout_constraintStart_toStartOf="@+id/checkBoxAndroid"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxAndroid" />
+        app:layout_constraintBottom_toBottomOf="@+id/checkBoxAndroid"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxAndroid"
+        app:layout_constraintTop_toTopOf="@+id/checkBoxAndroid"
+        app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
         android:id="@+id/checkBoxWeb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/web_projects"
-        app:layout_constraintStart_toStartOf="@+id/checkBoxiOS"
+        app:layout_constraintStart_toStartOf="@+id/checkBoxAndroid"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxiOS" />
 
     <EditText
@@ -56,7 +58,8 @@
         android:textColorHint="#757575"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/checkBoxWeb"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxWeb" />
+        app:layout_constraintTop_toBottomOf="@+id/within"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
         android:id="@+id/spinnerDistanceUnit"
@@ -66,5 +69,44 @@
         app:layout_constraintBottom_toBottomOf="@+id/etDistance"
         app:layout_constraintStart_toEndOf="@+id/etDistance"
         app:layout_constraintTop_toTopOf="@+id/etDistance" />
+
+    <TextView
+        android:id="@+id/sortBy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="5dp"
+        android:text="@string/sort_by"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/projectType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="5dp"
+        android:text="@string/project_type"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSortProjects" />
+
+    <TextView
+        android:id="@+id/within"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="5dp"
+        android:text="@string/within"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxWeb" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

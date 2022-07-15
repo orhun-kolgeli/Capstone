@@ -104,5 +104,7 @@
     <string name="zip_code">Zip Code</string>
     <string name="provide_zip_code">Please provide your zip code</string>
     <string name="signup_success">Sign up successful!</string>
+    <string name="sort_by">Sort by:</string>
+    <string name="within">Within:</string>
 
 </resources>
