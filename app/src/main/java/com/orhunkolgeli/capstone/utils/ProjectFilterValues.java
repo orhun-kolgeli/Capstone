@@ -1,7 +1,13 @@
 package com.orhunkolgeli.capstone.utils;
 
+import android.util.Log;
+import android.widget.Toast;
+
+import com.orhunkolgeli.capstone.LoginActivity;
 import com.orhunkolgeli.capstone.Project;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,23 +19,39 @@ public class ProjectFilterValues {
     public static final String ANDROID = "Android";
     public static final String IOS = "iOS";
     public static final String WEB = "Web";
+    public static final String LOCATION = "location";
+    public static final String TYPE = "type";
     public static final int CREATED_AT_DESCENDING = 0;
     public static final int UPDATED_AT_DESCENDING = 1;
     public static final int APPLICANT_COUNT_ASCENDING = 2;
     public static final int APPLICANT_COUNT_DESCENDING = 3;
+    public static final int MILES = 0;
+    public static final int KILOMETERS = 1;
+    public static final int DEFAULT_DISTANCE = 3000;
     private int sortBy;
     private boolean isAndroidChecked;
     private boolean isiOSChecked;
     private boolean isWebChecked;
     private int distance;
+    private int distanceUnit;
 
     public ProjectFilterValues() {
         // Set default values
-        this.sortBy = 0;
+        this.sortBy = CREATED_AT_DESCENDING;
         this.isAndroidChecked = true;
         this.isiOSChecked = true;
         this.isWebChecked = true;
-        this.distance = 3000;
+        this.distance = DEFAULT_DISTANCE;
+        this.distanceUnit = MILES;
+    }
+
+    public int getDistanceUnit() {
+        return distanceUnit;
+    }
+
+    public ProjectFilterValues setDistanceUnit(int distanceUnit) {
+        this.distanceUnit = distanceUnit;
+        return this;
     }
 
     public int getDistance() {
@@ -83,7 +105,7 @@ public class ProjectFilterValues {
         return this;
     }
 
-    public List<String> selectedProjectTypes() {
+    public void addTypeFilterToQuery(ParseQuery<Project> query) {
         List<String> selectedProjectTypes = new ArrayList<>();
         if (isAndroidChecked()) {
             selectedProjectTypes.add(ANDROID);
@@ -94,7 +116,7 @@ public class ProjectFilterValues {
         if (isWebChecked()) {
             selectedProjectTypes.add(WEB);
         }
-        return selectedProjectTypes;
+        query.whereContainedIn(TYPE, selectedProjectTypes);
     }
 
     public void addSortingToQuery(ParseQuery<Project> query) {
@@ -106,6 +128,15 @@ public class ProjectFilterValues {
             query.addAscendingOrder(APPLICANT_COUNT);
         } else if (getSortBy() == APPLICANT_COUNT_DESCENDING) {
             query.addDescendingOrder(APPLICANT_COUNT);
+        }
+    }
+
+    public void addDistanceFilterToQuery(ParseQuery<Project> query) {
+        ParseGeoPoint userLocation = ParseUser.getCurrentUser().getParseGeoPoint(LOCATION);
+        if (getDistanceUnit() == MILES) {
+            query.whereWithinMiles(LOCATION, userLocation, getDistance());
+        } else {
+            query.whereWithinKilometers(LOCATION, userLocation, getDistance());
         }
     }
 

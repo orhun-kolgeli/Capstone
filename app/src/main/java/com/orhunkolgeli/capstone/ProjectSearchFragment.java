@@ -118,9 +118,9 @@ public class ProjectSearchFragment extends Fragment implements ProjectFilterList
         // Limit query to as many items as LIMIT
         query.setLimit(LIMIT);
         // Filter the query result by project type
-        query.whereContainedIn(TYPE, projectFilterValues.selectedProjectTypes());
+        projectFilterValues.addTypeFilterToQuery(query);
         // Filter the query result by distance
-        query.whereWithinMiles(LOCATION, ParseUser.getCurrentUser().getParseGeoPoint(LOCATION), projectFilterValues.getDistance());
+        projectFilterValues.addDistanceFilterToQuery(query);
         // Sort the query results
         projectFilterValues.addSortingToQuery(query);
         // Start an asynchronous call to retrieve projects from database

@@ -59,7 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/checkBoxWeb" />
 
     <Spinner
-        android:id="@+id/spinner2"
+        android:id="@+id/spinnerDistanceUnit"
         android:layout_width="119dp"
         android:layout_height="48dp"
         android:entries="@array/units_of_distance"

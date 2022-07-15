@@ -9,5 +9,6 @@
 
     <string-array name="units_of_distance">
         <item>@string/miles</item>
+        <item>@string/kilometers</item>
     </string-array>
 </resources>

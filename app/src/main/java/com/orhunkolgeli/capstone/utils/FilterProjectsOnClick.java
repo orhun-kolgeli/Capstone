@@ -17,11 +17,12 @@ public class FilterProjectsOnClick {
 
     private Context context;
     private View dialogView;
-    private Spinner spinner;
+    private Spinner spinnerSort;
     private CheckBox checkBoxAndroid;
     private CheckBox checkBoxiOS;
     private CheckBox checkBoxWeb;
     private EditText etDistance;
+    private Spinner spinnerDistanceUnit;
     private ProjectFilterValues projectFilterValues;
 
 
@@ -33,21 +34,23 @@ public class FilterProjectsOnClick {
     public FilterProjectsOnClick getReferences(LayoutInflater layoutInflater) {
         dialogView = layoutInflater.inflate(R.layout.dialog_filter, null);
         // Get references to filter dialog's view objects
-        spinner = dialogView.findViewById(R.id.spinnerSortProjects);
+        spinnerSort = dialogView.findViewById(R.id.spinnerSortProjects);
         checkBoxAndroid = dialogView.findViewById(R.id.checkBoxAndroid);
         checkBoxiOS = dialogView.findViewById(R.id.checkBoxiOS);
         checkBoxWeb = dialogView.findViewById(R.id.checkBoxWeb);
         etDistance = dialogView.findViewById(R.id.etDistance);
+        spinnerDistanceUnit = dialogView.findViewById(R.id.spinnerDistanceUnit);
         return this;
     }
 
     public FilterProjectsOnClick populateDialog() {
         // Populate the dialog's fields with previous (or default) selection
-        spinner.setSelection(projectFilterValues.getSortBy());
+        spinnerSort.setSelection(projectFilterValues.getSortBy());
         checkBoxAndroid.setChecked(projectFilterValues.isAndroidChecked());
         checkBoxiOS.setChecked(projectFilterValues.isiOSChecked());
         checkBoxWeb.setChecked(projectFilterValues.isWebChecked());
         etDistance.setText(String.valueOf(projectFilterValues.getDistance()));
+        spinnerDistanceUnit.setSelection(projectFilterValues.getDistanceUnit());
         return this;
     }
 
@@ -61,11 +64,12 @@ public class FilterProjectsOnClick {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         projectFilterValues
-                                .setSortBy(spinner.getSelectedItemPosition())
+                                .setSortBy(spinnerSort.getSelectedItemPosition())
                                 .setAndroidChecked(checkBoxAndroid.isChecked())
                                 .setIsiOSChecked(checkBoxiOS.isChecked())
                                 .setWebChecked(checkBoxWeb.isChecked())
-                                .setDistance(etDistance.getText().toString());
+                                .setDistance(etDistance.getText().toString())
+                                .setDistanceUnit(spinnerDistanceUnit.getSelectedItemPosition());
                         // Communicate the new filter values to ProjectSearchFragment
                         if (projectFilterListener != null) {
                             projectFilterListener.onActionFilterProjects(projectFilterValues);
