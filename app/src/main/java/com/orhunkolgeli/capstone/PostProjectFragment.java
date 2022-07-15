@@ -35,9 +35,7 @@ public class PostProjectFragment extends Fragment {
 
     private static final String TAG = "PostProjectFragment";
     public static final String PROJECT = "project";
-    public static final int MAX_RESULTS = 5;
-    public static final int ZIP_LENGTH = 5;
-    private CustomGeoCoder geocoder;
+    public static final String LOCATION = "location";
 
     public PostProjectFragment() {
         // Required empty public constructor
@@ -58,7 +56,6 @@ public class PostProjectFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        geocoder = new CustomGeoCoder(getContext());
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_post_project, container, false);
     }
@@ -70,7 +67,6 @@ public class PostProjectFragment extends Fragment {
         // Get references to view objects
         EditText etProjectType = view.findViewById(R.id.etProjectType);
         EditText etProjectDescription = view.findViewById(R.id.etProjectDescription);
-        AutoCompleteTextView tvZipCode = view.findViewById(R.id.tvZipCode);
         Button btnPost = view.findViewById(R.id.btnPost);
 
         // Set onClick for the Post button
@@ -79,7 +75,7 @@ public class PostProjectFragment extends Fragment {
             public void onClick(View v) {
                 String projectType = etProjectType.getText().toString();
                 String projectDescription = etProjectDescription.getText().toString();
-                String addressText = tvZipCode.getText().toString();
+
                 if (projectType.isEmpty() || projectDescription.isEmpty()) {
                     Toast.makeText(getContext(), R.string.fill_all_required_fields, Toast.LENGTH_SHORT).show();
                     return;
@@ -88,9 +84,7 @@ public class PostProjectFragment extends Fragment {
                 Project project = new Project();
                 project.setType(projectType);
                 project.setDescription(projectDescription);
-                if (!addressText.isEmpty()) {
-                    project.setLocation(geocoder.getGeoPointFromText(addressText));
-                }
+                project.setLocation(ParseUser.getCurrentUser().getParseGeoPoint(LOCATION));
                 // Assign saved project to the current user
                 project.setUser(ParseUser.getCurrentUser());
                 project.saveInBackground(new SaveCallback() {
@@ -106,30 +100,6 @@ public class PostProjectFragment extends Fragment {
                 });
                 NavHostFragment.findNavController(PostProjectFragment.this)
                         .navigate(R.id.action_postProjectFragment_to_DeveloperSearchFragment);
-            }
-        });
-        setUpAddressSuggestions(tvZipCode);
-    }
-
-    private void setUpAddressSuggestions(AutoCompleteTextView tvZipCode) {
-        List<String> stringList = new ArrayList<>();
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>
-                (getActivity(), android.R.layout.simple_list_item_1, stringList);
-        tvZipCode.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (tvZipCode.getText().toString().length() == ZIP_LENGTH) {
-                    String zipCode = tvZipCode.getText().toString();
-                    List<Address> addressList = geocoder.getAddressListFromText(zipCode, MAX_RESULTS);
-                    arrayAdapter.clear();
-                    for (int i = 0; i < addressList.size(); i++) {
-                        arrayAdapter.add(addressList.get(i).getAddressLine(0));
-                    }
-                    tvZipCode.setAdapter(arrayAdapter);
-                    arrayAdapter.getFilter().filter(null);
-                    tvZipCode.showDropDown();
-                }
-                return false;
             }
         });
     }

@@ -31,6 +31,9 @@ public class CustomGeoCoder {
 
     // Return a ParseGeoPoint matching the given address string
     public ParseGeoPoint getGeoPointFromText(String text) {
+        if (text.isEmpty()) {
+            return null;
+        }
         List<Address> addressList = getAddressListFromText(text, MAX_RESULTS);
         if (addressList.isEmpty()) {
             return null;
