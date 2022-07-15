@@ -1,4 +1,4 @@
-package com.orhunkolgeli.capstone;
+package com.orhunkolgeli.capstone.utils;
 
 import android.view.View;
 

@@ -11,6 +11,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.orhunkolgeli.capstone.databinding.ActivityMainBinding;
+import com.orhunkolgeli.capstone.interfaces.ProjectFilterListener;
+import com.orhunkolgeli.capstone.utils.FilterProjectsOnClick;
 import com.parse.ParseUser;
 
 import android.view.Menu;

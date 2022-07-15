@@ -1,4 +1,4 @@
-package com.orhunkolgeli.capstone;
+package com.orhunkolgeli.capstone.utils;
 
 import android.content.Context;
 import android.location.Address;

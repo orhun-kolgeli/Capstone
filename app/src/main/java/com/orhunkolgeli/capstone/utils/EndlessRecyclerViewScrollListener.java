@@ -1,4 +1,4 @@
-package com.orhunkolgeli.capstone;
+package com.orhunkolgeli.capstone.utils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;

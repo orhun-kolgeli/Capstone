@@ -1,8 +1,6 @@
-package com.orhunkolgeli.capstone;
+package com.orhunkolgeli.capstone.utils;
 
-import android.content.res.Resources;
-
-import com.facebook.stetho.common.StringUtil;
+import com.orhunkolgeli.capstone.Project;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;

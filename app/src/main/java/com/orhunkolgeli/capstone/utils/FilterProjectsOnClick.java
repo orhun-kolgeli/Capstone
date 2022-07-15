@@ -1,4 +1,4 @@
-package com.orhunkolgeli.capstone;
+package com.orhunkolgeli.capstone.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AlertDialog;
+
+import com.orhunkolgeli.capstone.R;
+import com.orhunkolgeli.capstone.interfaces.ProjectFilterListener;
 
 public class FilterProjectsOnClick {
 

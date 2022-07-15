@@ -1,8 +1,6 @@
 package com.orhunkolgeli.capstone;
 
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,9 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.orhunkolgeli.capstone.databinding.FragmentProjectSearchBinding;
+import com.orhunkolgeli.capstone.interfaces.ProjectFilterListener;
+import com.orhunkolgeli.capstone.utils.EndlessRecyclerViewScrollListener;
+import com.orhunkolgeli.capstone.utils.ProjectFilterValues;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
