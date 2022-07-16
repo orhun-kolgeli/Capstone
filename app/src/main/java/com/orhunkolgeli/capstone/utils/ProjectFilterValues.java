@@ -10,6 +10,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 
 public class ProjectFilterValues {
@@ -21,6 +23,7 @@ public class ProjectFilterValues {
     public static final String WEB = "Web";
     public static final String LOCATION = "location";
     public static final String TYPE = "type";
+    public static final String DESCRIPTION = "description";
     public static final int CREATED_AT_DESCENDING = 0;
     public static final int UPDATED_AT_DESCENDING = 1;
     public static final int APPLICANT_COUNT_ASCENDING = 2;
@@ -35,6 +38,8 @@ public class ProjectFilterValues {
     private int distance;
     private int distanceUnit;
 
+    private HashMap<String, Boolean> keywords;
+
     public ProjectFilterValues() {
         // Set default values
         this.sortBy = CREATED_AT_DESCENDING;
@@ -43,6 +48,19 @@ public class ProjectFilterValues {
         this.isWebChecked = true;
         this.distance = DEFAULT_DISTANCE;
         this.distanceUnit = MILES;
+        this.keywords = new HashMap<>();
+    }
+
+    public void addKeyword(String keyword) {
+        this.keywords.putIfAbsent(keyword, true);
+    }
+
+    public void removeKeyword(String keyword) {
+        this.keywords.remove(keyword);
+    }
+
+    public HashMap<String, Boolean> getKeywords() {
+        return keywords;
     }
 
     public int getDistanceUnit() {
@@ -103,6 +121,13 @@ public class ProjectFilterValues {
     public ProjectFilterValues setWebChecked(boolean webChecked) {
         isWebChecked = webChecked;
         return this;
+    }
+
+    public void addKeywordFilterToQuery(ParseQuery<Project> query) {
+        for (String keyword : getKeywords().keySet()) {
+            query.whereContains(DESCRIPTION, keyword);
+        }
+
     }
 
     public void addTypeFilterToQuery(ParseQuery<Project> query) {

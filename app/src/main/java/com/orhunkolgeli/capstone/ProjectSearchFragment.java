@@ -137,6 +137,8 @@ public class ProjectSearchFragment extends Fragment implements ProjectFilterList
         query.setSkip(page*LIMIT);
         // Limit query to as many items as LIMIT
         query.setLimit(LIMIT);
+        // Filter the query result by keyword in description
+        projectFilterValues.addKeywordFilterToQuery(query);
         // Filter the query result by project type
         projectFilterValues.addTypeFilterToQuery(query);
         // Filter the query result by distance

@@ -47,8 +47,8 @@
 
     <EditText
         android:id="@+id/etDistance"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="139dp"
+        android:layout_height="48dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/max_distance"
@@ -108,5 +108,59 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxWeb" />
+
+    <TextView
+        android:id="@+id/keywords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingHorizontal="5dp"
+        android:text="@string/keywords"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
+        app:layout_constraintTop_toBottomOf="@+id/etDistance" />
+
+    <Button
+        android:id="@+id/btnAddKeyword"
+        android:layout_width="67dp"
+        android:layout_height="48dp"
+        android:text="@string/add"
+        app:layout_constraintEnd_toEndOf="@+id/horizontalScrollView2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/horizontalScrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/keywords"
+        app:layout_constraintTop_toBottomOf="@+id/keywords">
+
+        <LinearLayout
+            android:id="@+id/linearLayoutKeywords"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
+    </HorizontalScrollView>
+
+    <AutoCompleteTextView
+        android:id="@+id/tvInputKeyword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:hint="@string/keyword"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        app:layout_constraintBottom_toBottomOf="@+id/btnAddKeyword"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddKeyword"
+        app:layout_constraintStart_toStartOf="@+id/horizontalScrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

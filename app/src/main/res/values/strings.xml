@@ -106,5 +106,8 @@
     <string name="signup_success">Sign up successful!</string>
     <string name="sort_by">Sort by:</string>
     <string name="within">Within:</string>
+    <string name="keywords">Keywords:</string>
+    <string name="add">Add</string>
+    <string name="keyword">Keyword</string>
 
 </resources>

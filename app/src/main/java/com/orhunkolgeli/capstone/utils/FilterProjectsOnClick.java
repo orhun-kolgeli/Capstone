@@ -2,13 +2,19 @@ package com.orhunkolgeli.capstone.utils;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.res.ResourcesCompat;
 
 import com.orhunkolgeli.capstone.R;
 import com.orhunkolgeli.capstone.interfaces.ProjectFilterListener;
@@ -24,6 +30,9 @@ public class FilterProjectsOnClick {
     private EditText etDistance;
     private Spinner spinnerDistanceUnit;
     private ProjectFilterValues projectFilterValues;
+    private Button btnAddKeyword;
+    private LinearLayout layoutKeywords;
+    private AutoCompleteTextView tvInputKeyword;
 
 
     public FilterProjectsOnClick(Context context) {
@@ -40,6 +49,9 @@ public class FilterProjectsOnClick {
         checkBoxWeb = dialogView.findViewById(R.id.checkBoxWeb);
         etDistance = dialogView.findViewById(R.id.etDistance);
         spinnerDistanceUnit = dialogView.findViewById(R.id.spinnerDistanceUnit);
+        btnAddKeyword = dialogView.findViewById(R.id.btnAddKeyword);
+        tvInputKeyword = dialogView.findViewById(R.id.tvInputKeyword);
+        layoutKeywords = dialogView.findViewById(R.id.linearLayoutKeywords);
         return this;
     }
 
@@ -51,6 +63,8 @@ public class FilterProjectsOnClick {
         checkBoxWeb.setChecked(projectFilterValues.isWebChecked());
         etDistance.setText(String.valueOf(projectFilterValues.getDistance()));
         spinnerDistanceUnit.setSelection(projectFilterValues.getDistanceUnit());
+        setOnClickAddKeyword();
+        populateKeywordLayout();
         return this;
     }
 
@@ -88,9 +102,53 @@ public class FilterProjectsOnClick {
             @Override
             public void onClick(View view) {
                 projectFilterValues = new ProjectFilterValues();
+                layoutKeywords.removeAllViews();
                 populateDialog();
             }
         });
+    }
+
+    private void setOnClickAddKeyword() {
+        btnAddKeyword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String inputKeyword = tvInputKeyword.getText().toString();
+                if (inputKeyword.isEmpty()) {
+                    return;
+                }
+                addKeyword(inputKeyword);
+            }
+        });
+    }
+
+    private void addKeyword(String inputKeyword) {
+        // Add the keyword to the query
+        projectFilterValues.addKeyword(inputKeyword);
+        // Clear the input field
+        tvInputKeyword.setText("");
+        // Create a new TextView to display the keyword
+        TextView tvKeyword = new TextView(context);
+        tvKeyword.setText(String.format("%s  ✖", inputKeyword));
+        // Style the TextView
+        tvKeyword.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        tvKeyword.setBackground(ResourcesCompat.getDrawable(context.getResources(),
+                R.drawable.rounded_corners, null));
+        tvKeyword.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        tvKeyword.setTextColor(context.getResources().getColor(R.color.white, null));
+        tvKeyword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                projectFilterValues.removeKeyword(inputKeyword);
+                v.setVisibility(View.GONE);
+            }
+        });
+        layoutKeywords.addView(tvKeyword);
+    }
+
+    private void populateKeywordLayout() {
+        for (String keyword : projectFilterValues.getKeywords().keySet()) {
+            addKeyword(keyword);
+        }
     }
 
 
