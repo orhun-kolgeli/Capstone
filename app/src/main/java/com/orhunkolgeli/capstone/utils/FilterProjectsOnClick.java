@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.res.ResourcesCompat;
@@ -122,10 +123,22 @@ public class FilterProjectsOnClick {
     }
 
     private void addKeyword(String inputKeyword) {
-        // Add the keyword to the query
-        projectFilterValues.addKeyword(inputKeyword);
         // Clear the input field
         tvInputKeyword.setText("");
+        if (!projectFilterValues.containsKeyword(inputKeyword)) {
+            // Add the keyword to the query
+            projectFilterValues.addKeyword(inputKeyword);
+            addKeywordToLayout(inputKeyword);
+        }
+    }
+
+    private void populateKeywordLayout() {
+        for (String keyword : projectFilterValues.getKeywords().keySet()) {
+            addKeywordToLayout(keyword);
+        }
+    }
+
+    private void addKeywordToLayout(String inputKeyword) {
         // Create a new TextView to display the keyword
         TextView tvKeyword = new TextView(context);
         tvKeyword.setText(String.format("%s  ✖", inputKeyword));
@@ -143,12 +156,6 @@ public class FilterProjectsOnClick {
             }
         });
         layoutKeywords.addView(tvKeyword);
-    }
-
-    private void populateKeywordLayout() {
-        for (String keyword : projectFilterValues.getKeywords().keySet()) {
-            addKeyword(keyword);
-        }
     }
 
 

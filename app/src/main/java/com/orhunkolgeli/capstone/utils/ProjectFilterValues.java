@@ -51,6 +51,10 @@ public class ProjectFilterValues {
         this.keywords = new HashMap<>();
     }
 
+    public boolean containsKeyword(String keyword) {
+        return this.keywords.containsKey(keyword);
+    }
+
     public void addKeyword(String keyword) {
         this.keywords.putIfAbsent(keyword, true);
     }
