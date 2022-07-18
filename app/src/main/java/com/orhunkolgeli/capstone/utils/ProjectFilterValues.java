@@ -1,5 +1,6 @@
 package com.orhunkolgeli.capstone.utils;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class ProjectFilterValues {
     public static final String CREATED_AT = "createdAt";
@@ -23,7 +25,6 @@ public class ProjectFilterValues {
     public static final String WEB = "Web";
     public static final String LOCATION = "location";
     public static final String TYPE = "type";
-    public static final String DESCRIPTION = "description";
     public static final int CREATED_AT_DESCENDING = 0;
     public static final int UPDATED_AT_DESCENDING = 1;
     public static final int APPLICANT_COUNT_ASCENDING = 2;
@@ -31,17 +32,21 @@ public class ProjectFilterValues {
     public static final int MILES = 0;
     public static final int KILOMETERS = 1;
     public static final int DEFAULT_DISTANCE = 3000;
+    public static final int MAX_KEYWORD_COUNT = 9;
+    public static final String WORDS = "words";
     private int sortBy;
     private boolean isAndroidChecked;
     private boolean isiOSChecked;
     private boolean isWebChecked;
     private int distance;
     private int distanceUnit;
-
     private HashMap<String, Boolean> keywords;
+    private int keywordCount;
+    private Context context;
 
-    public ProjectFilterValues() {
+    public ProjectFilterValues(Context context) {
         // Set default values
+        this.context = context;
         this.sortBy = CREATED_AT_DESCENDING;
         this.isAndroidChecked = true;
         this.isiOSChecked = true;
@@ -49,18 +54,28 @@ public class ProjectFilterValues {
         this.distance = DEFAULT_DISTANCE;
         this.distanceUnit = MILES;
         this.keywords = new HashMap<>();
+        this.keywordCount = 0;
     }
 
     public boolean containsKeyword(String keyword) {
-        return this.keywords.containsKey(keyword);
+        return this.keywords.containsKey(keyword.toLowerCase(Locale.getDefault()));
+    }
+
+    public boolean maxKeywordCountReached() {
+        return this.keywordCount >= MAX_KEYWORD_COUNT;
     }
 
     public void addKeyword(String keyword) {
-        this.keywords.putIfAbsent(keyword, true);
+        keyword = keyword.toLowerCase(Locale.getDefault());
+        if (!containsKeyword(keyword)) {
+            this.keywords.put(keyword, true);
+            this.keywordCount++;
+        }
     }
 
     public void removeKeyword(String keyword) {
-        this.keywords.remove(keyword);
+        this.keywords.remove(keyword.toLowerCase(Locale.getDefault()));
+        this.keywordCount--;
     }
 
     public HashMap<String, Boolean> getKeywords() {
@@ -128,9 +143,11 @@ public class ProjectFilterValues {
     }
 
     public void addKeywordFilterToQuery(ParseQuery<Project> query) {
-        for (String keyword : getKeywords().keySet()) {
-            query.whereContains(DESCRIPTION, keyword);
+        if (keywords.isEmpty()) {
+            return;
         }
+        List<String> keywordList = new ArrayList<>(getKeywords().keySet());
+        query.whereContainsAll(WORDS, keywordList);
 
     }
 

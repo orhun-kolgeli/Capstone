@@ -38,7 +38,7 @@ public class FilterProjectsOnClick {
 
     public FilterProjectsOnClick(Context context) {
         this.context = context;
-        this.projectFilterValues = new ProjectFilterValues();
+        this.projectFilterValues = new ProjectFilterValues(context);
     }
 
     public FilterProjectsOnClick getReferences(LayoutInflater layoutInflater) {
@@ -102,7 +102,7 @@ public class FilterProjectsOnClick {
         alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                projectFilterValues = new ProjectFilterValues();
+                projectFilterValues = new ProjectFilterValues(context);
                 layoutKeywords.removeAllViews();
                 populateDialog();
             }
@@ -123,6 +123,10 @@ public class FilterProjectsOnClick {
     }
 
     private void addKeyword(String inputKeyword) {
+        if (projectFilterValues.maxKeywordCountReached()) {
+            Toast.makeText(context, "Please remove a keyword before adding another.", Toast.LENGTH_SHORT).show();
+            return;
+        }
         // Clear the input field
         tvInputKeyword.setText("");
         if (!projectFilterValues.containsKeyword(inputKeyword)) {

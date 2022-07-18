@@ -22,6 +22,7 @@
         android:id="@+id/checkBoxAndroid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:buttonTint="@color/color_primary"
         android:text="@string/android_projects"
         app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
         app:layout_constraintTop_toBottomOf="@+id/projectType" />
@@ -31,6 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:buttonTint="@color/color_primary"
         android:text="@string/ios_projects"
         app:layout_constraintBottom_toBottomOf="@+id/checkBoxAndroid"
         app:layout_constraintStart_toEndOf="@+id/checkBoxAndroid"
@@ -41,6 +43,7 @@
         android:id="@+id/checkBoxWeb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:buttonTint="@color/color_primary"
         android:text="@string/web_projects"
         app:layout_constraintStart_toStartOf="@+id/checkBoxAndroid"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxiOS" />
@@ -127,6 +130,7 @@
         android:layout_width="67dp"
         android:layout_height="48dp"
         android:text="@string/add"
+        app:icon="@android:drawable/ic_input_add"
         app:layout_constraintEnd_toEndOf="@+id/horizontalScrollView2"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/horizontalScrollView2"
