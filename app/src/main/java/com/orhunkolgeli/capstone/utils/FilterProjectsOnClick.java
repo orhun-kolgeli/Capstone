@@ -20,6 +20,8 @@ import androidx.core.content.res.ResourcesCompat;
 import com.orhunkolgeli.capstone.R;
 import com.orhunkolgeli.capstone.interfaces.ProjectFilterListener;
 
+import java.util.Locale;
+
 public class FilterProjectsOnClick {
 
     private Context context;
@@ -33,7 +35,7 @@ public class FilterProjectsOnClick {
     private ProjectFilterValues projectFilterValues;
     private Button btnAddKeyword;
     private LinearLayout layoutKeywords;
-    private AutoCompleteTextView tvInputKeyword;
+    private EditText tvInputKeyword;
 
 
     public FilterProjectsOnClick(Context context) {
@@ -145,7 +147,7 @@ public class FilterProjectsOnClick {
     private void addKeywordToLayout(String inputKeyword) {
         // Create a new TextView to display the keyword
         TextView tvKeyword = new TextView(context);
-        tvKeyword.setText(String.format("%s  ✖", inputKeyword));
+        tvKeyword.setText(String.format("%s  ✖", inputKeyword.toLowerCase(Locale.getDefault())));
         // Style the TextView
         tvKeyword.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         tvKeyword.setBackground(ResourcesCompat.getDrawable(context.getResources(),

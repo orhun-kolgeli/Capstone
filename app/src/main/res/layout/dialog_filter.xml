@@ -9,6 +9,7 @@
         android:id="@+id/spinnerSortProjects"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:entries="@array/project_sorting_options_array"
         android:minHeight="48dp"
         android:paddingVertical="10dp"
@@ -16,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sortBy" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
         android:id="@+id/checkBoxAndroid"
@@ -25,7 +26,7 @@
         android:buttonTint="@color/color_primary"
         android:text="@string/android_projects"
         app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
-        app:layout_constraintTop_toBottomOf="@+id/projectType" />
+        app:layout_constraintTop_toBottomOf="@+id/spinnerSortProjects" />
 
     <CheckBox
         android:id="@+id/checkBoxiOS"
@@ -48,104 +49,84 @@
         app:layout_constraintStart_toStartOf="@+id/checkBoxAndroid"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxiOS" />
 
-    <EditText
-        android:id="@+id/etDistance"
-        android:layout_width="139dp"
-        android:layout_height="48dp"
-        android:autofillHints=""
-        android:ems="10"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etDistanceParent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:hint="@string/max_distance"
-        android:inputType="numberDecimal"
-        android:minHeight="48dp"
-        android:paddingHorizontal="10dp"
-        android:textColorHint="#757575"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerDistanceUnit"
         app:layout_constraintStart_toStartOf="@+id/checkBoxWeb"
-        app:layout_constraintTop_toBottomOf="@+id/within"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxWeb"
+        app:layout_constraintVertical_bias="0.0">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etDistance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            android:textColorHint="#757575" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Spinner
         android:id="@+id/spinnerDistanceUnit"
-        android:layout_width="119dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="24dp"
         android:entries="@array/units_of_distance"
-        app:layout_constraintBottom_toBottomOf="@+id/etDistance"
-        app:layout_constraintStart_toEndOf="@+id/etDistance"
-        app:layout_constraintTop_toTopOf="@+id/etDistance" />
+        app:layout_constraintBottom_toBottomOf="@+id/etDistanceParent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etDistanceParent"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/sortBy"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tvInputKeywordParent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:paddingHorizontal="5dp"
-        android:text="@string/sort_by"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginEnd="8dp"
+        android:hint="@string/keyword"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/btnAddKeyword"
+        app:layout_constraintStart_toStartOf="@+id/horizontalScrollView2"
+        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2">
 
-    <TextView
-        android:id="@+id/projectType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:paddingHorizontal="5dp"
-        android:text="@string/project_type"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerSortProjects" />
-
-    <TextView
-        android:id="@+id/within"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:paddingHorizontal="5dp"
-        android:text="@string/within"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxWeb" />
-
-    <TextView
-        android:id="@+id/keywords"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:paddingHorizontal="5dp"
-        android:text="@string/keywords"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/spinnerSortProjects"
-        app:layout_constraintTop_toBottomOf="@+id/etDistance" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tvInputKeyword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:labelFor="@+id/tvInputKeywordParent"
+            android:minHeight="48dp"
+            android:textColorHint="#757575" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnAddKeyword"
         android:layout_width="67dp"
-        android:layout_height="48dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/add"
         app:icon="@android:drawable/ic_input_add"
-        app:layout_constraintEnd_toEndOf="@+id/horizontalScrollView2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/horizontalScrollView2"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
+        app:layout_constraintBottom_toBottomOf="@+id/tvInputKeywordParent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvInputKeywordParent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/keywords"
-        app:layout_constraintTop_toBottomOf="@+id/keywords">
+        app:layout_constraintStart_toStartOf="@+id/etDistanceParent"
+        app:layout_constraintTop_toBottomOf="@+id/etDistanceParent">
 
         <LinearLayout
             android:id="@+id/linearLayoutKeywords"
@@ -154,17 +135,5 @@
             android:orientation="horizontal" />
     </HorizontalScrollView>
 
-    <AutoCompleteTextView
-        android:id="@+id/tvInputKeyword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:hint="@string/keyword"
-        android:minHeight="48dp"
-        android:textColorHint="#757575"
-        app:layout_constraintBottom_toBottomOf="@+id/btnAddKeyword"
-        app:layout_constraintEnd_toStartOf="@+id/btnAddKeyword"
-        app:layout_constraintStart_toStartOf="@+id/horizontalScrollView2"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
