@@ -70,7 +70,7 @@ public class ProjectSearchFragment extends Fragment implements ProjectFilterList
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         // Initialize project filter values
         if (projectFilterValues == null) {
-            projectFilterValues = new ProjectFilterValues(getContext());
+            projectFilterValues = new ProjectFilterValues();
         }
         setHasOptionsMenu(true);
         // Read in the projects from database

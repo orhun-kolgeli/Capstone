@@ -40,13 +40,11 @@ public class ProjectFilterValues {
     private boolean isWebChecked;
     private int distance;
     private int distanceUnit;
-    private HashMap<String, Boolean> keywords;
+    private final HashMap<String, Boolean> keywords;
     private int keywordCount;
-    private Context context;
 
-    public ProjectFilterValues(Context context) {
+    public ProjectFilterValues() {
         // Set default values
-        this.context = context;
         this.sortBy = CREATED_AT_DESCENDING;
         this.isAndroidChecked = true;
         this.isiOSChecked = true;

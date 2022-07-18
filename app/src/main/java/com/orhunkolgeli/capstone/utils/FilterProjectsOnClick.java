@@ -38,7 +38,7 @@ public class FilterProjectsOnClick {
 
     public FilterProjectsOnClick(Context context) {
         this.context = context;
-        this.projectFilterValues = new ProjectFilterValues(context);
+        this.projectFilterValues = new ProjectFilterValues();
     }
 
     public FilterProjectsOnClick getReferences(LayoutInflater layoutInflater) {
@@ -102,7 +102,7 @@ public class FilterProjectsOnClick {
         alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                projectFilterValues = new ProjectFilterValues(context);
+                projectFilterValues = new ProjectFilterValues();
                 layoutKeywords.removeAllViews();
                 populateDialog();
             }
