@@ -152,24 +152,24 @@ public class ProjectDetailFragment extends Fragment {
     }
 
     private void showNoDeveloperAccountAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle(R.string.dev_profile_needed_to_apply);
-        builder.setMessage(R.string.set_up_profile_now);
-        builder.setIcon(R.drawable.icon);
-        builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Navigation.findNavController(binding.getRoot())
-                        .navigate(R.id.action_ProjectDetailFragment_to_setupProfileFragment);
-            }
-        });
-        builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.dev_profile_needed_to_apply)
+                .setMessage(R.string.set_up_profile_now)
+                .setIcon(R.drawable.icon)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Navigation.findNavController(binding.getRoot())
+                                .navigate(R.id.action_ProjectDetailFragment_to_setupProfileFragment);
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create()
+                .show();
     }
 }

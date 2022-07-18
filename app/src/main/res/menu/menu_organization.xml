@@ -1,17 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.orhunkolgeli.capstone.MainActivity">
+    tools:context="com.orhunkolgeli.capstone.OrganizationActivity">
     <item
         android:id="@+id/action_logout"
         android:orderInCategory="100"
         android:title="@string/log_out"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_filter"
-        android:icon="@drawable/filter"
-        android:title="@string/filter"
-        android:visible="false"
-        app:showAsAction="ifRoom" />
 
 </menu>

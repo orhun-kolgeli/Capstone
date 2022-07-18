@@ -96,4 +96,10 @@ public class DeveloperAdapter extends RecyclerView.Adapter<DeveloperAdapter.View
             });
         }
     }
+
+    public void clear() {
+        int size = developers.size();
+        developers.clear();
+        notifyItemRangeRemoved(0, size);
+    }
 }

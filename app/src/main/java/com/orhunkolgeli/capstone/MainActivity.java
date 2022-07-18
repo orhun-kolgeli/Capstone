@@ -3,24 +3,16 @@ package com.orhunkolgeli.capstone;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
-import android.view.View;
-
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.orhunkolgeli.capstone.databinding.ActivityMainBinding;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
+import com.orhunkolgeli.capstone.interfaces.ProjectFilterListener;
+import com.orhunkolgeli.capstone.utils.FilterProjectsOnClick;
 import com.parse.ParseUser;
 
 import android.view.Menu;
@@ -30,8 +22,10 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    public ProjectFilterListener projectFilterListener = null;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private FilterProjectsOnClick filterProjectsOnClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
+        filterProjectsOnClick = new FilterProjectsOnClick(this);
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
@@ -71,16 +66,20 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, R.string.logout_successful, Toast.LENGTH_SHORT).show();
             });
             return true;
+        } else if (id == R.id.action_filter) {
+            filterProjectsOnClick
+                    .getReferences(getLayoutInflater())
+                    .populateDialog()
+                    .showDialog(projectFilterListener);
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+        NavController navController = Navigation
+                .findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
-
-
 }

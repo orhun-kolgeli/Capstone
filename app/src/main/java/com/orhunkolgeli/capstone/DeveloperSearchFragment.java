@@ -1,31 +1,19 @@
 package com.orhunkolgeli.capstone;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.orhunkolgeli.capstone.databinding.FragmentDeveloperSearchBinding;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.orhunkolgeli.capstone.utils.ZoomOutPageTransformer;
 
 public class DeveloperSearchFragment extends Fragment {
 
@@ -52,6 +40,13 @@ public class DeveloperSearchFragment extends Fragment {
         // Create a TabLayoutMediator to link the TabLayout to the ViewPager2 and attach it
         new TabLayoutMediator(tabLayout, viewPager,
                 (tab, position) -> tab.setText(tabTitles[position])).attach();
+        binding.fabAddProject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavHostFragment.findNavController(DeveloperSearchFragment.this).navigate(
+                        R.id.action_DeveloperSearchFragment_to_postProjectFragment);
+            }
+        });
     }
 
     @Override

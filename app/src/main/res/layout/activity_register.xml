@@ -8,6 +8,20 @@
     android:paddingHorizontal="25dp"
     tools:context=".RegisterActivity">
 
+    <AutoCompleteTextView
+        android:id="@+id/tvZipCode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/zip_code"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.32"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+
     <TextView
         android:id="@+id/tvHaveAccount"
         android:layout_width="wrap_content"
@@ -114,6 +128,6 @@
         android:text="@string/organization"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/etPassword"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/tvZipCode" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

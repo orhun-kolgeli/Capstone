@@ -81,4 +81,33 @@
     <string name="you_currently_have_no_applications">You currently have no applications</string>
     <string name="update_profile">Update your profile</string>
     <string name="update">Update</string>
+    <string name="filter">Filter</string>
+    <string name="android_projects">Android Projects</string>
+    <string name="web_projects">Web Projects</string>
+    <string name="ios_projects">iOS Projects</string>
+    <string name="date_posted">Date Posted (Newest First)</string>
+    <string name="data_updated">Date Updated (Newest First)</string>
+    <string name="num_applicants_ascending">Number of Applicants (Ascending)</string>
+    <string name="num_applicants_descending">Number of Applicants (Descending)</string>
+    <string name="filter_projects">Filter &amp; Sort Projects</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_loading_projects">Error retrieving projects from database</string>
+    <string name="organization_s_zip_code">Organization\'s Zip Code</string>
+    <string name="find">Find</string>
+    <string name="verify">Verify</string>
+    <string name="fill_all_required_fields">Please fill all required fields.</string>
+    <string name="project_save_success">Project saved successfully</string>
+    <string name="kilometers">kilometers</string>
+    <string name="miles">miles</string>
+    <string name="max_distance">Max Distance</string>
+    <string name="reset">Reset</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="provide_zip_code">Please provide your zip code</string>
+    <string name="signup_success">Sign up successful!</string>
+    <string name="sort_by">Sort by:</string>
+    <string name="within">Within:</string>
+    <string name="keywords">Keywords:</string>
+    <string name="add">Add</string>
+    <string name="keyword">Keyword</string>
+
 </resources>
