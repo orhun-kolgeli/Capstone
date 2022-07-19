@@ -1,18 +1,15 @@
 package com.orhunkolgeli.capstone;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -21,6 +18,7 @@ import com.codepath.asynchttpclient.RequestHeaders;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.orhunkolgeli.capstone.databinding.FragmentDeveloperDetailBinding;
+import com.orhunkolgeli.capstone.utils.CustomTextView;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
@@ -32,8 +30,6 @@ import com.parse.ParseUser;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import okhttp3.Headers;
 
@@ -145,22 +141,10 @@ public class DeveloperDetailFragment extends Fragment {
                 }
                 String html_url = jsonObject.getString("html_url");
                 // Create a new TextView to put into linearLayoutRepos
-                TextView tvRepo = new TextView(getContext());
+                CustomTextView tvRepo = new CustomTextView(requireContext());
                 tvRepo.setText(String.format("%s\n·\n%s", repoName, language));
-                // Style the TextView
-                tvRepo.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                tvRepo.setBackground(ResourcesCompat.getDrawable(getResources(),
-                        R.drawable.rounded_corners, null));
-                tvRepo.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-                tvRepo.setTextColor(getResources().getColor(R.color.white, null));
-                // Take user to the repository on GitHub upon click
-                tvRepo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(html_url));
-                        startActivity(i);
-                    }
-                });
+                setOnLongPressListener(tvRepo, html_url);
+                setWebViewWindow();
                 // Put the TextView into the LinearLayout
                 binding.linearLayoutRepos.addView(tvRepo);
             } catch (JSONException e) {
@@ -168,6 +152,15 @@ public class DeveloperDetailFragment extends Fragment {
             }
         }
         binding.pbLoadingRepos.setVisibility(View.GONE);
+    }
+
+    private void setWebViewWindow() {
+        binding.ivCloseWebView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.clWebView.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void sendNotificationToDeveloper(@NonNull Developer developer) {
@@ -188,5 +181,32 @@ public class DeveloperDetailFragment extends Fragment {
         push.setMessage(ParseUser.getCurrentUser().getString("name") +
                 " would like you to consider their project!");
         push.sendInBackground();
+    }
+
+    private void setOnLongPressListener(CustomTextView tvRepo, String html_url) {
+        // Set onLongPress listener
+        tvRepo.setOnTouchListener(new View.OnTouchListener() {
+            private final GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    binding.clWebView.setVisibility(View.VISIBLE);
+                    binding.webViewRepo.loadUrl(html_url);
+                    binding.webViewRepo.bringToFront();
+                    super.onLongPress(e);
+                }
+
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    binding.clWebView.setVisibility(View.GONE);
+                    return super.onSingleTapUp(e);
+                }
+            });
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                tvRepo.performClick();
+                gestureDetector.onTouchEvent(event);
+                return false;
+            }
+        });
     }
 }
