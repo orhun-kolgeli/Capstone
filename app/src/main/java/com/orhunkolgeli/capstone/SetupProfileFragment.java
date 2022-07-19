@@ -14,6 +14,7 @@ import android.text.method.TextKeyListener;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -81,7 +82,6 @@ public class SetupProfileFragment extends Fragment {
         Developer existingProfile = (Developer) ParseUser.getCurrentUser().getParseObject("developer");
         if (existingProfile != null) {
             try {
-                ((MainActivity) requireActivity()).getSupportActionBar().setTitle(R.string.update_profile);
                 btnSave.setText(R.string.update);
                 existingProfile = existingProfile.fetchIfNeeded();
                 mactvSkills.setText(existingProfile.getSkills());
@@ -141,12 +141,24 @@ public class SetupProfileFragment extends Fragment {
         mactvSkills.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                    mactvSkills.setText(mactvSkills.getText().toString().replaceAll(", $", ""));
-                    mactvSkills.setSelection(mactvSkills.getText().length());
-                    return true;
+                if (keyCode == KeyEvent.KEYCODE_DEL) {
+                    if (mactvSkills.getText().toString().endsWith(", ")) {
+                        mactvSkills.setText(mactvSkills.getText().toString().replaceAll(", $", ""));
+                        mactvSkills.setSelection(mactvSkills.getText().length());
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
                 return false;
+            }
+        });
+        mactvSkills.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    mactvSkills.append(", ");
+                }
             }
         });
     }

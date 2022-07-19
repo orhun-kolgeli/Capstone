@@ -54,8 +54,8 @@
     <fragment
         android:id="@+id/setupProfileFragment"
         android:name="com.orhunkolgeli.capstone.SetupProfileFragment"
-        android:label="Set Up Your Profile"
-        tools:layout="@layout/fragment_setup_profile" >
+        android:label="Your Developer Profile"
+        tools:layout="@layout/fragment_setup_profile">
         <action
             android:id="@+id/action_setupProfileFragment_to_ProjectSearchFragment"
             app:destination="@id/ProjectSearchFragment"

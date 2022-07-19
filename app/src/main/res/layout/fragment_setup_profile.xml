@@ -7,47 +7,77 @@
     android:paddingHorizontal="25dp"
     tools:context=".SetupProfileFragment">
 
-    <EditText
-        android:id="@+id/etBio"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etBioParent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:autofillHints=""
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/bio"
-        android:inputType="textMultiLine"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <MultiAutoCompleteTextView
-        android:id="@+id/mactvSkills"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textMultiLine"
+            android:textColorHint="#757575" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/mactvSkillsParent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:completionThreshold="1"
         android:hint="@string/skills"
+        android:labelFor="@id/mactvSkills"
+        android:layout_marginTop="32dp"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etGitHub" />
+        app:layout_constraintTop_toBottomOf="@+id/etGitHubParent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <EditText
-        android:id="@+id/etGitHub"
+        <MultiAutoCompleteTextView
+            android:id="@+id/mactvSkills"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:completionThreshold="1"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="17dp"
+            android:textColorHint="#757575" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/etGitHubParent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:autofillHints=""
-        android:ems="10"
         android:hint="@string/github"
-        android:inputType="textPersonName"
+        android:layout_marginTop="32dp"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etBio" />
+        app:layout_constraintTop_toBottomOf="@+id/etBioParent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etGitHub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColorHint="#757575" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSave"
@@ -58,7 +88,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mactvSkills" />
+        app:layout_constraintTop_toBottomOf="@+id/mactvSkillsParent" />
 
     <ImageView
         android:id="@+id/imageView"
