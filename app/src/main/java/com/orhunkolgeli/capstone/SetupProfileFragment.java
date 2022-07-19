@@ -10,7 +10,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.TextKeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +72,7 @@ public class SetupProfileFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         // Get references to view objects
         MultiAutoCompleteTextView mactvSkills = view.findViewById(R.id.mactvSkills);
+        setSkillsKeyListener(mactvSkills);
         EditText etBio = view.findViewById(R.id.etBio);
         EditText etGitHub = view.findViewById(R.id.etGitHub);
         Button btnSave = view.findViewById(R.id.btnSave);
@@ -130,6 +133,20 @@ public class SetupProfileFragment extends Fragment {
                 });
                 NavHostFragment.findNavController(SetupProfileFragment.this)
                         .navigate(R.id.action_setupProfileFragment_to_ProjectSearchFragment);
+            }
+        });
+    }
+
+    private void setSkillsKeyListener(MultiAutoCompleteTextView mactvSkills) {
+        mactvSkills.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    mactvSkills.setText(mactvSkills.getText().toString().replaceAll(", $", ""));
+                    mactvSkills.setSelection(mactvSkills.getText().length());
+                    return true;
+                }
+                return false;
             }
         });
     }
