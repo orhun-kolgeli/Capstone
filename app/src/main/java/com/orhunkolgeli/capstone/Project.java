@@ -26,6 +26,7 @@ public class Project extends ParseObject {
     public static final String KEY_APPLICANTS = "applicants";
     public static final String KEY_APPLICANT_COUNT = "applicantCount";
     public static final String KEY_LOCATION = "location";
+    public static final String KEY_IMAGE_DESCRIPTION = "imageDescription";
 
     public String getType() {
         return getString(KEY_TYPE);
@@ -89,6 +90,14 @@ public class Project extends ParseObject {
 
     public void setLocation (ParseGeoPoint geoPoint) {
         put(KEY_LOCATION, geoPoint);
+    }
+
+    public String getImageDescription() {
+        return getString(KEY_IMAGE_DESCRIPTION);
+    }
+
+    public void setImageDescription(String imageDescription) {
+        put(KEY_IMAGE_DESCRIPTION, imageDescription);
     }
 
 }

@@ -110,5 +110,8 @@
     <string name="add">Add</string>
     <string name="keyword">Keyword</string>
     <string name="closes_the_webview">Closes the WebView</string>
+    <string name="upload_descriptive_image">Please upload a descriptive image</string>
+    <string name="upload_project_image">Upload project image</string>
+    <string name="image_description">Image description</string>
 
 </resources>

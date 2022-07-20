@@ -100,6 +100,8 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ViewHold
             // Load image describing the project from Parse server
             ParseFile image = project.getImage();
             if (image != null) {
+                ivProjectImage.setContentDescription(project.getImageDescription());
+                ivProjectImage.setTooltipText(project.getImageDescription());
                 // Reset the size of ivProjectImage
                 ivProjectImage.layout(0,0,0,0);
                 // Load project image into ivProjectImage

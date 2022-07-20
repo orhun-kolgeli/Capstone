@@ -10,19 +10,19 @@
     <Button
         android:id="@+id/btnPost"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
         android:text="@string/post"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etProjectDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/etImageDescription" />
 
     <EditText
         android:id="@+id/etProjectType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:autofillHints=""
         android:ems="10"
         android:gravity="start|top"
@@ -31,6 +31,7 @@
         android:minHeight="48dp"
         android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivProjectPic"
         tools:ignore="TextContrastCheck" />
@@ -39,7 +40,7 @@
         android:id="@+id/etProjectDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:autofillHints=""
         android:ems="10"
         android:gravity="start|top"
@@ -53,7 +54,7 @@
 
     <ImageView
         android:id="@+id/ivProjectPic"
-        android:layout_width="241dp"
+        android:layout_width="0dp"
         android:layout_height="213dp"
         android:layout_marginTop="24dp"
         android:contentDescription="@string/people_building_things"
@@ -61,5 +62,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnUploadProjectImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/upload_project_image"
+        app:icon="@drawable/upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etProjectDescription" />
+
+    <EditText
+        android:id="@+id/etImageDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/image_description"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:textColorHint="#757575"
+        app:layout_constraintEnd_toEndOf="@+id/btnUploadProjectImage"
+        app:layout_constraintStart_toStartOf="@+id/btnUploadProjectImage"
+        app:layout_constraintTop_toBottomOf="@+id/btnUploadProjectImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
