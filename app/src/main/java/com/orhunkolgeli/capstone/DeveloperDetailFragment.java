@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -78,6 +77,7 @@ public class DeveloperDetailFragment extends Fragment {
             setApplicantOnClickListeners(developer);
         }
         getGitHubRepos(developer.getGitHub());
+        binding.webViewRepo.setOnPinchToZoomListener(binding);
     }
 
     private void setApplicantOnClickListeners(Developer developer) {
@@ -144,7 +144,7 @@ public class DeveloperDetailFragment extends Fragment {
                 CustomTextView tvRepo = new CustomTextView(requireContext());
                 tvRepo.setText(String.format("%s\n·\n%s", repoName, language));
                 setOnLongPressListener(tvRepo, html_url);
-                setWebViewWindow();
+                setWebViewLayout();
                 // Put the TextView into the LinearLayout
                 binding.linearLayoutRepos.addView(tvRepo);
             } catch (JSONException e) {
@@ -154,7 +154,7 @@ public class DeveloperDetailFragment extends Fragment {
         binding.pbLoadingRepos.setVisibility(View.GONE);
     }
 
-    private void setWebViewWindow() {
+    private void setWebViewLayout() {
         binding.ivCloseWebView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,7 +186,8 @@ public class DeveloperDetailFragment extends Fragment {
     private void setOnLongPressListener(CustomTextView tvRepo, String html_url) {
         // Set onLongPress listener
         tvRepo.setOnTouchListener(new View.OnTouchListener() {
-            private final GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
+            private final GestureDetector gestureDetector = new GestureDetector(getContext(),
+                    new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public void onLongPress(MotionEvent e) {
                     binding.clWebView.setVisibility(View.VISIBLE);
@@ -203,7 +204,7 @@ public class DeveloperDetailFragment extends Fragment {
             });
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                tvRepo.performClick();
+                v.performClick();
                 gestureDetector.onTouchEvent(event);
                 return false;
             }
