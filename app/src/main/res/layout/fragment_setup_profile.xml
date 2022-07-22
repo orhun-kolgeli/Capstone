@@ -9,9 +9,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etBioParent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:gravity="start|top"
         android:hint="@string/bio"
@@ -19,8 +20,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        app:layout_constraintTop_toBottomOf="@+id/animationView"
+        app:startIconDrawable="@drawable/personcircle">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etBio"
@@ -34,16 +35,17 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/mactvSkillsParent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:hint="@string/skills"
         android:labelFor="@id/mactvSkills"
-        android:layout_marginTop="32dp"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etGitHubParent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        app:startIconDrawable="@drawable/javascript">
 
         <MultiAutoCompleteTextView
             android:id="@+id/mactvSkills"
@@ -57,19 +59,18 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/etGitHubParent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/github"
         android:layout_marginTop="32dp"
+        android:hint="@string/github"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etBioParent"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        app:startIconDrawable="@drawable/anglebrackets">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etGitHub"
@@ -90,15 +91,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mactvSkillsParent" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="327dp"
-        android:layout_height="176dp"
-        android:layout_marginTop="52dp"
-        android:contentDescription="@string/two_developers_discussing"
-        android:src="@drawable/dev"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="0dp"
+        android:layout_height="230dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/developers" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
