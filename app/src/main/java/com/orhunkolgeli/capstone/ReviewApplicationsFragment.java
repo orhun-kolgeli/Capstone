@@ -46,7 +46,9 @@ public class ReviewApplicationsFragment extends Fragment {
         // Create an adapter
         Project project = null;
         try {
-            project = (Project) ParseUser.getCurrentUser().getParseObject("project").fetchIfNeeded();
+            if (ParseUser.getCurrentUser().getParseObject("project") != null) {
+                project = (Project) ParseUser.getCurrentUser().getParseObject("project").fetchIfNeeded();
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -88,6 +90,11 @@ public class ReviewApplicationsFragment extends Fragment {
     }
 
     private void loadApplicants(Project project) {
+        if (project == null) {
+            binding.pbLoadApplicants.setVisibility(View.GONE);
+            binding.tvLoadingApplicants.setVisibility(View.GONE);
+            return;
+        }
         project.getApplicants().getQuery().findInBackground(new FindCallback<Developer>() {
             @Override
             public void done(List<Developer> developers, ParseException e) {
