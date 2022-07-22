@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.orhunkolgeli.capstone.models.Project;
 import com.orhunkolgeli.capstone.utils.GetFileFromUri;
 import com.parse.ParseException;
 import com.parse.ParseFile;

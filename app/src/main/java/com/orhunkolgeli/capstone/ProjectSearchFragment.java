@@ -18,12 +18,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.orhunkolgeli.capstone.databinding.FragmentProjectSearchBinding;
 import com.orhunkolgeli.capstone.interfaces.ProjectFilterListener;
+import com.orhunkolgeli.capstone.models.Project;
 import com.orhunkolgeli.capstone.utils.EndlessRecyclerViewScrollListener;
 import com.orhunkolgeli.capstone.utils.ProjectFilterValues;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;

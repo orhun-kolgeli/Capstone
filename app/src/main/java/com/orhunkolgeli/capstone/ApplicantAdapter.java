@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.orhunkolgeli.capstone.interfaces.RemoveCallback;
+import com.orhunkolgeli.capstone.models.Developer;
 
 import java.util.List;
 

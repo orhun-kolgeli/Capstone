@@ -3,7 +3,6 @@ package com.orhunkolgeli.capstone;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,11 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.orhunkolgeli.capstone.databinding.FragmentFindDeveloperBinding;
 import com.orhunkolgeli.capstone.databinding.FragmentReviewApplicationsBinding;
+import com.orhunkolgeli.capstone.models.Developer;
+import com.orhunkolgeli.capstone.models.Project;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;

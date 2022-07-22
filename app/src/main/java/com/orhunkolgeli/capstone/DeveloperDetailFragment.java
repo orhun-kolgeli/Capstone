@@ -17,6 +17,8 @@ import com.codepath.asynchttpclient.RequestHeaders;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.orhunkolgeli.capstone.databinding.FragmentDeveloperDetailBinding;
+import com.orhunkolgeli.capstone.models.Developer;
+import com.orhunkolgeli.capstone.models.Project;
 import com.orhunkolgeli.capstone.utils.CustomTextView;
 import com.parse.GetCallback;
 import com.parse.ParseException;

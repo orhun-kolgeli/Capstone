@@ -41,7 +41,7 @@
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
         <argument android:name="developer"
-            app:argType="com.orhunkolgeli.capstone.Developer" />
+            app:argType="com.orhunkolgeli.capstone.models.Developer" />
         <argument
             android:name="developerCategory"
             app:argType="com.orhunkolgeli.capstone.DeveloperDetailFragment$DeveloperCategory" />

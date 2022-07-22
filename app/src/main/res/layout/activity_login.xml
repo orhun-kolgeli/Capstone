@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.orhunkolgeli.capstone.viewmodel.LoginViewModel" />
+    </data>
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="25dp"
-    tools:context=".LoginActivity">
+    bind:context=".LoginActivity">
 
     <EditText
         android:id="@+id/etUsername"
@@ -20,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivLogo"
-        tools:ignore="TextContrastCheck" />
+        bind:ignore="TextContrastCheck" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -34,7 +42,7 @@
         android:minHeight="48dp"
         app:layout_constraintStart_toStartOf="@+id/etUsername"
         app:layout_constraintTop_toBottomOf="@+id/etUsername"
-        tools:ignore="TextContrastCheck" />
+        bind:ignore="TextContrastCheck" />
 
 
     <Button
@@ -47,7 +55,7 @@
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="@+id/etPassword"
         app:layout_constraintTop_toBottomOf="@+id/etPassword"
-        tools:ignore="TextContrastCheck" />
+        bind:ignore="TextContrastCheck" />
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -74,3 +82,4 @@
         app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

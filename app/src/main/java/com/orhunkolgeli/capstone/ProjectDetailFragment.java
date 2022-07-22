@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,18 +18,16 @@ import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.orhunkolgeli.capstone.databinding.FragmentProjectDetailBinding;
+import com.orhunkolgeli.capstone.models.Developer;
+import com.orhunkolgeli.capstone.models.Project;
 import com.parse.CountCallback;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
-import com.parse.ParseRelation;
 import com.parse.ParseUser;
-
-import java.util.List;
 
 public class ProjectDetailFragment extends Fragment {
 

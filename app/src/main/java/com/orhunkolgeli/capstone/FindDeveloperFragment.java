@@ -10,14 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.orhunkolgeli.capstone.databinding.FragmentDeveloperSearchBinding;
 import com.orhunkolgeli.capstone.databinding.FragmentFindDeveloperBinding;
+import com.orhunkolgeli.capstone.models.Developer;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
