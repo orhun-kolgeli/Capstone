@@ -45,14 +45,19 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel.getUserType().observe(this, new Observer<LoginViewModel.UserType>() {
             @Override
             public void onChanged(LoginViewModel.UserType userType) {
-                Intent intent;
-                if (userType == LoginViewModel.UserType.DEVELOPER) {
-                    intent = new Intent(LoginActivity.this, MainActivity.class);
-                } else  {
-                    intent = new Intent(LoginActivity.this, OrganizationActivity.class);
+                Intent intent = null;
+                switch (userType) {
+                    case DEVELOPER:
+                        intent = new Intent(LoginActivity.this, MainActivity.class);
+                        break;
+                    case ORGANIZATION:
+                        intent = new Intent(LoginActivity.this, OrganizationActivity.class);
+                        break;
                 }
-                startActivity(intent);
-                finish();
+                if (intent != null) {
+                    startActivity(intent);
+                    finish();
+                }
             }
         });
 
