@@ -1,17 +1,11 @@
 package com.orhunkolgeli.capstone.utils;
 
-import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.orhunkolgeli.capstone.LoginActivity;
-import com.orhunkolgeli.capstone.Project;
+import com.orhunkolgeli.capstone.models.Project;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;

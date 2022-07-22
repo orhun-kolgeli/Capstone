@@ -1,133 +1,81 @@
 package com.orhunkolgeli.capstone;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
-import com.codepath.asynchttpclient.AsyncHttpClient;
-import com.codepath.asynchttpclient.RequestParams;
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.codepath.asynchttpclient.callback.TextHttpResponseHandler;
-import com.google.android.gms.common.GoogleApiAvailability;
+import com.orhunkolgeli.capstone.databinding.ActivityLoginBinding;
+import com.orhunkolgeli.capstone.models.User;
+import com.orhunkolgeli.capstone.viewmodel.LoginViewModel;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
-import com.parse.ParsePush;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.Headers;
-
 public class LoginActivity extends AppCompatActivity {
-    public static final String TAG = "LoginActvity";
-    public static final String KEY_ORGANIZATION = "organization";
-    private EditText etUsername;
-    private EditText etPassword;
-    private Button btnLogin;
-    private TextView tvDontHaveAccount;
+    private LoginViewModel loginViewModel;
+    private ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
         getSupportActionBar().setTitle(R.string.log_in_toolbar);
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        // Check if user is already logged in
-        if (currentUser != null) {
-            boolean isOrganization = currentUser.getBoolean(KEY_ORGANIZATION);
-            if (isOrganization) {
-                launchOrganizationView();
-            } else {
-                launchDeveloperView();
-            }
-        }
-        etUsername = findViewById(R.id.etUsername);
-        etPassword = findViewById(R.id.etPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+
+        binding = DataBindingUtil.setContentView(LoginActivity.this, R.layout.activity_login);
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+        binding.setLifecycleOwner(this);
+        binding.setViewModel(loginViewModel);
+
+        loginViewModel.getMessage().observe(this, new Observer<Integer>() {
             @Override
-            public void onClick(View v) {
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                logUserIn(username, password);
+            public void onChanged(Integer message) {
+                Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
-        tvDontHaveAccount = findViewById(R.id.tvDontHaveAccount);
-        tvDontHaveAccount.setOnClickListener(new View.OnClickListener() {
+
+        loginViewModel.getUserType().observe(this, new Observer<LoginViewModel.UserType>() {
+            @Override
+            public void onChanged(LoginViewModel.UserType userType) {
+                Intent intent = null;
+                switch (userType) {
+                    case DEVELOPER:
+                        intent = new Intent(LoginActivity.this, MainActivity.class);
+                        break;
+                    case ORGANIZATION:
+                        intent = new Intent(LoginActivity.this, OrganizationActivity.class);
+                        break;
+                }
+                if (intent != null) {
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loginViewModel.updateUser(binding.etUsername.getText().toString(),
+                                          binding.etPassword.getText().toString());
+                loginViewModel.login();
+            }
+        });
+
+        binding.tvDontHaveAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
             }
         });
-    }
-
-    private void logUserIn(String username, String password) {
-        Log.i(TAG, "Attempting to log in: " + username);
-        ParseUser.logInInBackground(username, password, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                if (e != null) { // exception thrown
-                    Log.e(TAG, "Login error", e);
-                    if (username.isEmpty()) {
-                        Toast.makeText(LoginActivity.this, R.string.enter_username,
-                                Toast.LENGTH_SHORT).show();
-                    } else if (password.isEmpty()) {
-                        Toast.makeText(LoginActivity.this, R.string.enter_password,
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(LoginActivity.this, R.string.invalid_username_password,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                    return;
-                }
-                Toast.makeText(LoginActivity.this, getString(R.string.welcome) + username + "!",
-                        Toast.LENGTH_SHORT).show();
-                boolean isOrganization = user.getBoolean(KEY_ORGANIZATION);
-                if (isOrganization) {
-                    launchOrganizationView();
-                } else {
-                    launchDeveloperView();
-                }
-            }
-        });
-    }
-
-    private void launchDeveloperView() {
-        associateDevice();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        // Prevent user from going back to LoginActivity with back button
-        finish();
-    }
-
-    private void associateDevice() {
-        // Associate the device with a user
-        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
-        installation.put("user", ParseUser.getCurrentUser());
-        installation.saveInBackground();
-        Log.i(TAG, "Logged in user id: " + ParseUser.getCurrentUser().getObjectId());
-    }
-
-    private void launchOrganizationView() {
-        associateDevice();
-        Intent intent = new Intent(this, OrganizationActivity.class);
-        startActivity(intent);
-        // Prevent user from going back to LoginActivity with back button
-        finish();
     }
 }

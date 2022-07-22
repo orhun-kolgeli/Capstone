@@ -1,6 +1,4 @@
-package com.orhunkolgeli.capstone;
-
-import android.widget.Toast;
+package com.orhunkolgeli.capstone.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
@@ -8,14 +6,6 @@ import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @ParseClassName("Project")
 public class Project extends ParseObject {

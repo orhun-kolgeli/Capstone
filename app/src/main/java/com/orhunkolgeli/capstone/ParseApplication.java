@@ -1,8 +1,9 @@
 package com.orhunkolgeli.capstone;
 
 import android.app.Application;
-import android.content.Context;
 
+import com.orhunkolgeli.capstone.models.Developer;
+import com.orhunkolgeli.capstone.models.Project;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;

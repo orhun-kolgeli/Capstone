@@ -3,7 +3,6 @@ package com.orhunkolgeli.capstone;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,11 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.orhunkolgeli.capstone.databinding.FragmentFindDeveloperBinding;
 import com.orhunkolgeli.capstone.databinding.FragmentReviewApplicationsBinding;
+import com.orhunkolgeli.capstone.models.Developer;
+import com.orhunkolgeli.capstone.models.Project;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -47,7 +46,9 @@ public class ReviewApplicationsFragment extends Fragment {
         // Create an adapter
         Project project = null;
         try {
-            project = (Project) ParseUser.getCurrentUser().getParseObject("project").fetchIfNeeded();
+            if (ParseUser.getCurrentUser().getParseObject("project") != null) {
+                project = (Project) ParseUser.getCurrentUser().getParseObject("project").fetchIfNeeded();
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -89,6 +90,11 @@ public class ReviewApplicationsFragment extends Fragment {
     }
 
     private void loadApplicants(Project project) {
+        if (project == null) {
+            binding.pbLoadApplicants.setVisibility(View.GONE);
+            binding.tvLoadingApplicants.setVisibility(View.GONE);
+            return;
+        }
         project.getApplicants().getQuery().findInBackground(new FindCallback<Developer>() {
             @Override
             public void done(List<Developer> developers, ParseException e) {

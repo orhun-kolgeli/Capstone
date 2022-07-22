@@ -1,4 +1,4 @@
-package com.orhunkolgeli.capstone;
+package com.orhunkolgeli.capstone.models;
 
 import com.parse.GetCallback;
 import com.parse.ParseClassName;
