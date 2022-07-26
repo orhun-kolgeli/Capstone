@@ -116,5 +116,10 @@
     <string name="you_have_an_application_from">You have an application from\ </string>
     <string name="would_like_you_to_consider_their_project">" would like you to consider their project."</string>
     <string name="no_projects">This user has no projects.</string>
+    <string name="interview">Interview</string>
+    <string name="interview_offer_from">"Interview offer from "</string>
+    <string name="dear">"Dear "</string>
+    <string name="no_email_app_found">No email apps found.</string>
+    <string name="send_email_using">"Send email using: "</string>
 
 </resources>

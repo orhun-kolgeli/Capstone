@@ -165,11 +165,11 @@
         app:layout_constraintTop_toBottomOf="@+id/scrollViewRepos" />
 
     <Button
-        android:id="@+id/btnExtendOffer"
+        android:id="@+id/btnInterview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="@string/extend_offer"
+        android:text="@string/interview"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -184,7 +184,7 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnExtendOffer" />
+        app:layout_constraintTop_toBottomOf="@+id/btnInterview" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clWebView"

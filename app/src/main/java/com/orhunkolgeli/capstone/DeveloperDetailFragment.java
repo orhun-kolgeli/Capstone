@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import com.orhunkolgeli.capstone.databinding.FragmentDeveloperDetailBinding;
 import com.orhunkolgeli.capstone.models.Developer;
 import com.orhunkolgeli.capstone.models.Project;
 import com.orhunkolgeli.capstone.utils.CustomTextView;
+import com.orhunkolgeli.capstone.utils.EmailBuilder;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
@@ -49,6 +51,8 @@ public class DeveloperDetailFragment extends Fragment {
     public static final String ORGANIZATION_ID = "organizationId";
     public static final String USER = "user";
     public static final String OBJECT_ID = "objectId";
+    public static final String EMAIL_ADDRESS = "emailAddress";
+    public static final String NAME = "name";
 
     public enum DeveloperCategory {
         DEVELOPER, APPLICANT, APPLICANT_PUSH
@@ -85,18 +89,33 @@ public class DeveloperDetailFragment extends Fragment {
             case APPLICANT:
                 // Coming from the "Review" tab
                 ((OrganizationActivity) requireActivity()).getSupportActionBar().setTitle(R.string.review_application);
-                binding.btnExtendOffer.setVisibility(View.VISIBLE);
+                binding.btnInterview.setVisibility(View.VISIBLE);
                 binding.btnRemove.setVisibility(View.VISIBLE);
                 setApplicantOnClickListeners(developer);
                 break;
             case APPLICANT_PUSH:
                 // Coming from a push notification
                 ((OrganizationActivity) requireActivity()).getSupportActionBar().setTitle(R.string.review_application);
-                binding.btnExtendOffer.setVisibility(View.VISIBLE);
+                binding.btnInterview.setVisibility(View.VISIBLE);
                 break;
         }
         getGitHubRepos(developer.getGitHub());
         binding.webViewRepo.setOnPinchToZoomListener(binding);
+        setOfferOnClickListener(binding.btnInterview, developer);
+    }
+
+    private void setOfferOnClickListener(Button button, Developer developer) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new EmailBuilder(requireContext())
+                        .setEmailAddress(developer.getUser().getString(EMAIL_ADDRESS))
+                        .setSubject(getString(R.string.interview_offer_from) +
+                                ParseUser.getCurrentUser().getString(NAME))
+                        .setBody(getString(R.string.dear) + developer.getFullName())
+                        .build();
+            }
+        });
     }
 
     private void setApplicantOnClickListeners(Developer developer) {

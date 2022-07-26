@@ -42,7 +42,13 @@ public class Developer extends ParseObject {
     }
 
     public ParseUser getUser() {
-        return getParseUser(KEY_USER);
+        ParseUser parseUser = getParseUser(KEY_USER);
+        try {
+            parseUser = parseUser.fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return parseUser;
     }
 
     public void setUser(ParseUser user) {

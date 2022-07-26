@@ -145,23 +145,6 @@ public class ProjectDetailFragment extends Fragment {
         push.sendInBackground();
     }
 
-    private void sendApplicationViaEmail(Project project) {
-        // Old code
-        Intent intent = new Intent(android.content.Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        String email = project.getUser().getString("emailAddress");
-        intent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] {email} );
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Job application - " + project.getType() + " Developer");
-        intent.putExtra(android.content.Intent.EXTRA_TEXT,
-                "Dear " + "\n\n");
-        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            getActivity().startActivity(Intent.createChooser(intent, "Send Email using:"));
-        }
-        else {
-            Toast.makeText(getActivity(), "You don't have any email apps.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void showNoDeveloperAccountAlert() {
         new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.dev_profile_needed_to_apply)
