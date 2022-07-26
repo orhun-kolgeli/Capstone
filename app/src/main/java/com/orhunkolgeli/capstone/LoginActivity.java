@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.orhunkolgeli.capstone.databinding.ActivityLoginBinding;
 import com.orhunkolgeli.capstone.models.User;
+import com.orhunkolgeli.capstone.utils.CustomParsePushBroadcastReceiver;
 import com.orhunkolgeli.capstone.viewmodel.LoginViewModel;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -22,6 +23,7 @@ import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 public class LoginActivity extends AppCompatActivity {
+    public static final String DEVELOPER_ID = "developerId";
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
 
@@ -52,6 +54,11 @@ public class LoginActivity extends AppCompatActivity {
                         break;
                     case ORGANIZATION:
                         intent = new Intent(LoginActivity.this, OrganizationActivity.class);
+                        // Send any push data to OrganizationActivity
+                        Bundle bundle = getIntent().getExtras();
+                        if (bundle != null && bundle.getString(DEVELOPER_ID) != null) {
+                            intent.putExtra(DEVELOPER_ID, bundle.getString(DEVELOPER_ID));
+                        }
                         break;
                 }
                 if (intent != null) {

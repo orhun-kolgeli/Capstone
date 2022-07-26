@@ -113,5 +113,6 @@
     <string name="upload_descriptive_image">Please upload a descriptive image</string>
     <string name="upload_project_image">Upload project image</string>
     <string name="image_description">Image description</string>
+    <string name="you_have_an_application_from">You have an application from\ </string>
 
 </resources>

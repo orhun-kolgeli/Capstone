@@ -14,14 +14,24 @@ import android.widget.Toast;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.orhunkolgeli.capstone.databinding.ActivityOrganizationBinding;
+import com.orhunkolgeli.capstone.models.Developer;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 public class OrganizationActivity extends AppCompatActivity {
 
+    public static final String OBJECT_ID = "objectId";
+    public static final String DEVELOPER_ID = "developerId";
+    public static final String DEVELOPER = "Developer";
     private AppBarConfiguration appBarConfiguration;
     private ActivityOrganizationBinding binding;
 
@@ -37,6 +47,28 @@ public class OrganizationActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_organization);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        // Redirect user to the detail screen of the user that sent the push notification
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.getString(DEVELOPER_ID) != null) {
+            // Find the developer with the given ID
+            ParseQuery<Developer> parseQuery = new ParseQuery<Developer>(DEVELOPER);
+            parseQuery.whereEqualTo(OBJECT_ID, bundle.getString(DEVELOPER_ID));
+            parseQuery.findInBackground(new FindCallback<Developer>() {
+                @Override
+                public void done(List<Developer> developers, ParseException e) {
+                    // Navigate to the applicant's detail screen, starting from the search screen
+                    if (!developers.isEmpty()) {
+                        navController.navigate(DeveloperSearchFragmentDirections
+                                .actionDeveloperSearchFragmentToDeveloperDetailFragment(
+                                        developers.get(0),
+                                        DeveloperDetailFragment.DeveloperCategory.APPLICANT_PUSH, 0
+                                )
+                        );
+                    }
+                }
+            });
+        }
     }
 
     @Override

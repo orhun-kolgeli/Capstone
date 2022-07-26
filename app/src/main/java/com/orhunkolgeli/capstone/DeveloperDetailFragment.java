@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -44,7 +45,7 @@ public class DeveloperDetailFragment extends Fragment {
     public static final String DEVELOPER_CATEGORY = "developerCategory";
 
     public enum DeveloperCategory {
-        DEVELOPER, APPLICANT
+        DEVELOPER, APPLICANT, APPLICANT_PUSH
     }
     private FragmentDeveloperDetailBinding binding;
 
@@ -64,19 +65,29 @@ public class DeveloperDetailFragment extends Fragment {
         binding.tvDevInitials2.setText(developer.getFullName().substring(0,1));
         binding.tvSkills2.setText(developer.getSkills());
         binding.tvGitHub2.setText(developer.getGitHub());
-        if (developerCategory == DeveloperCategory.DEVELOPER) {
-            binding.btnInvite.setVisibility(View.VISIBLE);
-            binding.btnInvite.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sendNotificationToDeveloper(developer);
-                }
-            });
-        } else if (developerCategory == DeveloperCategory.APPLICANT) {
-            ((OrganizationActivity) requireActivity()).getSupportActionBar().setTitle(R.string.review_application);
-            binding.btnExtendOffer.setVisibility(View.VISIBLE);
-            binding.btnRemove.setVisibility(View.VISIBLE);
-            setApplicantOnClickListeners(developer);
+        switch (developerCategory) {
+            case DEVELOPER:
+                // Coming from the "Invite" tab
+                binding.btnInvite.setVisibility(View.VISIBLE);
+                binding.btnInvite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sendNotificationToDeveloper(developer);
+                    }
+                });
+                break;
+            case APPLICANT:
+                // Coming from the "Review" tab
+                ((OrganizationActivity) requireActivity()).getSupportActionBar().setTitle(R.string.review_application);
+                binding.btnExtendOffer.setVisibility(View.VISIBLE);
+                binding.btnRemove.setVisibility(View.VISIBLE);
+                setApplicantOnClickListeners(developer);
+                break;
+            case APPLICANT_PUSH:
+                // Coming from a push notification
+                ((OrganizationActivity) requireActivity()).getSupportActionBar().setTitle(R.string.review_application);
+                binding.btnExtendOffer.setVisibility(View.VISIBLE);
+                break;
         }
         getGitHubRepos(developer.getGitHub());
         binding.webViewRepo.setOnPinchToZoomListener(binding);
@@ -103,7 +114,6 @@ public class DeveloperDetailFragment extends Fragment {
                 });
             }
         });
-
     }
 
     @Override
