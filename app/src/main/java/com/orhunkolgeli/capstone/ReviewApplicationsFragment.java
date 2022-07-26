@@ -81,14 +81,6 @@ public class ReviewApplicationsFragment extends Fragment {
                 android.R.color.holo_red_light);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (adapter.getItemCount() == 0) {
-            binding.tvNothingFound.setVisibility(View.VISIBLE);
-        }
-    }
-
     private void loadApplicants(Project project) {
         if (project == null) {
             binding.pbLoadApplicants.setVisibility(View.GONE);

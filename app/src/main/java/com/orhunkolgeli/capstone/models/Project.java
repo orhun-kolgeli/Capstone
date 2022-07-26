@@ -1,6 +1,7 @@
 package com.orhunkolgeli.capstone.models;
 
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -43,7 +44,13 @@ public class Project extends ParseObject {
     }
 
     public ParseUser getUser() {
-        return getParseUser(KEY_USER);
+        ParseUser parseUser = getParseUser(KEY_USER);
+        try {
+            parseUser = parseUser.fetchIfNeeded();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return parseUser;
     }
 
     public void setUser(ParseUser user) {

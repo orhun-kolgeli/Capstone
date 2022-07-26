@@ -29,11 +29,16 @@ import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ProjectDetailFragment extends Fragment {
 
     private static final String TAG = "ProjectDetailFragment";
     public static final String OBJECT_ID = "objectId";
     public static final String USER = "user";
+    public static final String ALERT = "alert";
+    public static final String DEVELOPER_ID = "developerId";
     private FragmentProjectDetailBinding binding;
 
     @Override
@@ -97,8 +102,6 @@ public class ProjectDetailFragment extends Fragment {
             showNoDeveloperAccountAlert();
             return;
         }
-        // Send a push notification to the organization
-        sendNotificationToOrganization(project);
         // Get the developer profile
         Developer developer = null;
         try {
@@ -106,12 +109,14 @@ public class ProjectDetailFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        // Send a push notification to the organization
+        sendNotificationToOrganization(project, developer);
         // Add the developer to the pool of applicants
         project.addApplicant(developer);
         Toast.makeText(getContext(), R.string.application_received, Toast.LENGTH_SHORT).show();
     }
 
-    private void sendNotificationToOrganization(@NonNull Project project) {
+    private void sendNotificationToOrganization(@NonNull Project project, Developer developer) {
         ParseUser projectOwner = project.getUser();
         String owner_id = projectOwner.getObjectId();
         Log.i(TAG, "Sending notification to the user with the following id: " + owner_id);
@@ -123,11 +128,20 @@ public class ProjectDetailFragment extends Fragment {
         ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
         pushQuery.whereMatchesQuery(USER, userQuery);
 
+        // Create JSONObject that contains push data
+        JSONObject data = new JSONObject();
+        try {
+            data.put(ALERT, getString(R.string.you_have_an_application_from) +
+                    ParseUser.getCurrentUser().getUsername());
+            data.put(DEVELOPER_ID, developer.getObjectId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         // Send push notification to query
         ParsePush push = new ParsePush();
         push.setQuery(pushQuery); // Set our Installation query
-        push.setMessage(ParseUser.getCurrentUser().getUsername() + " is interested in your " +
-                project.getType() + " project!");
+        push.setData(data);
         push.sendInBackground();
     }
 

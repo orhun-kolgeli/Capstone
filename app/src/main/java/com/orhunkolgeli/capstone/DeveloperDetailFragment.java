@@ -1,5 +1,6 @@
 package com.orhunkolgeli.capstone;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -7,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -42,9 +45,13 @@ public class DeveloperDetailFragment extends Fragment {
     public static final String PROJECT = "project";
     public static final String DEVELOPER = "developer";
     public static final String DEVELOPER_CATEGORY = "developerCategory";
+    public static final String ALERT = "alert";
+    public static final String ORGANIZATION_ID = "organizationId";
+    public static final String USER = "user";
+    public static final String OBJECT_ID = "objectId";
 
     public enum DeveloperCategory {
-        DEVELOPER, APPLICANT
+        DEVELOPER, APPLICANT, APPLICANT_PUSH
     }
     private FragmentDeveloperDetailBinding binding;
 
@@ -64,19 +71,29 @@ public class DeveloperDetailFragment extends Fragment {
         binding.tvDevInitials2.setText(developer.getFullName().substring(0,1));
         binding.tvSkills2.setText(developer.getSkills());
         binding.tvGitHub2.setText(developer.getGitHub());
-        if (developerCategory == DeveloperCategory.DEVELOPER) {
-            binding.btnInvite.setVisibility(View.VISIBLE);
-            binding.btnInvite.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sendNotificationToDeveloper(developer);
-                }
-            });
-        } else if (developerCategory == DeveloperCategory.APPLICANT) {
-            ((OrganizationActivity) requireActivity()).getSupportActionBar().setTitle(R.string.review_application);
-            binding.btnExtendOffer.setVisibility(View.VISIBLE);
-            binding.btnRemove.setVisibility(View.VISIBLE);
-            setApplicantOnClickListeners(developer);
+        switch (developerCategory) {
+            case DEVELOPER:
+                // Coming from the "Invite" tab
+                binding.btnInvite.setVisibility(View.VISIBLE);
+                binding.btnInvite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        sendNotificationToDeveloper(developer);
+                    }
+                });
+                break;
+            case APPLICANT:
+                // Coming from the "Review" tab
+                ((OrganizationActivity) requireActivity()).getSupportActionBar().setTitle(R.string.review_application);
+                binding.btnExtendOffer.setVisibility(View.VISIBLE);
+                binding.btnRemove.setVisibility(View.VISIBLE);
+                setApplicantOnClickListeners(developer);
+                break;
+            case APPLICANT_PUSH:
+                // Coming from a push notification
+                ((OrganizationActivity) requireActivity()).getSupportActionBar().setTitle(R.string.review_application);
+                binding.btnExtendOffer.setVisibility(View.VISIBLE);
+                break;
         }
         getGitHubRepos(developer.getGitHub());
         binding.webViewRepo.setOnPinchToZoomListener(binding);
@@ -103,7 +120,6 @@ public class DeveloperDetailFragment extends Fragment {
                 });
             }
         });
-
     }
 
     @Override
@@ -171,17 +187,26 @@ public class DeveloperDetailFragment extends Fragment {
         Log.i(TAG, "Sending notification to the user with the following id: " + developer_user_id);
         // Make a query where the user is the developer being invited
         ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
-        userQuery.whereEqualTo("objectId", developer_user_id);
+        userQuery.whereEqualTo(OBJECT_ID, developer_user_id);
 
         // Find devices associated with this user
         ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
-        pushQuery.whereMatchesQuery("user", userQuery);
+        pushQuery.whereMatchesQuery(USER, userQuery);
+
+        // Create JSONObject that contains push data
+        JSONObject data = new JSONObject();
+        try {
+            data.put(ALERT, ParseUser.getCurrentUser().getUsername() +
+                    getString(R.string.would_like_you_to_consider_their_project));
+            data.put(ORGANIZATION_ID, ParseUser.getCurrentUser().getObjectId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // Send push notification to the developer
         ParsePush push = new ParsePush();
         push.setQuery(pushQuery);
-        push.setMessage(ParseUser.getCurrentUser().getString("name") +
-                " would like you to consider their project!");
+        push.setData(data);
         push.sendInBackground();
     }
 

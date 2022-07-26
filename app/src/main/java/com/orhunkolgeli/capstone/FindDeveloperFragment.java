@@ -63,7 +63,7 @@ public class FindDeveloperFragment extends Fragment {
     private void loadDeveloperProfiles() {
         ParseQuery<Developer> query = ParseQuery.getQuery(KEY_DEVELOPER);
         query.setLimit(5);
-        query.addDescendingOrder(KEY_CREATED_AT);
+        query.addAscendingOrder(KEY_CREATED_AT);
         // Search for ParseObject Developer
         // Query will invoke the FindCallback with either the object or the exception thrown
         query.findInBackground(new FindCallback<Developer>() {

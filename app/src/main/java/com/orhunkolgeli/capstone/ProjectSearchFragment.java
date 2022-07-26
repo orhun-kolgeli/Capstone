@@ -23,7 +23,9 @@ import com.orhunkolgeli.capstone.utils.EndlessRecyclerViewScrollListener;
 import com.orhunkolgeli.capstone.utils.ProjectFilterValues;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,8 @@ public class ProjectSearchFragment extends Fragment implements ProjectFilterList
     public static final String TYPE = "type";
     public static final String PROJECT = "Project";
     public static final String LOCATION = "location";
+    public static final String OBJECT_ID = "objectId";
+    public static final String USER = "user";
     private FragmentProjectSearchBinding binding;
     private EndlessRecyclerViewScrollListener scrollListener;
     List<Project> allProjects;
@@ -166,5 +170,45 @@ public class ProjectSearchFragment extends Fragment implements ProjectFilterList
     public void onActionFilterProjects(ProjectFilterValues projectFilterValues) {
         this.projectFilterValues = projectFilterValues;
         loadProjects(START_PAGE);
+    }
+
+    @Override
+    public void onPushOpen(String organizationId) {
+        ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+        userQuery.whereEqualTo(OBJECT_ID, organizationId);
+        ParseQuery<Project> projectQuery = new ParseQuery<Project>(PROJECT);
+
+        // Find the projects where the owner has the given organizationId
+        projectQuery.whereMatchesQuery(USER, userQuery);
+        projectQuery.findInBackground(new FindCallback<Project>() {
+            @Override
+            public void done(List<Project> projects, ParseException e) {
+                if (projects.isEmpty()) {
+                    // Notify user if no projects
+                    Toast.makeText(getContext(), R.string.no_projects, Toast.LENGTH_SHORT).show();
+                } else if (projects.size() == 1) {
+                    // Navigate to the detail page if only 1 project
+                    Project project = projects.get(0);
+                    try {
+                        project = project.fetchIfNeeded();
+                    } catch (ParseException ex) {
+                        ex.printStackTrace();
+                    }
+                    NavHostFragment
+                            .findNavController(ProjectSearchFragment.this)
+                            .navigate(ProjectSearchFragmentDirections
+                                    .actionProjectSearchFragmentToProjectDetailFragment(project));
+                } else {
+                    // Show all the projects where the owner has the given organizationId
+                    allProjects.clear();
+                    adapter.notifyDataSetChanged();
+                    scrollListener.resetState();
+                    allProjects.addAll(projects);
+                    adapter.notifyItemRangeInserted(0, projects.size());
+                    binding.pbReadProjects.setVisibility(View.GONE);
+                    binding.tvLoadingProjects.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 }
