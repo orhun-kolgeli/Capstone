@@ -12,16 +12,23 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.orhunkolgeli.capstone.databinding.ActivityMainBinding;
 import com.orhunkolgeli.capstone.interfaces.ProjectFilterListener;
+import com.orhunkolgeli.capstone.models.Developer;
 import com.orhunkolgeli.capstone.utils.FilterProjectsOnClick;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    public static final String ORGANIZATION_ID = "organizationId";
     public ProjectFilterListener projectFilterListener = null;
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -40,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        // Redirect user to the detail screen of the user that sent the push notification
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.getString(ORGANIZATION_ID) != null) {
+            if (projectFilterListener != null) {
+                projectFilterListener.onPushOpen(bundle.getString(ORGANIZATION_ID));
+            }
+        }
     }
 
     @Override

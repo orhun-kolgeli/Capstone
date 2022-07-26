@@ -1,5 +1,6 @@
 package com.orhunkolgeli.capstone;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -43,6 +45,10 @@ public class DeveloperDetailFragment extends Fragment {
     public static final String PROJECT = "project";
     public static final String DEVELOPER = "developer";
     public static final String DEVELOPER_CATEGORY = "developerCategory";
+    public static final String ALERT = "alert";
+    public static final String ORGANIZATION_ID = "organizationId";
+    public static final String USER = "user";
+    public static final String OBJECT_ID = "objectId";
 
     public enum DeveloperCategory {
         DEVELOPER, APPLICANT, APPLICANT_PUSH
@@ -181,17 +187,26 @@ public class DeveloperDetailFragment extends Fragment {
         Log.i(TAG, "Sending notification to the user with the following id: " + developer_user_id);
         // Make a query where the user is the developer being invited
         ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
-        userQuery.whereEqualTo("objectId", developer_user_id);
+        userQuery.whereEqualTo(OBJECT_ID, developer_user_id);
 
         // Find devices associated with this user
         ParseQuery<ParseInstallation> pushQuery = ParseInstallation.getQuery();
-        pushQuery.whereMatchesQuery("user", userQuery);
+        pushQuery.whereMatchesQuery(USER, userQuery);
+
+        // Create JSONObject that contains push data
+        JSONObject data = new JSONObject();
+        try {
+            data.put(ALERT, ParseUser.getCurrentUser().getUsername() +
+                    getString(R.string.would_like_you_to_consider_their_project));
+            data.put(ORGANIZATION_ID, ParseUser.getCurrentUser().getObjectId());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // Send push notification to the developer
         ParsePush push = new ParsePush();
         push.setQuery(pushQuery);
-        push.setMessage(ParseUser.getCurrentUser().getString("name") +
-                " would like you to consider their project!");
+        push.setData(data);
         push.sendInBackground();
     }
 

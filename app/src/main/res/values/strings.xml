@@ -114,5 +114,7 @@
     <string name="upload_project_image">Upload project image</string>
     <string name="image_description">Image description</string>
     <string name="you_have_an_application_from">You have an application from\ </string>
+    <string name="would_like_you_to_consider_their_project">" would like you to consider their project."</string>
+    <string name="no_projects">This user has no projects.</string>
 
 </resources>
