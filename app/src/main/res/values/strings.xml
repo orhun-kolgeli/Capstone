@@ -121,5 +121,6 @@
     <string name="dear">"Dear "</string>
     <string name="no_email_app_found">No email apps found.</string>
     <string name="send_email_using">"Send email using: "</string>
+    <string name="a_list_containing_the_developer_s_repositories">A list containing the developer\'s repositories</string>
 
 </resources>

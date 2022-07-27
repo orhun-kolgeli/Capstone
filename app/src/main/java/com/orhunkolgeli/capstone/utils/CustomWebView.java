@@ -2,6 +2,7 @@ package com.orhunkolgeli.capstone.utils;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
@@ -72,6 +73,7 @@ public class CustomWebView extends WebView {
                 @Override
                 public void onScaleEnd(ScaleGestureDetector detector) {}
             });
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 v.performClick();

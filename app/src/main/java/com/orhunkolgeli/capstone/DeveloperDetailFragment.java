@@ -1,5 +1,7 @@
 package com.orhunkolgeli.capstone;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,6 +55,7 @@ public class DeveloperDetailFragment extends Fragment {
     public static final String OBJECT_ID = "objectId";
     public static final String EMAIL_ADDRESS = "emailAddress";
     public static final String NAME = "name";
+    public static final int DELAY_MILLIS = 3000;
 
     public enum DeveloperCategory {
         DEVELOPER, APPLICANT, APPLICANT_PUSH
@@ -232,8 +235,7 @@ public class DeveloperDetailFragment extends Fragment {
     private void setOnLongPressListener(CustomTextView tvRepo, String html_url) {
         // Set onLongPress listener
         tvRepo.setOnTouchListener(new View.OnTouchListener() {
-            private final GestureDetector gestureDetector = new GestureDetector(getContext(),
-                    new GestureDetector.SimpleOnGestureListener() {
+            private final GestureDetector gestureDetector = new GestureDetector(getContext(), new GestureDetector.SimpleOnGestureListener() {
                 @Override
                 public void onLongPress(MotionEvent e) {
                     binding.clWebView.setVisibility(View.VISIBLE);
@@ -247,7 +249,20 @@ public class DeveloperDetailFragment extends Fragment {
                     binding.clWebView.setVisibility(View.GONE);
                     return super.onSingleTapUp(e);
                 }
+
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    binding.animationLongPress.setVisibility(View.VISIBLE);
+                    binding.animationLongPress.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            binding.animationLongPress.setVisibility(View.GONE);
+                        }
+                    }, DELAY_MILLIS);
+                    return super.onDoubleTap(e);
+                }
             });
+
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 v.performClick();
