@@ -44,23 +44,12 @@ public class ReviewApplicationsFragment extends Fragment {
         // Set layoutManger
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         // Create an adapter
-        Project project = null;
-        try {
-            if (ParseUser.getCurrentUser().getParseObject("project") != null) {
-                project = (Project) ParseUser.getCurrentUser().getParseObject("project").fetchIfNeeded();
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         applicants = new ArrayList<Developer>();
         adapter = new ApplicantAdapter(getContext(), applicants, ReviewApplicationsFragment.this);
         // Set adapter
         recyclerView.setAdapter(adapter);
         // Set item animator to DefaultAnimator
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        // Read in the applicants from database
-        loadApplicants(project);
-        setUpRefresh(project);
         return rootView;
     }
 
@@ -100,5 +89,22 @@ public class ReviewApplicationsFragment extends Fragment {
                 binding.tvLoadingApplicants.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        applicants.clear();
+        Project project = null;
+        try {
+            if (ParseUser.getCurrentUser().getParseObject("project") != null) {
+                project = (Project) ParseUser.getCurrentUser().getParseObject("project").fetchIfNeeded();
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        // Read in the applicants from database
+        loadApplicants(project);
+        setUpRefresh(project);
     }
 }

@@ -36,13 +36,21 @@ public class DeveloperSearchFragment extends Fragment {
         developerSearchTabAdapter = new DeveloperSearchTabAdapter(this);
         viewPager.setAdapter(developerSearchTabAdapter);
         viewPager.setPageTransformer(new ZoomOutPageTransformer());
-        int[] tabTitles = {R.string.invite, R.string.review};
-        int[] tabIcons = {R.drawable.searchperson, R.drawable.review
+        int[] tabTitles = {
+                R.string.invite,
+                R.string.review,
+                R.string.projects
+        };
+        int[] tabIcons = {
+                R.drawable.searchperson,
+                R.drawable.review,
+                R.drawable.project
         };
         // Create a TabLayoutMediator to link the TabLayout to the ViewPager2 and attach it
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) ->
-            {tab.setText(tabTitles[position]);
-            tab.setIcon(tabIcons[position]);}
+        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+            tab.setText(tabTitles[position]);
+            tab.setIcon(tabIcons[position]);
+        }
         ).attach();
         binding.fabAddProject.setOnClickListener(new View.OnClickListener() {
             @Override
