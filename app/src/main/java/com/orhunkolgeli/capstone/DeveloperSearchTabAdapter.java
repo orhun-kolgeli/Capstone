@@ -5,9 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 public class DeveloperSearchTabAdapter extends FragmentStateAdapter {
-    public static final int ITEM_COUNT = 2;
+    public static final int ITEM_COUNT = 3;
     private FindDeveloperFragment findDeveloperFragment;
     private ReviewApplicationsFragment reviewApplicationsFragment;
+    private PostedProjectFragment postedProjectFragment;
 
     public DeveloperSearchTabAdapter(Fragment fragment) {
         super(fragment);
@@ -21,11 +22,16 @@ public class DeveloperSearchTabAdapter extends FragmentStateAdapter {
                 findDeveloperFragment = new FindDeveloperFragment();
             }
             return findDeveloperFragment;
-        } else {
+        } else if (position == 1) {
             if (reviewApplicationsFragment == null) {
                 reviewApplicationsFragment = new ReviewApplicationsFragment();
             }
             return reviewApplicationsFragment;
+        } else {
+            if (postedProjectFragment == null) {
+                postedProjectFragment = new PostedProjectFragment();
+            }
+            return postedProjectFragment;
         }
     }
 

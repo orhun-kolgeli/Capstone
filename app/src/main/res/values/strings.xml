@@ -122,5 +122,11 @@
     <string name="no_email_app_found">No email apps found.</string>
     <string name="send_email_using">"Send email using: "</string>
     <string name="a_list_containing_the_developer_s_repositories">A list containing the developer\'s repositories</string>
+    <string name="projects">Projects</string>
+    <string name="already_applied">developers already applied</string>
+    <string name="singular_already_applied">developer already applied</string>
+    <string name="select">Select</string>
+    <string name="selected">Selected</string>
+    <string name="error_selecting_project">Couldn\'t select project</string>
 
 </resources>

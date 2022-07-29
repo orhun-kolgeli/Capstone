@@ -20,7 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.32"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/animationView"
+        app:layout_constraintTop_toBottomOf="@+id/animationLongPress"
         app:startIconDrawable="@drawable/personcircle">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -92,7 +92,7 @@
         app:layout_constraintTop_toBottomOf="@+id/mactvSkillsParent" />
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/animationView"
+        android:id="@+id/animationLongPress"
         android:layout_width="0dp"
         android:layout_height="230dp"
         android:layout_marginTop="8dp"
