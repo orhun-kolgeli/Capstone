@@ -7,8 +7,6 @@
 - **Mobile:** Native Android app
 - **Story:** Matches nonprofit organizations and businesses with students and professionals willing to build a website or app for a nonprofit for their portfolio.
 - **Market:** Any nonprofit and any developer may benefit from the app. The organizations can find developers to build their app and developers can get real-world experience for their portfolio. 
-- **Habit:** Developers can view the app requirements of the organizations, and if interested, can share their GitHub, resume, and profile with the organization. The more frequently they share their profile, the higher their chances of being matched to a project. 
-- **Scope:** Can be used by any web or app developer willing to improve their portfolio.
 
 ## Product Spec
 
@@ -24,8 +22,7 @@ https://user-images.githubusercontent.com/74283397/182308665-2132193a-6b50-4996-
 * Developers can apply to build a posted project by opening up a detail view of the project
 
 
-https://user-images.githubusercontent.com/74283397/182309072-571e8e77-aeb1-4f70-a5df-4f70e67d2876.mp4
-
+https://user-images.githubusercontent.com/74283397/182311507-c5a7bd77-47e1-4fbb-808f-71bf5d01a9ed.mp4
 
 * Developers can edit their profile 
 
@@ -37,8 +34,7 @@ https://user-images.githubusercontent.com/74283397/182308751-ba81577a-6b21-48d2-
 * Nonprofits can invite a developer to build their project by opening up a detail view of a developer's profile
 
 
-https://user-images.githubusercontent.com/74283397/182308824-6b15c36d-a958-4b03-b888-cfef014df223.mp4
-
+https://user-images.githubusercontent.com/74283397/182311555-3fc32b19-5cdf-4f3d-beb7-1cd4c7e6d4d5.mp4
 
 * Nonprofits can post their web, iOS, Android, or other projects
 
@@ -93,7 +89,6 @@ https://user-images.githubusercontent.com/74283397/182309188-829e9c44-ae88-4795-
     * Developer detail view
 
 **Flow Navigation** (Screen to Screen)
-List all your screens from above. Under each screen, list the screens you can navigate to from that screen.
 
 * Login <=> Register
 * Login <=> Search screen
