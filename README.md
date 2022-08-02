@@ -1,17 +1,8 @@
-# Capstone
-
-## Table of Contents
-1. [Overview](#Overview)
-1. [Product Spec](#Product-Spec)
-1. [Wireframes](#Wireframes)
-1. [Schema](#Schema)
+# DevMatch
 
 
 ## Overview
 ### Description
-
-
-### App Evaluation
 - **Category:** Matching app
 - **Mobile:** Native Android app
 - **Story:** Matches nonprofit organizations and businesses with students and professionals willing to build a website or app for a nonprofit for their portfolio.
@@ -21,23 +12,48 @@
 
 ## Product Spec
 
-### 1. User Stories (Required and Optional)
+### 1. Features
 
-**Required Must-have Stories**
 * Both nonprofits and developers can sign up and log in
+
+
+https://user-images.githubusercontent.com/74283397/182308665-2132193a-6b50-4996-bf33-311f07cf3503.mp4
+
+
 * Developers can scroll through the list of projects posted by nonprofits
-* Developers can apply via email to build a posted project by opening up a detail view of the project
+* Developers can apply to build a posted project by opening up a detail view of the project
+
+
+https://user-images.githubusercontent.com/74283397/182309072-571e8e77-aeb1-4f70-a5df-4f70e67d2876.mp4
+
+
 * Developers can edit their profile 
+
+
+https://user-images.githubusercontent.com/74283397/182308751-ba81577a-6b21-48d2-8ec4-ea4a58719c74.mp4
+
+
 * Nonprofits can scroll through the list of all developers
-* Nonprofits can invite via email a developer to build their project by opening up a detail view of a developer's profile
+* Nonprofits can invite a developer to build their project by opening up a detail view of a developer's profile
+
+
+https://user-images.githubusercontent.com/74283397/182308824-6b15c36d-a958-4b03-b888-cfef014df223.mp4
+
+
 * Nonprofits can post their web, iOS, Android, or other projects
 
-**Optional Nice-to-have Stories**
 
-* Nonprofits can filter developers
+https://user-images.githubusercontent.com/74283397/182309446-68331b81-bddb-4ba8-b8fc-96fa1779a3b8.mp4
+
+
+https://user-images.githubusercontent.com/74283397/182309468-0a7512f1-78a8-48ed-84c1-61158f3395d8.mp4
+
+
 * Developers can filter projects
-* Polished UI
-* Animations
+
+
+https://user-images.githubusercontent.com/74283397/182309188-829e9c44-ae88-4795-9a46-b7a309e7814b.mp4
+
 * Developers can receive a notification when a nonprofit invites them
 * Nonprofits can receive a notification when a developer sends an application
 * Developers can showcase their GitHub projects on their profile
@@ -60,9 +76,6 @@
    * User (developer) can set up or update their profile
  * Compose Project Screen
    * User (nonprofit) can post a project 
-
-
-
 
 ### 3. Navigation
 
@@ -90,10 +103,6 @@ List all your screens from above. Under each screen, list the screens you can na
 * Project search screen <=> Project details screen
 
 
-
-## Wireframes
-![alt-text](https://github.com/orhun-kolgeli/Capstone/blob/main/capstone_wireframes.jpg)
-
 ## Schema 
 ### Models
 #### User
@@ -107,9 +116,7 @@ List all your screens from above. Under each screen, list the screens you can na
    | username      | String         | username of the user |
    | name          | String         | full name of the user |
    | password      | String         | user password |
-   | organization  | bool / or enum  | false if developer; true if organization |
-   | project       | Pointer to Project | project tied to the account, if any
-   | developer     | Pointer to Developer | developer tied to the account, if any
+   | organization  | bool           | false if developer; true if organization |
    
    
 #### Project
@@ -131,34 +138,28 @@ List all your screens from above. Under each screen, list the screens you can na
    | objectId      | String         | unique id for the developer (default field) |
    | createdAt     | DateTime       | date when developer profile is created (default field) |
    | updatedAt     | DateTime       | date when developer profile is last updated (default field) |
-   | profileImage  | File => url / or initials (Picasso) | profile picture of the user |
    | bio           | String         | bio of the developer |
    | github        | String         | GitHub username |
    | skills        | String         | web or mobile development skills |
    | user          | Pointer to User| associated user |
-   Having pre-determined skills to choose from: for filtering, matching, etc.
    
    
    
    
 ### Networking
-#### List of network requests by screen
+#### Example network request
    - Search Project Screen
       - (Read/GET) Query all projects
       ```java
-        // Specify what type of data to query, i.e., Project
-        // Error handling
         ParseQuery<Project> query = ParseQuery.getQuery(Project.class);
-        // Limit query to latest 20 projects
-        query.setLimit(20);
+        query.setLimit(LIMIT);
         // Order projects by creation date
-        query.addDescendingOrder("createdAt");
+        query.addDescendingOrder(CREATED_AT);
         // Start an asynchronous call for projects
-        query.findInBackground(new FindCallback<Post>() {
+        query.findInBackground(new FindCallback<Project>() {
             @Override
             public void done(List<Project> projects, ParseException e) {
-                if (e != null) { // exception thrown
-                    // Snack bar, toast (error handling)
+                if (e != null) {
                     Log.e(TAG, "Issue with getting projects", e);
                     return;
                 } else {
@@ -167,9 +168,3 @@ List all your screens from above. Under each screen, list the screens you can na
             }
         });
      ```
-   - Set Up Profile Screen
-      - (Create/POST) Create a new developer object
-   - Search Developer Screen
-      - (Read/GET) Query all developers
-   - Post Project Screen
-      - (Create/POST) Create a new project object
